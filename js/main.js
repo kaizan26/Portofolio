@@ -841,7 +841,10 @@ function initProjectFilter() {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      if (projectsContainer) updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
+      if (projectsContainer) {
+        updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
       
       const filter = btn.getAttribute('data-filter');
       const projectItems = document.querySelectorAll('.project-item');
@@ -1103,7 +1106,10 @@ function initSkillTabs() {
     tab.addEventListener('click', () => {
       skillTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      if (skillsContainer) updateSegmentedPill(skillsContainer, '#skill-filter-morph-pill', '.active');
+      if (skillsContainer) {
+        updateSegmentedPill(skillsContainer, '#skill-filter-morph-pill', '.active');
+        tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
       
       const targetGroup = tab.getAttribute('data-skill-group');
       
@@ -1119,7 +1125,7 @@ function initSkillTabs() {
 }
 
 /* ==========================================================================
-   14. MOBILE NAVIGATION DRAWER
+   14. MOBILE NAVIGATION DRAWER WITH APPLE LIQUID EXPAND
    ========================================================================== */
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobile-menu-toggle');
@@ -1128,10 +1134,13 @@ function initMobileMenu() {
   
   if (!toggleBtn || !drawer) return;
   
-  toggleBtn.addEventListener('click', () => {
-    drawer.classList.toggle('show');
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isShowing = drawer.classList.contains('show');
+    drawer.classList.toggle('show', !isShowing);
+    toggleBtn.classList.toggle('open', !isShowing);
     const icon = toggleBtn.querySelector('i');
-    if (drawer.classList.contains('show')) {
+    if (!isShowing) {
       icon.className = 'bi bi-x-lg';
     } else {
       icon.className = 'bi bi-list';
@@ -1141,9 +1150,19 @@ function initMobileMenu() {
   drawerLinks.forEach(link => {
     link.addEventListener('click', () => {
       drawer.classList.remove('show');
+      toggleBtn.classList.remove('open');
       const icon = toggleBtn.querySelector('i');
       if (icon) icon.className = 'bi bi-list';
     });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (drawer.classList.contains('show') && !drawer.contains(e.target) && !toggleBtn.contains(e.target)) {
+      drawer.classList.remove('show');
+      toggleBtn.classList.remove('open');
+      const icon = toggleBtn.querySelector('i');
+      if (icon) icon.className = 'bi bi-list';
+    }
   });
 }
 

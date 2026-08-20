@@ -70,14 +70,15 @@
   <header class="header-wrapper">
     <div class="navbar-container">
       <nav class="glass-navbar">
-        <!-- Brand Logo & Name (Fixed Width) -->
+        <!-- Brand Logo & Name -->
         <a href="#hero" class="navbar-brand-logo">
           <span class="brand-icon">B</span>
-          <span>Bobby Kamal Aizan</span>
+          <span class="hidden sm:inline">Bobby Kamal Aizan</span>
+          <span class="sm:hidden">Bobby</span>
         </a>
 
         <!-- Desktop Navigation Links with Animated Morph Pill -->
-        <ul class="nav-links-desktop">
+        <ul class="nav-links-desktop hidden lg:flex">
           <div class="nav-active-morph-pill" id="nav-morph-pill"></div>
           <li><a href="#hero" class="nav-link-item active" data-i18n="nav_home">Home</a></li>
           <li><a href="#about" class="nav-link-item" data-i18n="nav_about">Tentang</a></li>
@@ -89,7 +90,7 @@
           <li><a href="#contact" class="nav-link-item" data-i18n="nav_contact">Kontak</a></li>
         </ul>
 
-        <!-- Action Items (Fixed Width Block) -->
+        <!-- Action Items -->
         <div class="nav-actions">
           <!-- Segmented Language Switcher with Morphing Sliding Pill -->
           <div class="lang-switcher-pro" data-lang="id" role="group" aria-label="Language">
@@ -103,7 +104,7 @@
             <i class="bi bi-sun-fill" id="theme-icon"></i>
           </button>
 
-          <!-- Apple Pro CTA Pill Button (Fixed Width) -->
+          <!-- Apple Pro CTA Pill Button -->
           <a href="#contact" class="btn-apple-cta hidden sm:inline-flex">
             <span data-i18n="nav_cta">Hubungi</span>
             <i class="bi bi-arrow-up-right"></i>
@@ -458,17 +459,19 @@
           </p>
         </div>
 
-        <!-- Skills Filter Tabs with Morph Pill -->
-        <div class="skill-category-tabs justify-center reveal-on-scroll">
-          <div class="filter-morph-pill" id="skill-filter-morph-pill"></div>
-          <button class="skill-tab-btn active" data-skill-group="all" data-i18n="skill_tab_all"><i
-              class="bi bi-grid-fill me-1"></i> Semua Bidang</button>
-          <button class="skill-tab-btn" data-skill-group="backend" data-i18n="skill_tab_backend"><i
-              class="bi bi-hdd-stack-fill me-1"></i> Backend & Basis Data</button>
-          <button class="skill-tab-btn" data-skill-group="frontend" data-i18n="skill_tab_frontend"><i
-              class="bi bi-window-fullscreen me-1"></i> Frontend & UI</button>
-          <button class="skill-tab-btn" data-skill-group="analysis" data-i18n="skill_tab_analysis"><i
-              class="bi bi-clipboard2-data-fill me-1"></i> Analisis & Kualitas Sistem</button>
+        <!-- Skills Filter Tabs with Morph Pill (Horizontal Scroll Container) -->
+        <div class="tabs-scroll-container reveal-on-scroll">
+          <div class="skill-category-tabs">
+            <div class="filter-morph-pill" id="skill-filter-morph-pill"></div>
+            <button class="skill-tab-btn active" data-skill-group="all" data-i18n="skill_tab_all"><i
+                class="bi bi-grid-fill me-1"></i> Semua Bidang</button>
+            <button class="skill-tab-btn" data-skill-group="backend" data-i18n="skill_tab_backend"><i
+                class="bi bi-hdd-stack-fill me-1"></i> Backend & Basis Data</button>
+            <button class="skill-tab-btn" data-skill-group="frontend" data-i18n="skill_tab_frontend"><i
+                class="bi bi-window-fullscreen me-1"></i> Frontend & UI</button>
+            <button class="skill-tab-btn" data-skill-group="analysis" data-i18n="skill_tab_analysis"><i
+                class="bi bi-clipboard2-data-fill me-1"></i> Analisis & Kualitas Sistem</button>
+          </div>
         </div>
 
         <!-- Skills Grid -->
@@ -635,17 +638,19 @@
           </p>
         </div>
 
-        <!-- Project Filter Controls with Morph Pill -->
-        <div class="project-filter-bar justify-center reveal-on-scroll">
-          <div class="filter-morph-pill" id="project-filter-morph-pill"></div>
-          <button class="filter-btn active" data-filter="all" data-i18n="proj_filter_all"><i
-              class="bi bi-grid me-1"></i> Semua Proyek</button>
-          <button class="filter-btn" data-filter="research" data-i18n="proj_filter_research"><i
-              class="bi bi-bar-chart me-1"></i> Riset & WebQual</button>
-          <button class="filter-btn" data-filter="web-systems" data-i18n="proj_filter_web"><i
-              class="bi bi-laptop me-1"></i> Sistem Informasi Web</button>
-          <button class="filter-btn" data-filter="community" data-i18n="proj_filter_community"><i
-              class="bi bi-people me-1"></i> Pengabdian Masyarakat</button>
+        <!-- Project Filter Controls with Morph Pill (Horizontal Scroll Container) -->
+        <div class="tabs-scroll-container reveal-on-scroll">
+          <div class="project-filter-bar">
+            <div class="filter-morph-pill" id="project-filter-morph-pill"></div>
+            <button class="filter-btn active" data-filter="all" data-i18n="proj_filter_all"><i
+                class="bi bi-grid me-1"></i> Semua Proyek</button>
+            <button class="filter-btn" data-filter="research" data-i18n="proj_filter_research"><i
+                class="bi bi-bar-chart me-1"></i> Riset & WebQual</button>
+            <button class="filter-btn" data-filter="web-systems" data-i18n="proj_filter_web"><i
+                class="bi bi-laptop me-1"></i> Sistem Informasi Web</button>
+            <button class="filter-btn" data-filter="community" data-i18n="proj_filter_community"><i
+                class="bi bi-people me-1"></i> Pengabdian Masyarakat</button>
+          </div>
         </div>
 
         <!-- Dynamic Projects Grid (Rendered by JS with Tailwind Grid) -->

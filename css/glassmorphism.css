@@ -497,6 +497,18 @@
   pointer-events: none;
 }
 
+@media (max-width: 639.98px) {
+  .header-wrapper {
+    top: 10px;
+    padding: 0 10px;
+  }
+  
+  .glass-navbar {
+    padding: 5px 8px 5px 12px;
+    gap: 6px;
+  }
+}
+
 .navbar-brand-logo {
   display: flex;
   align-items: center;
@@ -512,6 +524,14 @@
   width: 195px;
 }
 
+@media (max-width: 991.98px) {
+  .navbar-brand-logo {
+    width: auto;
+    font-size: 0.92rem;
+    gap: 7px;
+  }
+}
+
 .brand-icon {
   width: 28px;
   height: 28px;
@@ -524,6 +544,15 @@
   color: #fff;
   font-weight: 800;
   font-size: 0.85rem;
+}
+
+@media (max-width: 639.98px) {
+  .brand-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.78rem;
+    border-radius: 7px;
+  }
 }
 
 .nav-links-desktop {
@@ -599,6 +628,19 @@
   gap: 8px;
   flex-shrink: 0;
   width: 240px;
+}
+
+@media (max-width: 991.98px) {
+  .nav-actions {
+    width: auto;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .nav-actions {
+    gap: 5px;
+  }
 }
 
 .lang-switcher-pro {
@@ -870,20 +912,48 @@
 /* ==========================================================================
    SEGMENTED FILTER & TAB BARS (FLUID SPRING MORPH PILLS)
    ========================================================================== */
+.tabs-scroll-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 16px;
+  margin-bottom: 32px;
+  scrollbar-width: none;
+}
+
+.tabs-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .tabs-scroll-container {
+    justify-content: flex-start;
+    padding: 6px 16px;
+    margin-bottom: 24px;
+  }
+}
+
 .project-filter-bar,
 .skill-category-tabs {
   position: relative;
-  display: inline-flex;
+  display: inline-flex !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  width: max-content;
+  max-width: none;
   align-items: center;
-  padding: 4px;
+  padding: 5px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.25), inset 0 0.5px 0.5px rgba(255, 255, 255, 0.2);
   gap: 2px;
   user-select: none;
+  flex-shrink: 0;
 }
 
 [data-theme="light"] .project-filter-bar,
@@ -894,9 +964,9 @@
 
 .filter-morph-pill {
   position: absolute;
-  top: 4px;
+  top: 5px;
   left: 0;
-  height: calc(100% - 8px);
+  height: calc(100% - 10px);
   border-radius: var(--radius-pill);
   background: var(--apple-blue);
   box-shadow: 0 4px 16px rgba(41, 151, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5);
@@ -920,8 +990,17 @@
   font-weight: 600;
   cursor: pointer;
   transition: color 0.25s ease;
-  white-space: nowrap;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
   box-shadow: none !important;
+}
+
+@media (max-width: 639.98px) {
+  .filter-btn,
+  .skill-tab-btn {
+    padding: 6px 14px;
+    font-size: 0.78rem;
+  }
 }
 
 .filter-btn:hover,
