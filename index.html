@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Primary Meta Tags -->
+  <title>Bobby Kamal Aizan | Software Engineer & Information Systems Specialist</title>
+  <meta name="title" content="Bobby Kamal Aizan | Software Engineer & Information Systems Specialist">
+  <meta name="description"
+    content="Personal portfolio of Bobby Kamal Aizan — Software Engineer, Information Systems Specialist, and Institut Teknologi Kalimantan (ITK) alumnus.">
+  <meta name="keywords"
+    content="Bobby Kamal Aizan, Software Engineer, Information Systems, Institut Teknologi Kalimantan, ITK, SIAT WebQual, Sirem Car Rental, Web Developer">
+  <meta name="author" content="Bobby Kamal Aizan">
+  <meta name="robots" content="index, follow">
+
+  <!-- Apple San Francisco & Inter Typography Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS v4 & Bootstrap Icons -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Custom Apple Pro Liquid Glass Stylesheets -->
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+</head>
+
+<body class="antialiased">
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
+
+  <!-- Pure Clean Apple Liquid Glass Background (Interactive Fluid Canvas) -->
+  <div class="liquid-bg-wrapper" id="liquid-bg-canvas" aria-hidden="true">
+    <div class="ambient-titanium-glow" id="ambient-titanium-glow"></div>
+    <div class="liquid-orb-layer" id="orb-layer-1">
+      <div class="liquid-orb liquid-orb-1"></div>
+    </div>
+    <div class="liquid-orb-layer" id="orb-layer-2">
+      <div class="liquid-orb liquid-orb-2"></div>
+    </div>
+    <div class="liquid-orb-layer" id="orb-layer-3">
+      <div class="liquid-orb liquid-orb-3"></div>
+    </div>
+    <div class="liquid-orb-layer" id="orb-layer-4">
+      <div class="liquid-orb liquid-orb-4"></div>
+    </div>
+    <div class="liquid-orb-layer" id="orb-layer-5">
+      <div class="liquid-orb liquid-orb-5"></div>
+    </div>
+  </div>
+
+  <!-- Interactive Mouse Ambient Glow -->
+  <div class="cursor-ambient-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       APPLE PRO LIQUID GLASS NAVIGATION BAR (ZERO-SHIFT)
+       ========================================================================== -->
+  <header class="header-wrapper">
+    <div class="navbar-container">
+      <nav class="glass-navbar">
+        <!-- Brand Logo & Name (Fixed Width) -->
+        <a href="#hero" class="navbar-brand-logo">
+          <span class="brand-icon">B</span>
+          <span>Bobby Kamal Aizan</span>
+        </a>
+
+        <!-- Desktop Navigation Links with Animated Morph Pill -->
+        <ul class="nav-links-desktop">
+          <div class="nav-active-morph-pill" id="nav-morph-pill"></div>
+          <li><a href="#hero" class="nav-link-item active" data-i18n="nav_home">Home</a></li>
+          <li><a href="#about" class="nav-link-item" data-i18n="nav_about">Tentang</a></li>
+          <li><a href="#explorer" class="nav-link-item" data-i18n="nav_explorer">Arsitektur</a></li>
+          <li><a href="#skills" class="nav-link-item" data-i18n="nav_skills">Keahlian</a></li>
+          <li><a href="#projects" class="nav-link-item" data-i18n="nav_projects">Proyek</a></li>
+          <li><a href="#publications" class="nav-link-item" data-i18n="nav_research">Riset</a></li>
+          <li><a href="#social" class="nav-link-item" data-i18n="nav_socials">Jejaring</a></li>
+          <li><a href="#contact" class="nav-link-item" data-i18n="nav_contact">Kontak</a></li>
+        </ul>
+
+        <!-- Action Items (Fixed Width Block) -->
+        <div class="nav-actions">
+          <!-- Segmented Language Switcher with Morphing Sliding Pill -->
+          <div class="lang-switcher-pro" data-lang="id" role="group" aria-label="Language">
+            <div class="lang-morph-pill"></div>
+            <button class="lang-btn-pro lang-btn-id active" title="Bahasa Indonesia">ID</button>
+            <button class="lang-btn-pro lang-btn-en" title="English">EN</button>
+          </div>
+
+          <!-- Theme Switcher -->
+          <button class="btn-glass-icon-pro" id="theme-toggle-btn" aria-label="Toggle Theme" title="Switch Theme">
+            <i class="bi bi-sun-fill" id="theme-icon"></i>
+          </button>
+
+          <!-- Apple Pro CTA Pill Button (Fixed Width) -->
+          <a href="#contact" class="btn-apple-cta hidden sm:inline-flex">
+            <span data-i18n="nav_cta">Hubungi</span>
+            <i class="bi bi-arrow-up-right"></i>
+          </a>
+
+          <!-- Mobile Hamburger -->
+          <button class="mobile-nav-toggle lg:hidden" id="mobile-menu-toggle" aria-label="Toggle Navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-menu-drawer" id="mobile-drawer">
+    <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+      <span class="text-xs font-bold text-muted">Language:</span>
+      <div class="lang-switcher-pro" data-lang="id">
+        <div class="lang-morph-pill"></div>
+        <button class="lang-btn-pro lang-btn-id active">ID</button>
+        <button class="lang-btn-pro lang-btn-en">EN</button>
+      </div>
+    </div>
+    <a href="#hero" class="nav-link-item" data-i18n="nav_home">Home</a>
+    <a href="#about" class="nav-link-item" data-i18n="nav_about">Tentang</a>
+    <a href="#explorer" class="nav-link-item" data-i18n="nav_explorer">Arsitektur</a>
+    <a href="#skills" class="nav-link-item" data-i18n="nav_skills">Keahlian</a>
+    <a href="#projects" class="nav-link-item" data-i18n="nav_projects">Proyek</a>
+    <a href="#publications" class="nav-link-item" data-i18n="nav_research">Riset & Publikasi</a>
+    <a href="#social" class="nav-link-item" data-i18n="nav_socials">Jejaring</a>
+    <a href="#contact" class="nav-link-item" data-i18n="nav_contact">Kontak</a>
+    <div class="mt-4 pt-3">
+      <a href="#contact" class="btn-apple-cta w-full justify-center" data-i18n="nav_connect">Mari Terhubung</a>
+    </div>
+  </div>
+
+  <main class="w-full flex flex-col items-center">
+    <!-- ==========================================================================
+         HERO SECTION (PERFECTLY CENTERED CONTAINER)
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container-custom">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <!-- Hero Text & Pitch -->
+          <div class="reveal-on-scroll">
+            <div class="hero-status-chip">
+              <span class="glass-badge glass-badge-pulse" data-i18n="hero_badge">
+                <i class="bi bi-mortarboard-fill text-info me-1"></i> Institut Teknologi Kalimantan (ITK) Alumnus
+              </span>
+            </div>
+
+            <h1 class="hero-name">
+              Bobby Kamal Aizan
+            </h1>
+
+            <div class="hero-role-wrapper">
+              <span data-i18n="hero_focus">Fokus pada</span>
+              <span class="gradient-text-cyan font-bold" id="typing-role">Software Engineering</span>
+              <span class="typing-cursor"></span>
+            </div>
+
+            <p class="hero-bio" data-i18n="hero_bio">
+              Software Engineer & Information Systems Specialist. Berpengalaman dalam pengembangan sistem informasi
+              berbasis web, arsitektur MVC (PHP / CodeIgniter / Laravel), JavaScript modern, serta evaluasi kualitas dan
+              user-experience sistem menggunakan metode empiris WebQual 4.0 dan Importance-Performance Analysis (IPA).
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#projects" class="btn-glass-primary">
+                <span data-i18n="hero_cta_projects">Lihat Karya & Riset</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+              <a href="#contact" class="btn-glass-secondary">
+                <i class="bi bi-envelope"></i>
+                <span data-i18n="hero_cta_contact">Hubungi Saya</span>
+              </a>
+            </div>
+
+            <!-- Fast Tech Stack Badges -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-muted text-xs font-semibold me-2" data-i18n="hero_stack_label">STACK:</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-filetype-js text-warning"></i> JavaScript /
+                TS</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-filetype-php text-primary"></i> PHP /
+                MVC</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-database-fill text-success"></i> MySQL /
+                PG</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-clipboard2-check text-info"></i> WebQual
+                4.0</span>
+            </div>
+          </div>
+
+          <!-- Hero Liquid Glass Developer Console Card -->
+          <div class="reveal-on-scroll delay-100">
+            <div class="hero-terminal-glass">
+              <!-- Terminal Header -->
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+                <span class="terminal-title"><i class="bi bi-terminal me-1"></i> bobby@itk-system: ~</span>
+                <span class="bg-white/10 text-cyan-400 text-xs px-2 py-0.5 rounded-full"><i class="bi bi-cpu me-1"></i>
+                  v2.4.0</span>
+              </div>
+
+              <!-- Terminal Tab Controls with Morph Pill -->
+              <div class="terminal-tabs">
+                <div class="terminal-morph-pill" id="terminal-morph-pill"></div>
+                <button class="terminal-tab-btn active" data-snippet="overview"><i
+                    class="bi bi-file-earmark-code me-1"></i> overview.js</button>
+                <button class="terminal-tab-btn" data-snippet="research"><i class="bi bi-database-gear me-1"></i>
+                  research_matrix.sql</button>
+                <button class="terminal-tab-btn" data-snippet="stack"><i class="bi bi-braces me-1"></i>
+                  stack.json</button>
+              </div>
+
+              <!-- Terminal Content -->
+              <div class="terminal-body">
+                <pre class="m-0" style="font-family: inherit;"><code id="terminal-code-body">
+<span class="term-comment"># Engineer & Information Systems Profile</span>
+<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
+  <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
+  <span class="term-prop">almaMater</span>: <span class="term-string">"Institut Teknologi Kalimantan (ITK)"</span>,
+  <span class="term-prop">focus</span>: [<span class="term-string">"Web Systems"</span>, <span class="term-string">"Information Architecture"</span>, <span class="term-string">"UX Analytics"</span>],
+  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & Importance-Performance Analysis"</span>,
+  <span class="term-prop">status</span>: <span class="term-val">"Available for Engineering & Systems Collaboration"</span>
+};
+
+<span class="term-cmd">console</span>.log(<span class="term-string">"System initialized with high reliability."</span>);
+                </code></pre>
+              </div>
+
+              <!-- Terminal Footer Status -->
+              <div class="terminal-footer-status text-muted">
+                <span><i class="bi bi-check2-circle text-success me-1"></i> <span data-i18n="terminal_status">Terbuka
+                    untuk kolaborasi</span></span>
+                <span><i class="bi bi-shield-check text-info me-1"></i> UTF-8 &bull; Node.js v20.x</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         KEY IMPACT METRICS BAR (CENTERED)
+         ========================================================================== -->
+    <div class="container-custom">
+      <div class="glass-card stats-bar-card reveal-on-scroll">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="stat-item flex items-center justify-center gap-3.5">
+            <div class="sf-icon-squircle blue"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="text-left">
+              <div class="stat-value gradient-text">ITK</div>
+              <div class="stat-label" data-i18n="stat_itk_label">Sistem Informasi Alumnus</div>
+            </div>
+          </div>
+          <div class="stat-item flex items-center justify-center gap-3.5">
+            <div class="sf-icon-squircle purple"><i class="bi bi-journal-bookmark-fill"></i></div>
+            <div class="text-left">
+              <div class="stat-value gradient-text-cyan">Syntax</div>
+              <div class="stat-label" data-i18n="stat_syntax_label">Peer-Reviewed Journal Author</div>
+            </div>
+          </div>
+          <div class="stat-item flex items-center justify-center gap-3.5">
+            <div class="sf-icon-squircle orange"><i class="bi bi-bar-chart-steps"></i></div>
+            <div class="text-left">
+              <div class="stat-value gradient-text">WebQual</div>
+              <div class="stat-label" data-i18n="stat_webqual_label">4.0 Empirical Evaluation</div>
+            </div>
+          </div>
+          <div class="stat-item flex items-center justify-center gap-3.5">
+            <div class="sf-icon-squircle emerald"><i class="bi bi-layers-half"></i></div>
+            <div class="text-left">
+              <div class="stat-value gradient-text-cyan">Full-Stack</div>
+              <div class="stat-label" data-i18n="stat_fullstack_label">MVC & Web Architecture</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         ABOUT ME SECTION
+         ========================================================================== -->
+    <section id="about">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="about_tagline"><i class="bi bi-person-badge"></i> Background</span>
+          <h2 class="section-title" data-i18n="about_title">Profil & Orientasi Profesional</h2>
+          <p class="section-subtitle mx-auto" data-i18n="about_subtitle">
+            Kombinasi antara keahlian teknis pengembangan perangkat lunak dan pendekatan analitis sistem informasi untuk
+            menghasilkan solusi digital yang andal dan terukur.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          <!-- Left Column: Narrative & Pillars -->
+          <div class="reveal-on-scroll">
+            <div class="glass-card about-card">
+              <h3 class="font-bold text-xl mb-4 flex items-center gap-2.5">
+                <i class="bi bi-person-circle text-primary"></i> <span data-i18n="about_heading">Tentang Bobby Kamal
+                  Aizan</span>
+              </h3>
+              <p class="about-intro-text" data-i18n="about_p1">
+                Saya merupakan lulusan program studi Sistem Informasi dari Institut Teknologi Kalimantan (ITK). Fokus
+                keahlian saya mencakup perancangan sistem informasi berbasis web, arsitektur basis data relasional,
+                implementasi pola MVC, serta evaluasi kualitas perangkat lunak secara kuantitatif dan kualitatif.
+              </p>
+              <p class="about-intro-text" data-i18n="about_p2">
+                Melalui riset akademik dan pengalaman pengembangan sistem nyata, saya terbiasa menerjemahkan kebutuhan
+                bisnis dan pengguna ke dalam struktur teknis yang teruji, mulai dari tahap analisis kebutuhan,
+                perancangan database, penulisan kode terstruktur, hingga audit kegunaan sistem (Usability & Service
+                Quality).
+              </p>
+
+              <h4 class="font-bold text-xs uppercase text-muted mt-6 mb-4 flex items-center gap-2"
+                style="letter-spacing:0.05em;" data-i18n="about_principles">
+                <i class="bi bi-lightning-charge text-warning"></i> Prinsip Rekayasa Sistem
+              </h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="glass-card-subtle pillar-card">
+                  <div class="sf-icon-squircle blue mb-3"><i class="bi bi-diagram-3-fill"></i></div>
+                  <h5 class="pillar-title" data-i18n="pillar_arch_title">Arsitektur Terstruktur</h5>
+                  <p class="pillar-desc" data-i18n="pillar_arch_desc">Penerapan pola MVC yang bersih, struktur database
+                    ternormalisasi, dan keterbacaan kode yang modular.</p>
+                </div>
+                <div class="glass-card-subtle pillar-card">
+                  <div class="sf-icon-squircle orange mb-3"><i class="bi bi-clipboard2-pulse-fill"></i></div>
+                  <h5 class="pillar-title" data-i18n="pillar_ux_title">Evaluasi Kualitas Empiris</h5>
+                  <p class="pillar-desc" data-i18n="pillar_ux_desc">Pemanfaatan WebQual 4.0 dan Importance-Performance
+                    Analysis (IPA) untuk membedah kualitas sistem nyata.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Experience & Academic Milestones -->
+          <div class="reveal-on-scroll delay-100">
+            <div class="glass-card about-card">
+              <h3 class="font-bold text-xl mb-6 flex items-center gap-2.5">
+                <i class="bi bi-clock-history text-info"></i> <span data-i18n="timeline_heading">Jejak Akademik &
+                  Riset</span>
+              </h3>
+
+              <div class="timeline-container">
+                <!-- Milestone 1 -->
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> 2023</div>
+                  <h4 class="timeline-title" data-i18n="timeline_1_title">Penelitian Skripsi SIAT WebQual 4.0 & IPA</h4>
+                  <div class="timeline-institution" data-i18n="timeline_1_inst"><i class="bi bi-building me-1"></i>
+                    Institut Teknologi Kalimantan (ITK) & Universitas Balikpapan</div>
+                  <p class="timeline-description" data-i18n="timeline_1_desc">Melakukan riset komprehensif evaluasi
+                    kualitas website Sistem Informasi Akademik Terpadu (SIAT) menggunakan instrumen WebQual 4.0 dan
+                    kuadran IPA. Terarsip di Repositori ITK.</p>
+                </div>
+
+                <!-- Milestone 2 -->
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> 2021</div>
+                  <h4 class="timeline-title" data-i18n="timeline_2_title">Publikasi Jurnal Ilmiah: SIREM (CodeIgniter)
+                  </h4>
+                  <div class="timeline-institution" data-i18n="timeline_2_inst"><i class="bi bi-journal-text me-1"></i>
+                    Syntax: Journal of Software Engineering, CS & IT</div>
+                  <p class="timeline-description" data-i18n="timeline_2_desc">Rancang bangun sistem informasi persewaan
+                    mobil (SIREM) berbasis web dengan framework CodeIgniter dan penulisan karya ilmiah yang diterbitkan
+                    pada jurnal terakreditasi.</p>
+                </div>
+
+                <!-- Milestone 3 -->
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> 2021</div>
+                  <h4 class="timeline-title" data-i18n="timeline_3_title">Optimalisasi Digitalisasi Pariwisata Lamaru
+                  </h4>
+                  <div class="timeline-institution" data-i18n="timeline_3_inst"><i class="bi bi-people me-1"></i>
+                    Program Pengabdian Masyarakat ITK</div>
+                  <p class="timeline-description" data-i18n="timeline_3_desc">Kolaborasi optimalisasi potensi wisata
+                    lokal dan pemberdayaan UMKM melalui strategi integrasi sistem informasi di Kelurahan Lamaru,
+                    Balikpapan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         APPLE PRO INTERACTIVE ARCHITECTURE & ENGINEERING EXPLORER
+         ========================================================================== -->
+    <section id="explorer">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="explorer_tagline"><i class="bi bi-cpu"></i> Interaktif</span>
+          <h2 class="section-title" data-i18n="explorer_title">Eksplorasi Arsitektur & Rekayasa Sistem</h2>
+          <p class="section-subtitle mx-auto" data-i18n="explorer_subtitle">
+            Pilih pilar spesifikasi di bawah untuk menjelajahi metodologi rekayasa sistem, instrumen evaluasi empiris,
+            dan implementasi teknologi nyata.
+          </p>
+        </div>
+
+        <div class="apple-explorer-wrapper reveal-on-scroll">
+          <div class="explorer-layout">
+            <!-- Left Controls Stack -->
+            <div class="explorer-controls-stack">
+              <!-- Integrated Toolbar Header -->
+              <div class="explorer-toolbar">
+                <span class="explorer-index-indicator" id="explorer-indicator-text"><i class="bi bi-sliders me-1"></i>
+                  SPECIFICATION 01 / 05</span>
+                <div class="explorer-nav-arrows-inline">
+                  <button class="stepper-btn-inline" id="stepper-btn-up" aria-label="Previous Feature"><i
+                      class="bi bi-chevron-up"></i></button>
+                  <button class="stepper-btn-inline" id="stepper-btn-down" aria-label="Next Feature"><i
+                      class="bi bi-chevron-down"></i></button>
+                </div>
+              </div>
+
+              <!-- Dynamic Interactive Stack (Populated by js/main.js) -->
+              <div id="explorer-pills-stack" class="flex flex-col gap-2">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Right Stage: Centered Liquid Glass Architecture Visualizer -->
+            <div class="explorer-stage-view">
+              <div class="stage-device-frame" id="explorer-stage-container">
+                <!-- SVG Architecture Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SKILLS & EXPERTISE MATRIX (CENTERED)
+         ========================================================================== -->
+    <section id="skills">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="skills_tagline"><i class="bi bi-tools"></i> Kompetensi</span>
+          <h2 class="section-title" data-i18n="skills_title">Keahlian & Instrumen Teknis</h2>
+          <p class="section-subtitle mx-auto" data-i18n="skills_subtitle">
+            Teknologi, bahasa pemrograman, kerangka kerja, dan metode yang diaplikasikan dalam pembangunan dan evaluasi
+            sistem.
+          </p>
+        </div>
+
+        <!-- Skills Filter Tabs with Morph Pill -->
+        <div class="skill-category-tabs justify-center reveal-on-scroll">
+          <div class="filter-morph-pill" id="skill-filter-morph-pill"></div>
+          <button class="skill-tab-btn active" data-skill-group="all" data-i18n="skill_tab_all"><i
+              class="bi bi-grid-fill me-1"></i> Semua Bidang</button>
+          <button class="skill-tab-btn" data-skill-group="backend" data-i18n="skill_tab_backend"><i
+              class="bi bi-hdd-stack-fill me-1"></i> Backend & Basis Data</button>
+          <button class="skill-tab-btn" data-skill-group="frontend" data-i18n="skill_tab_frontend"><i
+              class="bi bi-window-fullscreen me-1"></i> Frontend & UI</button>
+          <button class="skill-tab-btn" data-skill-group="analysis" data-i18n="skill_tab_analysis"><i
+              class="bi bi-clipboard2-data-fill me-1"></i> Analisis & Kualitas Sistem</button>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Skill Card 1: Backend PHP & Frameworks -->
+          <div class="skill-group-container reveal-on-scroll" data-skill-group="backend">
+            <div class="glass-card skill-card-item">
+              <div>
+                <div class="skill-header">
+                  <div class="sf-icon-squircle blue"><i class="bi bi-filetype-php"></i></div>
+                  <div>
+                    <h4 class="skill-name">PHP & MVC Frameworks</h4>
+                    <span class="skill-level-text">CodeIgniter & Laravel</span>
+                  </div>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="92%"></div>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-code-slash me-1"></i> CodeIgniter MVC</span>
+                <span class="skill-tag-pill"><i class="bi bi-box me-1"></i> Laravel</span>
+                <span class="skill-tag-pill"><i class="bi bi-arrow-left-right me-1"></i> RESTful API</span>
+                <span class="skill-tag-pill"><i class="bi bi-braces me-1"></i> OOP PHP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 2: Basis Data -->
+          <div class="skill-group-container reveal-on-scroll delay-100" data-skill-group="backend">
+            <div class="glass-card skill-card-item">
+              <div>
+                <div class="skill-header">
+                  <div class="sf-icon-squircle emerald"><i class="bi bi-database-check"></i></div>
+                  <div>
+                    <h4 class="skill-name">Relational Databases</h4>
+                    <span class="skill-level-text">MySQL & PostgreSQL</span>
+                  </div>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="90%"></div>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-diagram-2 me-1"></i> ERD Modeling</span>
+                <span class="skill-tag-pill"><i class="bi bi-check2-circle me-1"></i> Normalisasi 3NF</span>
+                <span class="skill-tag-pill"><i class="bi bi-search me-1"></i> Complex Queries</span>
+                <span class="skill-tag-pill"><i class="bi bi-speedometer2 me-1"></i> Optimization</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 3: Web Quality & Analysis -->
+          <div class="skill-group-container reveal-on-scroll delay-200" data-skill-group="analysis">
+            <div class="glass-card skill-card-item">
+              <div>
+                <div class="skill-header">
+                  <div class="sf-icon-squircle orange"><i class="bi bi-clipboard2-check"></i></div>
+                  <div>
+                    <h4 class="skill-name">WebQual 4.0 & IPA</h4>
+                    <span class="skill-level-text">Metodologi Kualitas Sistem</span>
+                  </div>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="95%"></div>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-eye me-1"></i> Usability</span>
+                <span class="skill-tag-pill"><i class="bi bi-info-circle me-1"></i> Information</span>
+                <span class="skill-tag-pill"><i class="bi bi-headset me-1"></i> Service</span>
+                <span class="skill-tag-pill"><i class="bi bi-grid-3x3 me-1"></i> IPA Matrix</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 4: Modern JavaScript -->
+          <div class="skill-group-container reveal-on-scroll" data-skill-group="frontend">
+            <div class="glass-card skill-card-item">
+              <div>
+                <div class="skill-header">
+                  <div class="sf-icon-squircle cyan"><i class="bi bi-filetype-js"></i></div>
+                  <div>
+                    <h4 class="skill-name">JavaScript & Frontend</h4>
+                    <span class="skill-level-text">Modern ES6+, DOM, Asinkron</span>
+                  </div>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="88%"></div>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-lightning me-1"></i> ES6+</span>
+                <span class="skill-tag-pill"><i class="bi bi-cloud-arrow-down me-1"></i> Fetch / AJAX</span>
+                <span class="skill-tag-pill"><i class="bi bi-palette me-1"></i> Tailwind CSS</span>
+                <span class="skill-tag-pill"><i class="bi bi-phone me-1"></i> Responsive UI</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 5: Analisis Kebutuhan Sistem -->
+          <div class="skill-group-container reveal-on-scroll delay-100" data-skill-group="analysis">
+            <div class="glass-card skill-card-item">
+              <div>
+                <div class="skill-header">
+                  <div class="sf-icon-squircle purple"><i class="bi bi-diagram-2"></i></div>
+                  <div>
+                    <h4 class="skill-name">Analisis Sistem Informasi</h4>
+                    <span class="skill-level-text">UML, DFD, & BPMN</span>
+                  </div>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="91%"></div>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-bounding-box me-1"></i> Use Case</span>
+                <span class="skill-tag-pill"><i class="bi bi-activity me-1"></i> Activity</span>
+                <span class="skill-tag-pill"><i class="bi bi-arrow-repeat me-1"></i> DFD</span>
+                <span class="skill-tag-pill"><i class="bi bi-file-earmark-check me-1"></i> Requirements</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 6: Software Engineering Tools -->
+          <div class="skill-group-container reveal-on-scroll delay-200" data-skill-group="backend">
+            <div class="glass-card skill-card-item">
+              <div>
+                <div class="skill-header">
+                  <div class="sf-icon-squircle pink"><i class="bi bi-git"></i></div>
+                  <div>
+                    <h4 class="skill-name">Version Control & Tooling</h4>
+                    <span class="skill-level-text">Git, SPSS, Figma, Web Servers</span>
+                  </div>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="87%"></div>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-github me-1"></i> Git / GitHub</span>
+                <span class="skill-tag-pill"><i class="bi bi-graph-up me-1"></i> SPSS</span>
+                <span class="skill-tag-pill"><i class="bi bi-server me-1"></i> Apache</span>
+                <span class="skill-tag-pill"><i class="bi bi-vector-pen me-1"></i> Figma</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURED PROJECTS / PORTFOLIO SECTION (CENTERED)
+         ========================================================================== -->
+    <section id="projects">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="projects_tagline"><i class="bi bi-folder-check"></i> Proyek &
+            Publikasi</span>
+          <h2 class="section-title" data-i18n="projects_title">Karya Nyata & Dokumentasi Proyek</h2>
+          <p class="section-subtitle mx-auto" data-i18n="projects_subtitle">
+            Daftar karya autentik yang mencakup riset evaluasi sistem institusi, sistem manajemen operasional, dan
+            program pemberdayaan masyarakat.
+          </p>
+        </div>
+
+        <!-- Project Filter Controls with Morph Pill -->
+        <div class="project-filter-bar justify-center reveal-on-scroll">
+          <div class="filter-morph-pill" id="project-filter-morph-pill"></div>
+          <button class="filter-btn active" data-filter="all" data-i18n="proj_filter_all"><i
+              class="bi bi-grid me-1"></i> Semua Proyek</button>
+          <button class="filter-btn" data-filter="research" data-i18n="proj_filter_research"><i
+              class="bi bi-bar-chart me-1"></i> Riset & WebQual</button>
+          <button class="filter-btn" data-filter="web-systems" data-i18n="proj_filter_web"><i
+              class="bi bi-laptop me-1"></i> Sistem Informasi Web</button>
+          <button class="filter-btn" data-filter="community" data-i18n="proj_filter_community"><i
+              class="bi bi-people me-1"></i> Pengabdian Masyarakat</button>
+        </div>
+
+        <!-- Dynamic Projects Grid (Rendered by JS with Tailwind Grid) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+          <!-- Populated from js/projects-data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         RESEARCH & PUBLICATIONS HIGHLIGHT SECTION
+         ========================================================================== -->
+    <section id="publications">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="pub_tagline"><i class="bi bi-journal-text"></i> Dokumentasi
+            Akademik</span>
+          <h2 class="section-title" data-i18n="pub_title">Publikasi Ilmiah & Repositori</h2>
+          <p class="section-subtitle mx-auto" data-i18n="pub_subtitle">
+            Karya ilmiah dan penelitian terindeks yang dapat diakses secara publik pada repositori institusi dan jurnal
+            software engineering.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          <!-- Publication 1 -->
+          <div class="reveal-on-scroll">
+            <div class="glass-card pub-card">
+              <div class="flex items-center gap-2.5 mb-3">
+                <div class="sf-icon-squircle sm blue"><i class="bi bi-award-fill"></i></div>
+                <div class="pub-badge m-0" data-i18n="pub_1_badge">Skripsi Sarjana / Repositori ITK (2023)</div>
+              </div>
+              <h3 class="pub-title" data-i18n="pub_1_title">
+                Analisis Kualitas Website Sistem Informasi Akademik Terpadu (SIAT) Universitas Balikpapan Dengan Metode
+                WebQual 4.0 Dan Importance-Performance Analysis
+              </h3>
+              <div class="pub-meta">
+                <i class="bi bi-person-fill text-info"></i> <strong>Bobby Kamal Aizan</strong> &bull; Institut Teknologi
+                Kalimantan (ITK)
+              </div>
+              <p class="pub-abstract" data-i18n="pub_1_desc">
+                Penelitian empiris yang mengukur kualitas website SIAT UNIBA melalui integrasi instrumen WebQual 4.0
+                (Usability, Information, Service Interaction) serta pemetaan kuadran IPA untuk menentukan titik
+                prioritas perbaikan fungsionalitas dan antarmuka pengguna.
+              </p>
+              <div class="mt-5">
+                <a href="https://repository.itk.ac.id" target="_blank" rel="noopener noreferrer"
+                  class="btn-glass-secondary py-2 px-5 text-sm inline-flex items-center gap-2">
+                  <i class="bi bi-box-arrow-up-right"></i> <span data-i18n="pub_1_btn">Kunjungi Repositori ITK</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Publication 2 -->
+          <div class="reveal-on-scroll delay-100">
+            <div class="glass-card pub-card">
+              <div class="flex items-center gap-2.5 mb-3">
+                <div class="sf-icon-squircle sm purple"><i class="bi bi-journal-check"></i></div>
+                <div class="pub-badge m-0" data-i18n="pub_2_badge">Syntax Journal (2021)</div>
+              </div>
+              <h3 class="pub-title" data-i18n="pub_2_title">
+                Pengembangan Sistem Informasi Rental Mobil (Sirem) Berbasis Website Menggunakan Framework Codeigniter
+              </h3>
+              <div class="pub-meta">
+                <i class="bi bi-people-fill text-info"></i> <strong>Bobby Kamal Aizan</strong> et al. &bull; <em>Syntax:
+                  Journal of Software Engineering, CS & IT</em>
+              </div>
+              <p class="pub-abstract" data-i18n="pub_2_desc">
+                Publikasi rekayasa perangkat lunak mengenai pengembangan sistem informasi persewaan mobil menggunakan
+                kerangka kerja CodeIgniter. Mengimplementasikan alur manajemen armada, sistem penjadwalan peminjaman,
+                serta kalkulasi transaksi berbasis basis data relasional.
+              </p>
+              <div class="mt-5">
+                <a href="https://ejurnal.dharmawangsa.ac.id/index.php/syntax" target="_blank" rel="noopener noreferrer"
+                  class="btn-glass-secondary py-2 px-5 text-sm inline-flex items-center gap-2">
+                  <i class="bi bi-journal-arrow-down"></i> <span data-i18n="pub_2_btn">Baca di Syntax Journal</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SOCIAL & ONLINE PRESENCE HUB (CENTERED)
+         ========================================================================== -->
+    <section id="social">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="social_tagline"><i class="bi bi-share"></i> Jejaring</span>
+          <h2 class="section-title" data-i18n="social_title">Profil & Kehadiran Daring</h2>
+          <p class="section-subtitle mx-auto" data-i18n="social_subtitle">
+            Kanal resmi untuk terhubung langsung dengan Bobby Kamal Aizan.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+          <!-- LinkedIn -->
+          <div class="reveal-on-scroll">
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+              class="glass-card social-hub-card">
+              <div class="social-hub-icon">
+                <i class="bi bi-linkedin"></i>
+              </div>
+              <h4 class="social-hub-title">LinkedIn</h4>
+              <span class="social-hub-handle">Bobby Kamal Aizan</span>
+            </a>
+          </div>
+
+          <!-- Instagram -->
+          <div class="reveal-on-scroll delay-100">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"
+              class="glass-card social-hub-card">
+              <div class="social-hub-icon">
+                <i class="bi bi-instagram"></i>
+              </div>
+              <h4 class="social-hub-title">Instagram</h4>
+              <span class="social-hub-handle">@bobbykamalaizan</span>
+            </a>
+          </div>
+
+          <!-- Facebook -->
+          <div class="reveal-on-scroll delay-200">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+              class="glass-card social-hub-card">
+              <div class="social-hub-icon">
+                <i class="bi bi-facebook"></i>
+              </div>
+              <h4 class="social-hub-title">Facebook</h4>
+              <span class="social-hub-handle">Bobby Kamal Aizan</span>
+            </a>
+          </div>
+
+          <!-- GitHub -->
+          <div class="reveal-on-scroll delay-300">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="glass-card social-hub-card">
+              <div class="social-hub-icon">
+                <i class="bi bi-github"></i>
+              </div>
+              <h4 class="social-hub-title">GitHub</h4>
+              <span class="social-hub-handle">Repositories</span>
+            </a>
+          </div>
+
+          <!-- Email Direct -->
+          <div class="reveal-on-scroll delay-300 col-span-2 sm:col-span-1">
+            <a href="mailto:bobbykamalaizan@gmail.com" class="glass-card social-hub-card">
+              <div class="social-hub-icon">
+                <i class="bi bi-envelope-at"></i>
+              </div>
+              <h4 class="social-hub-title">Email</h4>
+              <span class="social-hub-handle" data-i18n="social_email_handle">Kontak Langsung</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONTACT & INQUIRY SECTION (CENTERED)
+         ========================================================================== -->
+    <section id="contact">
+      <div class="container-custom">
+        <div class="text-center mb-14 reveal-on-scroll">
+          <span class="section-tagline" data-i18n="contact_tagline"><i class="bi bi-chat-dots"></i> Kontak</span>
+          <h2 class="section-title" data-i18n="contact_title">Kirim Pesan atau Konsultasi</h2>
+          <p class="section-subtitle mx-auto" data-i18n="contact_subtitle">
+            Diskusikan kebutuhan pengembangan sistem informasi, audit kualitas website, atau peluang kolaborasi rekayasa
+            perangkat lunak.
+          </p>
+        </div>
+
+        <div class="glass-card contact-glass-box reveal-on-scroll">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <!-- Left Info Panel -->
+            <div class="lg:col-span-5">
+              <h3 class="font-bold text-xl mb-3 flex items-center gap-2.5">
+                <i class="bi bi-chat-square-text text-primary"></i> <span data-i18n="contact_info_heading">Informasi
+                  Kontak</span>
+              </h3>
+              <p class="text-secondary mb-6 leading-relaxed" data-i18n="contact_info_desc">
+                Terbuka untuk diskusi teknis seputar arsitektur web, implementasi sistem informasi, serta riset kualitas
+                sistem berbasis data.
+              </p>
+
+              <div class="contact-info-list mb-6">
+                <!-- Email Item with Copy Trigger -->
+                <div class="contact-info-item">
+                  <div class="sf-icon-squircle blue">
+                    <i class="bi bi-envelope-at-fill"></i>
+                  </div>
+                  <div class="contact-info-content">
+                    <h6 data-i18n="contact_email_title">Alamat Email</h6>
+                    <p>bobbykamalaizan@gmail.com</p>
+                  </div>
+                  <button class="btn-copy-email" id="copy-email-btn" title="Salin Email" aria-label="Salin Email">
+                    <i class="bi bi-clipboard"></i>
+                  </button>
+                </div>
+
+                <!-- Location Item -->
+                <div class="contact-info-item">
+                  <div class="sf-icon-squircle purple">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="contact-info-content">
+                    <h6 data-i18n="contact_loc_title">Domisili</h6>
+                    <p data-i18n="contact_loc_val">Balikpapan, Kalimantan Timur</p>
+                  </div>
+                </div>
+
+                <!-- Availability Item -->
+                <div class="contact-info-item">
+                  <div class="sf-icon-squircle emerald">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <div class="contact-info-content">
+                    <h6 data-i18n="contact_status_title">Status</h6>
+                    <p class="text-success font-semibold" data-i18n="contact_status_val">Terbuka untuk Peluang
+                      Kolaborasi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Contact Form -->
+            <div class="lg:col-span-7">
+              <form id="contact-form" novalidate>
+                <div id="form-alert" class="form-submit-alert" role="alert"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="form-floating-label">
+                    <label for="contact-name" data-i18n="contact_label_name">Nama Lengkap *</label>
+                    <input type="text" id="contact-name" class="glass-input"
+                      data-i18n-placeholder="contact_placeholder_name" placeholder="Masukkan nama Anda" required>
+                  </div>
+
+                  <div class="form-floating-label">
+                    <label for="contact-email" data-i18n="contact_label_email">Alamat Email *</label>
+                    <input type="email" id="contact-email" class="glass-input"
+                      data-i18n-placeholder="contact_placeholder_email" placeholder="nama@email.com" required>
+                  </div>
+
+                  <div class="md:col-span-2 form-floating-label">
+                    <label for="contact-subject" data-i18n="contact_label_subject">Subjek Pesan</label>
+                    <input type="text" id="contact-subject" class="glass-input"
+                      data-i18n-placeholder="contact_placeholder_subject" placeholder="Topik atau keperluan diskusi">
+                  </div>
+
+                  <div class="md:col-span-2 form-floating-label">
+                    <label for="contact-message" data-i18n="contact_label_message">Isi Pesan *</label>
+                    <textarea id="contact-message" class="glass-input" rows="4"
+                      data-i18n-placeholder="contact_placeholder_message"
+                      placeholder="Tuliskan pesan, rincian proyek, atau pertanyaan Anda..." required></textarea>
+                  </div>
+
+                  <div class="md:col-span-2 text-right">
+                    <button type="submit" id="submit-btn"
+                      class="btn-apple-cta px-6 py-2.5 w-full sm:w-auto inline-flex items-center justify-center gap-2">
+                      <i class="bi bi-send-fill"></i> <span data-i18n="contact_btn_send">Kirim Pesan</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER (CENTERED)
+       ========================================================================== -->
+  <footer class="footer-glass">
+    <div class="container-custom">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="navbar-brand-logo mb-1">
+            <span class="brand-icon">B</span>
+            <span>Bobby Kamal Aizan</span>
+          </div>
+          <p class="text-secondary text-sm mb-0" data-i18n="footer_tagline">
+            Sistem Informasi &bull; Institut Teknologi Kalimantan (ITK)
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
+            aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
+            aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="mailto:bobbykamalaizan@gmail.com" class="btn-glass-icon-pro" aria-label="Email"><i
+              class="bi bi-envelope-fill"></i></a>
+        </div>
+      </div>
+
+      <div
+        class="footer-bottom mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted">
+        <div data-i18n="footer_copy">
+          &copy; 2026 Bobby Kamal Aizan.
+        </div>
+        <div>
+          <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-shield-check text-info"></i> <span
+              data-i18n="footer_status">All Systems Operational</span></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       NATIVE TAILWIND APPLE GLASS MODAL: PROJECT DEEP DIVE
+       ========================================================================== -->
+  <div class="apple-glass-modal-backdrop" id="appleProjectModal"
+    onclick="if(event.target === this) closeProjectModal()">
+    <div class="apple-glass-modal-card">
+      <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close modal">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <h3 class="text-xl md:text-2xl font-bold mb-4" id="projectModalTitle" data-i18n="modal_title_default">Detail
+        Proyek</h3>
+      <div id="projectModalBody">
+        <!-- Injected via js/main.js -->
+      </div>
+      <div class="mt-6 pt-4 border-t border-white/10 text-right">
+        <button class="btn-glass-secondary py-1.5 px-6 text-sm" onclick="closeProjectModal()"
+          data-i18n="modal_btn_close">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Apple Dynamic Island Floating Launcher Capsule with Fluid Morph Pill -->
+  <div class="dynamic-island-capsule" id="dynamic-island"
+    style="opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(20px);">
+    <div class="island-morph-pill" id="island-morph-pill"></div>
+    <a href="#hero" class="island-btn active">
+      <span class="brand-icon" style="width:20px;height:20px;font-size:0.7rem;border-radius:5px;">B</span>
+      <span>Bobby</span>
+    </a>
+    <div class="island-divider"></div>
+    <a href="#explorer" class="island-btn">
+      <i class="bi bi-cpu text-info"></i>
+      <span data-i18n="nav_explorer">Arsitektur</span>
+    </a>
+    <a href="#projects" class="island-btn">
+      <i class="bi bi-folder-check text-warning"></i>
+      <span data-i18n="nav_projects">Proyek</span>
+    </a>
+    <div class="island-divider"></div>
+    <a href="#contact" class="island-btn">
+      <i class="bi bi-chat-dots-fill"></i>
+      <span data-i18n="nav_contact">Kontak</span>
+    </a>
+  </div>
+
+  <!-- Back to Top Floating Glass Pill -->
+  <button id="back-to-top" class="btn-back-to-top" title="Kembali ke atas" aria-label="Kembali ke atas">
+    <i class="bi bi-chevron-up"></i>
+  </button>
+
+  <!-- Project Scripts with i18n Engine (No Bootstrap Dependency) -->
+  <script src="js/i18n.js"></script>
+  <script src="js/projects-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+
+</html>
