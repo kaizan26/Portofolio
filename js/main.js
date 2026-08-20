@@ -355,87 +355,75 @@ function initAmbientCursorGlow() {
   }
 }
 
-/* ==========================================================================
+/*/* ==========================================================================
    5. TERMINAL CONSOLE TABS WITH MORPH PILL
    ========================================================================== */
+const TERMINAL_SNIPPETS = {
+  overview: `
+<span class="term-comment"># Engineer & Information Systems Profile</span>
+<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
+  <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
+  <span class="term-prop">almaMater</span>: <span class="term-string">"Institut Teknologi Kalimantan (ITK)"</span>,
+  <span class="term-prop">focus</span>: [<span class="term-string">"Web Systems"</span>, <span class="term-string">"Information Architecture"</span>, <span class="term-string">"UX Analytics"</span>],
+  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & Importance-Performance Analysis"</span>,
+  <span class="term-prop">status</span>: <span class="term-val">"Available for Engineering & Systems Collaboration"</span>
+};
+
+<span class="term-cmd">console</span>.log(<span class="term-string">"System initialized with high reliability."</span>);
+`,
+
+  research: `
+<span class="term-comment">-- WebQual 4.0 & IPA Matrix Evaluation Query</span>
+<span class="term-keyword">SELECT</span> 
+  dimension,
+  <span class="term-cmd">AVG</span>(usability_score) <span class="term-keyword">AS</span> usability,
+  <span class="term-cmd">AVG</span>(info_quality_score) <span class="term-keyword">AS</span> info_quality,
+  <span class="term-cmd">AVG</span>(service_interaction_score) <span class="term-keyword">AS</span> service_interaction,
+  <span class="term-keyword">CASE</span> 
+    <span class="term-keyword">WHEN</span> performance < importance <span class="term-keyword">THEN</span> <span class="term-string">'Quadrant I: Concentrate Here'</span>
+    <span class="term-keyword">ELSE</span> <span class="term-string">'Quadrant II: Keep Up Good Work'</span>
+  <span class="term-keyword">END AS</span> ipa_priority
+<span class="term-keyword">FROM</span> siat_academic_evaluations
+<span class="term-keyword">GROUP BY</span> dimension;
+`,
+
+  stack: `
+<span class="term-comment">/* Verified Technical Tooling */</span>
+{
+  <span class="term-prop">"languages"</span>: [<span class="term-string">"JavaScript (ES6+)"</span>, <span class="term-string">"PHP"</span>, <span class="term-string">"SQL"</span>, <span class="term-string">"HTML5/CSS3"</span>],
+  <span class="term-prop">"frameworks"</span>: [<span class="term-string">"CodeIgniter"</span>, <span class="term-string">"Laravel"</span>, <span class="term-string">"Bootstrap 5"</span>, <span class="term-string">"Tailwind"</span>],
+  <span class="term-prop">"databases"</span>: [<span class="term-string">"MySQL"</span>, <span class="term-string">"PostgreSQL"</span>],
+  <span class="term-prop">"methods"</span>: [<span class="term-string">"WebQual 4.0"</span>, <span class="term-string">"IPA Matrix"</span>, <span class="term-string">"MVC Architecture"</span>],
+  <span class="term-prop">"tools"</span>: [<span class="term-string">"Git"</span>, <span class="term-string">"SPSS"</span>, <span class="term-string">"Figma"</span>, <span class="term-string">"VS Code"</span>]
+}
+`
+};
+
 function initTerminalTabs() {
   const terminalTabs = document.querySelectorAll('.terminal-tab-btn');
   const codeBody = document.getElementById('terminal-code-body');
   const terminalContainer = document.querySelector('.terminal-tabs');
   if (!terminalTabs.length || !codeBody) return;
 
-  const snippets = {
-    overview: `
-<span class="term-comment"># Engineer & Information Systems Profile</span>
-<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
-  <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
-  <span class="term-prop">almaMater</span>: <span class="term-string">"ITK Kalimantan"</span>,
-  <span class="term-prop">focus</span>: [
-    <span class="term-string">"Web Systems"</span>,
-    <span class="term-string">"Info Architecture"</span>,
-    <span class="term-string">"UX Analytics"</span>
-  ],
-  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & IPA"</span>,
-  <span class="term-prop">status</span>: <span class="term-val">"Available for Collaboration"</span>
-};
-
-<span class="term-cmd">console</span>.log(<span class="term-string">"System operational."</span>);`,
-    
-    research: `
-<span class="term-comment">-- WebQual 4.0 & IPA Matrix Query</span>
-<span class="term-keyword">SELECT</span> 
-  dim.dimension_name,
-  <span class="term-cmd">AVG</span>(eval.performance_score) 
-    <span class="term-keyword">AS</span> mean_performance,
-  <span class="term-cmd">AVG</span>(eval.importance_score) 
-    <span class="term-keyword">AS</span> mean_importance,
-  <span class="term-cmd">CASE</span> 
-    <span class="term-keyword">WHEN</span> <span class="term-cmd">AVG</span>(eval.importance_score) >= 4.5 
-      <span class="term-keyword">THEN</span> <span class="term-string">'Quadrant I: Priority Action'</span>
-    <span class="term-keyword">ELSE</span> 
-      <span class="term-string">'Quadrant II: Keep Up Work'</span>
-  <span class="term-keyword">END AS</span> ipa_classification
-<span class="term-keyword">FROM</span> webqual_evaluations eval
-<span class="term-keyword">JOIN</span> webqual_dimensions dim 
-  <span class="term-keyword">ON</span> eval.dimension_id = dim.id
-<span class="term-keyword">GROUP BY</span> dim.dimension_name;`,
-
-    stack: `
-{
-  <span class="term-prop">"architecture"</span>: <span class="term-string">"MVC / Layered Web"</span>,
-  <span class="term-prop">"backend"</span>: [
-    <span class="term-string">"PHP 8.x"</span>,
-    <span class="term-string">"CodeIgniter"</span>,
-    <span class="term-string">"Laravel"</span>,
-    <span class="term-string">"Node.js"</span>
-  ],
-  <span class="term-prop">"frontend"</span>: [
-    <span class="term-string">"Modern JS (ES6+)"</span>,
-    <span class="term-string">"Tailwind CSS v4"</span>,
-    <span class="term-string">"HTML5/CSS3"</span>
-  ],
-  <span class="term-prop">"databases"</span>: [
-    <span class="term-string">"MySQL"</span>,
-    <span class="term-string">"PostgreSQL"</span>,
-    <span class="term-string">"Relational 3NF"</span>
-  ],
-  <span class="term-prop">"analytics"</span>: [
-    <span class="term-string">"WebQual 4.0"</span>,
-    <span class="term-string">"IPA Matrix"</span>,
-    <span class="term-string">"SPSS Quantitative"</span>
-  ]
-}`
-  };
-
   terminalTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       terminalTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      if (terminalContainer) updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
+      if (terminalContainer) {
+        updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
+      }
 
       const snippetKey = tab.getAttribute('data-snippet');
-      if (snippets[snippetKey]) {
-        codeBody.innerHTML = snippets[snippetKey].trim();
+      if (TERMINAL_SNIPPETS[snippetKey]) {
+        codeBody.style.opacity = '0';
+        codeBody.style.transform = 'translateY(6px)';
+        codeBody.style.transition = 'all 0.2s ease';
+        
+        setTimeout(() => {
+          codeBody.innerHTML = TERMINAL_SNIPPETS[snippetKey].trim();
+          codeBody.style.opacity = '1';
+          codeBody.style.transform = 'translateY(0)';
+        }, 120);
       }
     });
   });
@@ -689,76 +677,7 @@ function initAppleFeatureExplorer() {
   updateExplorerContent();
 }
 
-/* ==========================================================================
-   8. HERO TERMINAL TABS CONTROLLER (WITH TYPING SIMULATION)
-   ========================================================================== */
-const TERMINAL_SNIPPETS = {
-  overview: `
-<span class="term-comment"># Engineer & Information Systems Profile</span>
-<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
-  <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
-  <span class="term-prop">almaMater</span>: <span class="term-string">"Institut Teknologi Kalimantan (ITK)"</span>,
-  <span class="term-prop">focus</span>: [<span class="term-string">"Web Systems"</span>, <span class="term-string">"Information Architecture"</span>, <span class="term-string">"UX Analytics"</span>],
-  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & Importance-Performance Analysis"</span>,
-  <span class="term-prop">status</span>: <span class="term-val">"Available for Engineering & Systems Collaboration"</span>
-};
 
-<span class="term-cmd">console</span>.log(<span class="term-string">"System initialized with high reliability."</span>);
-`,
-
-  research: `
-<span class="term-comment">-- WebQual 4.0 & IPA Matrix Evaluation Query</span>
-<span class="term-keyword">SELECT</span> 
-  dimension,
-  <span class="term-cmd">AVG</span>(usability_score) <span class="term-keyword">AS</span> usability,
-  <span class="term-cmd">AVG</span>(info_quality_score) <span class="term-keyword">AS</span> info_quality,
-  <span class="term-cmd">AVG</span>(service_interaction_score) <span class="term-keyword">AS</span> service_interaction,
-  <span class="term-keyword">CASE</span> 
-    <span class="term-keyword">WHEN</span> performance < importance <span class="term-keyword">THEN</span> <span class="term-string">'Quadrant I: Concentrate Here'</span>
-    <span class="term-keyword">ELSE</span> <span class="term-string">'Quadrant II: Keep Up Good Work'</span>
-  <span class="term-keyword">END AS</span> ipa_priority
-<span class="term-keyword">FROM</span> siat_academic_evaluations
-<span class="term-keyword">GROUP BY</span> dimension;
-`,
-
-  stack: `
-<span class="term-comment">/* Verified Technical Tooling */</span>
-{
-  <span class="term-prop">"languages"</span>: [<span class="term-string">"JavaScript (ES6+)"</span>, <span class="term-string">"PHP"</span>, <span class="term-string">"SQL"</span>, <span class="term-string">"HTML5/CSS3"</span>],
-  <span class="term-prop">"frameworks"</span>: [<span class="term-string">"CodeIgniter"</span>, <span class="term-string">"Laravel"</span>, <span class="term-string">"Bootstrap 5"</span>, <span class="term-string">"Tailwind"</span>],
-  <span class="term-prop">"databases"</span>: [<span class="term-string">"MySQL"</span>, <span class="term-string">"PostgreSQL"</span>],
-  <span class="term-prop">"methods"</span>: [<span class="term-string">"WebQual 4.0"</span>, <span class="term-string">"IPA Matrix"</span>, <span class="term-string">"MVC Architecture"</span>],
-  <span class="term-prop">"tools"</span>: [<span class="term-string">"Git"</span>, <span class="term-string">"SPSS"</span>, <span class="term-string">"Figma"</span>, <span class="term-string">"VS Code"</span>]
-}
-`
-};
-
-function initTerminalTabs() {
-  const tabs = document.querySelectorAll('.terminal-tab-btn');
-  const body = document.getElementById('terminal-code-body');
-  
-  if (!body) return;
-  
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      
-      const snippetKey = tab.getAttribute('data-snippet');
-      if (TERMINAL_SNIPPETS[snippetKey]) {
-        body.style.opacity = '0';
-        body.style.transform = 'translateY(6px)';
-        body.style.transition = 'all 0.2s ease';
-        
-        setTimeout(() => {
-          body.innerHTML = TERMINAL_SNIPPETS[snippetKey].trim();
-          body.style.opacity = '1';
-          body.style.transform = 'translateY(0)';
-        }, 120);
-      }
-    });
-  });
-}
 
 /* ==========================================================================
    9. BESPOKE SVG PROJECT BANNERS (APPLE LIQUID GLASS)
@@ -969,21 +888,53 @@ function updateSegmentedPill(container, pillSelector, activeSelector = '.active'
   const activeItem = container.querySelector(activeSelector);
   if (!pill || !activeItem) return;
 
-  const containerRect = container.getBoundingClientRect();
-  const itemRect = activeItem.getBoundingClientRect();
-  const offsetLeft = itemRect.left - containerRect.left;
-  const width = itemRect.width;
+  let offsetLeft = activeItem.offsetLeft;
+  let width = activeItem.offsetWidth;
 
-  pill.style.opacity = '1';
-  pill.style.transform = `translateX(${offsetLeft}px)`;
-  pill.style.width = `${width}px`;
+  if (!width || width === 0) {
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+    offsetLeft = itemRect.left - containerRect.left;
+    width = itemRect.width;
+  }
+
+  if (width > 0) {
+    pill.style.opacity = '1';
+    pill.style.transform = `translateX(${offsetLeft}px)`;
+    pill.style.width = `${width}px`;
+  }
 }
+
+function refreshAllSegmentedPills() {
+  const skillsContainer = document.querySelector('.skill-category-tabs');
+  const projectsContainer = document.querySelector('.project-filter-bar');
+  const terminalContainer = document.querySelector('.terminal-tabs');
+
+  if (skillsContainer) updateSegmentedPill(skillsContainer, '#skill-filter-morph-pill', '.active');
+  if (projectsContainer) updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
+  if (terminalContainer) updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
+  if (typeof updateNavMorphPill === 'function') updateNavMorphPill();
+  if (typeof updateIslandMorphPill === 'function') updateIslandMorphPill();
+}
+window.refreshAllSegmentedPills = refreshAllSegmentedPills;
 
 function setupSegmentedMorphContainer(container, pillSelector, itemSelector) {
   if (!container) return;
   const items = container.querySelectorAll(itemSelector);
 
-  setTimeout(() => updateSegmentedPill(container, pillSelector, '.active'), 80);
+  const update = () => updateSegmentedPill(container, pillSelector, '.active');
+
+  // Trigger immediate & progressive updates to catch fast render, font ready & layout computation
+  update();
+  requestAnimationFrame(update);
+  setTimeout(update, 50);
+  setTimeout(update, 150);
+  setTimeout(update, 350);
+
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(() => update());
+    ro.observe(container);
+  }
 
   items.forEach(item => {
     item.addEventListener('mouseenter', () => {
@@ -1021,12 +972,12 @@ function initAllSegmentedMorphPills() {
     setupSegmentedMorphContainer(terminalContainer, '#terminal-morph-pill', '.terminal-tab-btn');
   }
 
-  window.addEventListener('resize', () => {
-    if (skillsContainer) updateSegmentedPill(skillsContainer, '#skill-filter-morph-pill', '.active');
-    if (projectsContainer) updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
-    if (terminalContainer) updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
-    updateIslandMorphPill();
-  }, { passive: true });
+  window.addEventListener('resize', () => refreshAllSegmentedPills(), { passive: true });
+  window.addEventListener('load', () => refreshAllSegmentedPills());
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => refreshAllSegmentedPills());
+  }
 }
 
 /* ==========================================================================
@@ -1234,6 +1185,7 @@ function initScrollReveal() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
+          refreshAllSegmentedPills();
           obs.unobserve(entry.target);
         }
       });
@@ -1249,6 +1201,7 @@ function initScrollReveal() {
     });
   } else {
     reveals.forEach(el => el.classList.add('revealed'));
+    refreshAllSegmentedPills();
   }
 }
 

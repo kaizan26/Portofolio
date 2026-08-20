@@ -329,6 +329,9 @@ function setLanguage(lang, smooth = true) {
       if (typeof updateNavMorphPill === 'function') {
         updateNavMorphPill();
       }
+      if (typeof refreshAllSegmentedPills === 'function') {
+        refreshAllSegmentedPills();
+      }
     }, 180);
   } else {
     applyTranslations();
@@ -343,6 +346,9 @@ function setLanguage(lang, smooth = true) {
     }
     if (typeof updateNavMorphPill === 'function') {
       updateNavMorphPill();
+    }
+    if (typeof refreshAllSegmentedPills === 'function') {
+      refreshAllSegmentedPills();
     }
   }
 }
