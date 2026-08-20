@@ -369,35 +369,61 @@ function initTerminalTabs() {
 <span class="term-comment"># Engineer & Information Systems Profile</span>
 <span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
   <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
-  <span class="term-prop">almaMater</span>: <span class="term-string">"Institut Teknologi Kalimantan (ITK)"</span>,
-  <span class="term-prop">focus</span>: [<span class="term-string">"Web Systems"</span>, <span class="term-string">"Information Architecture"</span>, <span class="term-string">"UX Analytics"</span>],
-  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & Importance-Performance Analysis"</span>,
-  <span class="term-prop">status</span>: <span class="term-val">"Available for Engineering & Systems Collaboration"</span>
+  <span class="term-prop">almaMater</span>: <span class="term-string">"ITK Kalimantan"</span>,
+  <span class="term-prop">focus</span>: [
+    <span class="term-string">"Web Systems"</span>,
+    <span class="term-string">"Info Architecture"</span>,
+    <span class="term-string">"UX Analytics"</span>
+  ],
+  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & IPA"</span>,
+  <span class="term-prop">status</span>: <span class="term-val">"Available for Collaboration"</span>
 };
 
-<span class="term-cmd">console</span>.log(<span class="term-string">"System initialized with high reliability."</span>);`,
+<span class="term-cmd">console</span>.log(<span class="term-string">"System operational."</span>);`,
     
     research: `
-<span class="term-comment">-- WebQual 4.0 Empirical Evaluation Matrix</span>
+<span class="term-comment">-- WebQual 4.0 & IPA Matrix Query</span>
 <span class="term-keyword">SELECT</span> 
   dim.dimension_name,
-  <span class="term-cmd">AVG</span>(eval.performance_score) <span class="term-keyword">AS</span> mean_performance,
-  <span class="term-cmd">AVG</span>(eval.importance_score) <span class="term-keyword">AS</span> mean_importance,
+  <span class="term-cmd">AVG</span>(eval.performance_score) 
+    <span class="term-keyword">AS</span> mean_performance,
+  <span class="term-cmd">AVG</span>(eval.importance_score) 
+    <span class="term-keyword">AS</span> mean_importance,
   <span class="term-cmd">CASE</span> 
-    <span class="term-keyword">WHEN</span> <span class="term-cmd">AVG</span>(eval.importance_score) >= 4.5 <span class="term-keyword">THEN</span> <span class="term-string">'Quadrant I: Priority Action'</span>
-    <span class="term-keyword">ELSE</span> <span class="term-string">'Quadrant II: Keep Up Good Work'</span>
+    <span class="term-keyword">WHEN</span> <span class="term-cmd">AVG</span>(eval.importance_score) >= 4.5 
+      <span class="term-keyword">THEN</span> <span class="term-string">'Quadrant I: Priority Action'</span>
+    <span class="term-keyword">ELSE</span> 
+      <span class="term-string">'Quadrant II: Keep Up Work'</span>
   <span class="term-keyword">END AS</span> ipa_classification
 <span class="term-keyword">FROM</span> webqual_evaluations eval
-<span class="term-keyword">JOIN</span> webqual_dimensions dim <span class="term-keyword">ON</span> eval.dimension_id = dim.id
+<span class="term-keyword">JOIN</span> webqual_dimensions dim 
+  <span class="term-keyword">ON</span> eval.dimension_id = dim.id
 <span class="term-keyword">GROUP BY</span> dim.dimension_name;`,
 
     stack: `
 {
-  <span class="term-prop">"architecture"</span>: <span class="term-string">"MVC / Layered Web Systems"</span>,
-  <span class="term-prop">"backend"</span>: [<span class="term-string">"PHP 8.x"</span>, <span class="term-string">"CodeIgniter"</span>, <span class="term-string">"Laravel"</span>, <span class="term-string">"Node.js"</span>],
-  <span class="term-prop">"frontend"</span>: [<span class="term-string">"Modern JavaScript (ES6+)"</span>, <span class="term-string">"Tailwind CSS v4"</span>, <span class="term-string">"HTML5/CSS3"</span>],
-  <span class="term-prop">"databases"</span>: [<span class="term-string">"MySQL"</span>, <span class="term-string">"PostgreSQL"</span>, <span class="term-string">"Relational 3NF"</span>],
-  <span class="term-prop">"analytics"</span>: [<span class="term-string">"WebQual 4.0"</span>, <span class="term-string">"IPA Matrix"</span>, <span class="term-string">"SPSS Quantitative"</span>]
+  <span class="term-prop">"architecture"</span>: <span class="term-string">"MVC / Layered Web"</span>,
+  <span class="term-prop">"backend"</span>: [
+    <span class="term-string">"PHP 8.x"</span>,
+    <span class="term-string">"CodeIgniter"</span>,
+    <span class="term-string">"Laravel"</span>,
+    <span class="term-string">"Node.js"</span>
+  ],
+  <span class="term-prop">"frontend"</span>: [
+    <span class="term-string">"Modern JS (ES6+)"</span>,
+    <span class="term-string">"Tailwind CSS v4"</span>,
+    <span class="term-string">"HTML5/CSS3"</span>
+  ],
+  <span class="term-prop">"databases"</span>: [
+    <span class="term-string">"MySQL"</span>,
+    <span class="term-string">"PostgreSQL"</span>,
+    <span class="term-string">"Relational 3NF"</span>
+  ],
+  <span class="term-prop">"analytics"</span>: [
+    <span class="term-string">"WebQual 4.0"</span>,
+    <span class="term-string">"IPA Matrix"</span>,
+    <span class="term-string">"SPSS Quantitative"</span>
+  ]
 }`
   };
 

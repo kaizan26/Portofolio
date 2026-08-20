@@ -408,12 +408,25 @@ section {
 }
 
 .terminal-body {
-  padding: 24px;
+  padding: 20px;
   font-family: var(--font-mono);
-  font-size: 0.86rem;
-  line-height: 1.75;
+  font-size: 0.82rem;
+  line-height: 1.68;
   min-height: 290px;
   color: #e2e8f0;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+.terminal-body pre,
+.terminal-body code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  font-family: inherit;
 }
 
 [data-theme="light"] .terminal-body {
