@@ -16,6 +16,10 @@ const TRANSLATIONS = {
     nav_contact: "Kontak",
     nav_cta: "Hubungi",
     nav_connect: "Mari Terhubung",
+    nav_nightlight_on: "Matikan Night Light (Filter Layar Hangat)",
+    nav_nightlight_off: "Aktifkan Night Light (Mode Nyaman Mata)",
+    toast_nightlight_on: "Mode Night Light Aktif (Warm Amber)",
+    toast_nightlight_off: "Mode Standar Dikembalikan",
 
     // Hero
     hero_badge: "Institut Teknologi Kalimantan (ITK) Alumnus",
@@ -141,7 +145,7 @@ const TRANSLATIONS = {
 
     // Footer
     footer_tagline: "Sistem Informasi • Institut Teknologi Kalimantan (ITK)",
-    footer_copy: "© 2026 Bobby Kamal Aizan. Apple Liquid Glass Architecture.",
+    footer_copy: "© 2026 Bobby Kamal Aizan.",
     footer_status: "All Systems Operational"
   },
 
@@ -157,6 +161,10 @@ const TRANSLATIONS = {
     nav_contact: "Contact",
     nav_cta: "Contact",
     nav_connect: "Get in Touch",
+    nav_nightlight_on: "Disable Night Light (Warm Screen Filter)",
+    nav_nightlight_off: "Enable Night Light (Eye Comfort Mode)",
+    toast_nightlight_on: "Night Light Enabled (Warm Amber)",
+    toast_nightlight_off: "Standard Mode Restored",
 
     // Hero
     hero_badge: "Institut Teknologi Kalimantan (ITK) Alumnus",
@@ -282,12 +290,12 @@ const TRANSLATIONS = {
 
     // Footer
     footer_tagline: "Information Systems • Institut Teknologi Kalimantan (ITK)",
-    footer_copy: "© 2026 Bobby Kamal Aizan. Apple Liquid Glass Architecture.",
+    footer_copy: "© 2026 Bobby Kamal Aizan.",
     footer_status: "All Systems Operational"
   }
 };
 
-let currentLanguage = localStorage.getItem('bobby_portfolio_lang') || 'id';
+let currentLanguage = localStorage.getItem('bobby_portfolio_lang') || localStorage.getItem('bobby-portfolio-lang') || 'id';
 
 function getTranslation(key) {
   const langPack = TRANSLATIONS[currentLanguage] || TRANSLATIONS['id'];
@@ -298,12 +306,12 @@ function setLanguage(lang, smooth = true) {
   if (lang !== 'id' && lang !== 'en') return;
   currentLanguage = lang;
   localStorage.setItem('bobby_portfolio_lang', lang);
+  localStorage.setItem('bobby-portfolio-lang', lang);
   document.documentElement.setAttribute('lang', lang);
-  
+
   updateLanguageSwitcherUI();
 
   const elements = document.querySelectorAll('[data-i18n]');
-  const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
   if (smooth) {
     elements.forEach(el => {
@@ -332,7 +340,15 @@ function setLanguage(lang, smooth = true) {
       if (typeof refreshAllSegmentedPills === 'function') {
         refreshAllSegmentedPills();
       }
-    }, 180);
+      if (typeof initNightLightToggle === 'function') {
+        initNightLightToggle();
+      }
+      if (typeof showHudToast === 'function' && smooth) {
+        const toastMsg = lang === 'id' ? 'Bahasa Indonesia Aktif' : 'English Language Active';
+        const flagIcon = lang === 'id' ? 'bi-translate' : 'bi-translate';
+        showHudToast(toastMsg, flagIcon);
+      }
+    }, 150);
   } else {
     applyTranslations();
     if (typeof initDynamicTyping === 'function') {
@@ -358,7 +374,16 @@ function applyTranslations() {
   elements.forEach(el => {
     const key = el.getAttribute('data-i18n');
     const text = getTranslation(key);
-    if (text) {
+    if (!text) return;
+
+    // Check if element contains an icon <i>
+    const icon = el.querySelector('i');
+    if (icon) {
+      const iconClone = icon.cloneNode(true);
+      el.innerHTML = '';
+      el.appendChild(iconClone);
+      el.appendChild(document.createTextNode(' ' + text));
+    } else {
       el.textContent = text;
     }
   });
@@ -377,11 +402,11 @@ function updateLanguageSwitcherUI() {
   const switchers = document.querySelectorAll('.lang-switcher-pro');
   const idBtns = document.querySelectorAll('.lang-btn-id');
   const enBtns = document.querySelectorAll('.lang-btn-en');
-  
+
   switchers.forEach(s => {
     s.setAttribute('data-lang', currentLanguage);
   });
-  
+
   if (currentLanguage === 'id') {
     idBtns.forEach(b => b.classList.add('active'));
     enBtns.forEach(b => b.classList.remove('active'));
@@ -401,7 +426,7 @@ function initI18n() {
   });
 
   setLanguage(currentLanguage, false);
-  
+
   document.querySelectorAll('.lang-btn-id').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();

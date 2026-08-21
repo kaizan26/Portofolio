@@ -23,13 +23,12 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
-  <!-- Tailwind CSS v4 & Bootstrap Icons -->
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Apple Pro Liquid Glass Stylesheets -->
-  <link rel="stylesheet" href="css/glassmorphism.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css?v=3.8">
+  <link rel="stylesheet" href="css/style.css?v=3.8">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml"
@@ -63,6 +62,12 @@
 
   <!-- Interactive Mouse Ambient Glow -->
   <div class="cursor-ambient-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Night Light Ambient Eye-Comfort Overlay -->
+  <div id="nightlight-overlay" aria-hidden="true"></div>
+
+  <!-- Floating HUD Toast for Quick Feedback -->
+  <div id="hud-toast" class="hud-toast" aria-live="polite"></div>
 
   <!-- ==========================================================================
        APPLE PRO LIQUID GLASS NAVIGATION BAR (ZERO-SHIFT)
@@ -99,6 +104,12 @@
             <button class="lang-btn-pro lang-btn-en" title="English">EN</button>
           </div>
 
+          <!-- Night Light Switcher (Comfort Warmth Mode) -->
+          <button class="btn-glass-icon-pro" id="nightlight-toggle-btn" aria-label="Toggle Night Light"
+            title="Night Light (Mode Nyaman Mata)">
+            <i class="bi bi-lamp" id="nightlight-icon"></i>
+          </button>
+
           <!-- Theme Switcher -->
           <button class="btn-glass-icon-pro" id="theme-toggle-btn" aria-label="Toggle Theme" title="Switch Theme">
             <i class="bi bi-sun-fill" id="theme-icon"></i>
@@ -122,7 +133,15 @@
   <!-- Mobile Menu Drawer -->
   <div class="mobile-menu-drawer" id="mobile-drawer">
     <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
-      <span class="text-xs font-bold text-muted">Language:</span>
+      <div class="flex items-center gap-2">
+        <button class="btn-glass-icon-pro" id="mobile-nightlight-toggle-btn" aria-label="Toggle Night Light"
+          title="Night Light">
+          <i class="bi bi-lamp" id="mobile-nightlight-icon"></i>
+        </button>
+        <button class="btn-glass-icon-pro" id="mobile-theme-toggle-btn" aria-label="Toggle Theme" title="Switch Theme">
+          <i class="bi bi-sun-fill" id="mobile-theme-icon"></i>
+        </button>
+      </div>
       <div class="lang-switcher-pro" data-lang="id">
         <div class="lang-morph-pill"></div>
         <button class="lang-btn-pro lang-btn-id active">ID</button>
@@ -152,8 +171,9 @@
           <!-- Hero Text & Pitch -->
           <div class="reveal-on-scroll">
             <div class="hero-status-chip">
-              <span class="glass-badge glass-badge-pulse" data-i18n="hero_badge">
-                <i class="bi bi-mortarboard-fill text-info me-1"></i> Institut Teknologi Kalimantan (ITK) Alumnus
+              <span class="glass-badge glass-badge-pulse">
+                <i class="bi bi-mortarboard-fill text-info me-1"></i> <span data-i18n="hero_badge">Institut Teknologi
+                  Kalimantan (ITK) Alumnus</span>
               </span>
             </div>
 
@@ -261,31 +281,31 @@
          ========================================================================== -->
     <div class="container-custom">
       <div class="glass-card stats-bar-card reveal-on-scroll">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          <div class="stat-item flex items-center gap-3.5">
+        <div class="stats-grid-wrapper">
+          <div class="stat-item">
             <div class="sf-icon-squircle blue"><i class="bi bi-mortarboard-fill"></i></div>
-            <div class="text-left">
+            <div class="stat-text-col">
               <div class="stat-value gradient-text">ITK</div>
               <div class="stat-label" data-i18n="stat_itk_label">Sistem Informasi Alumnus</div>
             </div>
           </div>
-          <div class="stat-item flex items-center gap-3.5">
+          <div class="stat-item">
             <div class="sf-icon-squircle purple"><i class="bi bi-journal-bookmark-fill"></i></div>
-            <div class="text-left">
+            <div class="stat-text-col">
               <div class="stat-value gradient-text-cyan">Syntax</div>
               <div class="stat-label" data-i18n="stat_syntax_label">Peer-Reviewed Journal Author</div>
             </div>
           </div>
-          <div class="stat-item flex items-center gap-3.5">
+          <div class="stat-item">
             <div class="sf-icon-squircle orange"><i class="bi bi-bar-chart-steps"></i></div>
-            <div class="text-left">
+            <div class="stat-text-col">
               <div class="stat-value gradient-text">WebQual</div>
               <div class="stat-label" data-i18n="stat_webqual_label">4.0 Empirical Evaluation</div>
             </div>
           </div>
-          <div class="stat-item flex items-center gap-3.5">
+          <div class="stat-item">
             <div class="sf-icon-squircle emerald"><i class="bi bi-layers-half"></i></div>
-            <div class="text-left">
+            <div class="stat-text-col">
               <div class="stat-value gradient-text-cyan">Full-Stack</div>
               <div class="stat-label" data-i18n="stat_fullstack_label">MVC & Web Architecture</div>
             </div>
@@ -312,8 +332,9 @@
           <!-- Left Column: Narrative & Pillars -->
           <div class="reveal-on-scroll">
             <div class="glass-card about-card">
-              <h3 class="font-bold text-xl mb-4 flex items-center gap-2.5">
-                <i class="bi bi-person-circle text-primary"></i> <span data-i18n="about_heading">Tentang Bobby Kamal
+              <h3 class="font-bold text-xl mb-4 flex items-center gap-3">
+                <i class="bi bi-person-circle text-primary me-2"></i> <span data-i18n="about_heading">Tentang Bobby
+                  Kamal
                   Aizan</span>
               </h3>
               <p class="about-intro-text" data-i18n="about_p1">
@@ -753,11 +774,11 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+        <div class="social-grid-container">
           <!-- LinkedIn -->
           <div class="reveal-on-scroll">
             <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
-              class="glass-card social-hub-card">
+              class="glass-card social-hub-card social-linkedin">
               <div class="social-hub-icon">
                 <i class="bi bi-linkedin"></i>
               </div>
@@ -769,7 +790,7 @@
           <!-- Instagram -->
           <div class="reveal-on-scroll delay-100">
             <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"
-              class="glass-card social-hub-card">
+              class="glass-card social-hub-card social-instagram">
               <div class="social-hub-icon">
                 <i class="bi bi-instagram"></i>
               </div>
@@ -781,7 +802,7 @@
           <!-- Facebook -->
           <div class="reveal-on-scroll delay-200">
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
-              class="glass-card social-hub-card">
+              class="glass-card social-hub-card social-facebook">
               <div class="social-hub-icon">
                 <i class="bi bi-facebook"></i>
               </div>
@@ -792,7 +813,8 @@
 
           <!-- GitHub -->
           <div class="reveal-on-scroll delay-300">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="glass-card social-hub-card">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+              class="glass-card social-hub-card social-github">
               <div class="social-hub-icon">
                 <i class="bi bi-github"></i>
               </div>
@@ -802,8 +824,8 @@
           </div>
 
           <!-- Email Direct -->
-          <div class="reveal-on-scroll delay-300 col-span-2 sm:col-span-1">
-            <a href="mailto:bobbykamalaizan@gmail.com" class="glass-card social-hub-card">
+          <div class="reveal-on-scroll delay-300">
+            <a href="mailto:bobbykamalaizan@gmail.com" class="glass-card social-hub-card social-email">
               <div class="social-hub-icon">
                 <i class="bi bi-envelope-at"></i>
               </div>
@@ -830,12 +852,12 @@
         </div>
 
         <div class="glass-card contact-glass-box reveal-on-scroll">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="contact-layout-grid">
             <!-- Left Info Panel -->
-            <div class="lg:col-span-5">
-              <h3 class="font-bold text-xl mb-3 flex items-center gap-2.5">
-                <i class="bi bi-chat-square-text text-primary"></i> <span data-i18n="contact_info_heading">Informasi
-                  Kontak</span>
+            <div>
+              <h3 class="contact-heading-title">
+                <i class="bi bi-chat-square-text text-primary me-2"></i>
+                <span data-i18n="contact_info_heading">Informasi Kontak</span>
               </h3>
               <p class="text-secondary mb-6 leading-relaxed" data-i18n="contact_info_desc">
                 Terbuka untuk diskusi teknis seputar arsitektur web, implementasi sistem informasi, serta riset kualitas
@@ -883,11 +905,11 @@
             </div>
 
             <!-- Right Contact Form -->
-            <div class="lg:col-span-7">
+            <div>
               <form id="contact-form" novalidate>
                 <div id="form-alert" class="form-submit-alert" role="alert"></div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="contact-form-grid">
                   <div class="form-floating-label">
                     <label for="contact-name" data-i18n="contact_label_name">Nama Lengkap *</label>
                     <input type="text" id="contact-name" class="glass-input"
@@ -900,23 +922,23 @@
                       data-i18n-placeholder="contact_placeholder_email" placeholder="nama@email.com" required>
                   </div>
 
-                  <div class="md:col-span-2 form-floating-label">
+                  <div class="contact-form-full form-floating-label">
                     <label for="contact-subject" data-i18n="contact_label_subject">Subjek Pesan</label>
                     <input type="text" id="contact-subject" class="glass-input"
                       data-i18n-placeholder="contact_placeholder_subject" placeholder="Topik atau keperluan diskusi">
                   </div>
 
-                  <div class="md:col-span-2 form-floating-label">
+                  <div class="contact-form-full form-floating-label">
                     <label for="contact-message" data-i18n="contact_label_message">Isi Pesan *</label>
                     <textarea id="contact-message" class="glass-input" rows="4"
                       data-i18n-placeholder="contact_placeholder_message"
                       placeholder="Tuliskan pesan, rincian proyek, atau pertanyaan Anda..." required></textarea>
                   </div>
 
-                  <div class="md:col-span-2 text-right">
+                  <div class="contact-form-full text-right">
                     <button type="submit" id="submit-btn"
                       class="btn-apple-cta px-6 py-2.5 w-full sm:w-auto inline-flex items-center justify-center gap-2">
-                      <i class="bi bi-send-fill"></i> <span data-i18n="contact_btn_send">Kirim Pesan</span>
+                      <i class="bi bi-send-fill me-2"></i> <span data-i18n="contact_btn_send">Kirim Pesan</span>
                     </button>
                   </div>
                 </div>
@@ -933,8 +955,8 @@
        ========================================================================== -->
   <footer class="footer-glass">
     <div class="container-custom">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div>
+      <div class="footer-main-row">
+        <div class="footer-info-col">
           <div class="navbar-brand-logo mb-1">
             <span class="brand-icon">B</span>
             <span>Bobby Kamal Aizan</span>
@@ -943,7 +965,7 @@
             Sistem Informasi &bull; Institut Teknologi Kalimantan (ITK)
           </p>
         </div>
-        <div class="flex gap-2">
+        <div class="footer-social-links">
           <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
             aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
           <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
@@ -953,9 +975,8 @@
         </div>
       </div>
 
-      <div
-        class="footer-bottom mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted">
-        <div data-i18n="footer_copy">
+      <div class="footer-bottom-row">
+        <div class="footer-copy-text" data-i18n="footer_copy">
           &copy; 2026 Bobby Kamal Aizan.
         </div>
         <div>
@@ -1017,10 +1038,10 @@
   </button>
 
   <!-- Project Scripts with i18n Engine (No Bootstrap Dependency) -->
-  <script src="js/i18n.js"></script>
-  <script src="js/projects-data.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/contact.js"></script>
+  <script src="js/i18n.js?v=3.8"></script>
+  <script src="js/projects-data.js?v=3.8"></script>
+  <script src="js/main.js?v=3.8"></script>
+  <script src="js/contact.js?v=3.8"></script>
 </body>
 
 </html>
