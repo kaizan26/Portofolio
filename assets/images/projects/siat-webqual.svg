@@ -1,0 +1,13 @@
+<svg class="project-banner-svg" viewBox="0 0 400 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="200" cy="80" r="58" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.5" stroke-dasharray="4 4" />
+  <circle cx="200" cy="80" r="38" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" />
+  <line x1="200" y1="12" x2="200" y2="148" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.2" />
+  <line x1="130" y1="80" x2="270" y2="80" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.2" />
+  <polygon points="200,28 244,65 224,120 176,120 156,65" fill="rgba(56, 189, 248, 0.22)" stroke="#38bdf8" stroke-width="2.5" />
+  <circle cx="200" cy="28" r="5" fill="#38bdf8" />
+  <circle cx="244" cy="65" r="5" fill="#38bdf8" />
+  <circle cx="224" cy="120" r="5" fill="#38bdf8" />
+  <circle cx="176" cy="120" r="5" fill="#38bdf8" />
+  <circle cx="156" cy="65" r="5" fill="#38bdf8" />
+  <text x="200" y="148" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="sans-serif" font-weight="600">WebQual 4.0 &#8226; IPA Matrix Analysis</text>
+</svg>

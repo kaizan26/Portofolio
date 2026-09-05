@@ -1,0 +1,26 @@
+<svg class="stage-svg-visual" viewBox="0 0 460 300" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="20" width="420" height="260" rx="16" fill="rgba(48, 209, 88, 0.05)" stroke="rgba(48, 209, 88, 0.3)" stroke-width="1.5" />
+  
+  <!-- Table 1: Users -->
+  <rect x="50" y="60" width="140" height="85" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(48, 209, 88, 0.6)" stroke-width="1.5" />
+  <rect x="50" y="60" width="140" height="24" rx="10" fill="rgba(48, 209, 88, 0.3)" />
+  <text x="120" y="77" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">users (PK)</text>
+  <text x="62" y="102" fill="#86868b" font-size="9.5">🔑 id: INT</text>
+  <text x="62" y="118" fill="#86868b" font-size="9.5">👤 name: VARCHAR</text>
+  <text x="62" y="134" fill="#86868b" font-size="9.5">📧 email: VARCHAR</text>
+  
+  <!-- Table 2: Rentals -->
+  <rect x="270" y="60" width="140" height="85" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(56, 189, 248, 0.6)" stroke-width="1.5" />
+  <rect x="270" y="60" width="140" height="24" rx="10" fill="rgba(56, 189, 248, 0.3)" />
+  <text x="340" y="77" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">rentals (FK)</text>
+  <text x="282" y="102" fill="#86868b" font-size="9.5">🔑 id: INT</text>
+  <text x="282" y="118" fill="#86868b" font-size="9.5">🔗 user_id: INT</text>
+  <text x="282" y="134" fill="#86868b" font-size="9.5">🚗 car_id: INT</text>
+  
+  <!-- Relation Line -->
+  <path d="M 190,102 C 230,102 230,118 270,118" stroke="#30d158" stroke-width="2" fill="none" />
+  <circle cx="190" cy="102" r="3" fill="#30d158" />
+  <circle cx="270" cy="118" r="3" fill="#30d158" />
+  
+  <text x="230" y="240" text-anchor="middle" fill="#30d158" font-size="12" font-weight="bold">Third Normal Form (3NF) Verified</text>
+</svg>

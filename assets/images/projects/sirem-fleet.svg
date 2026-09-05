@@ -1,0 +1,10 @@
+<svg class="project-banner-svg" viewBox="0 0 400 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 70,80 Q 140,25 200,80 T 330,80" stroke="rgba(168, 85, 247, 0.5)" stroke-width="2.5" fill="none" stroke-dasharray="6 6" />
+  <rect x="60" y="55" width="70" height="46" rx="10" fill="rgba(168, 85, 247, 0.25)" stroke="#a855f7" stroke-width="2" />
+  <text x="95" y="83" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Model</text>
+  <rect x="165" y="55" width="70" height="46" rx="10" fill="rgba(236, 72, 153, 0.25)" stroke="#ec4899" stroke-width="2" />
+  <text x="200" y="83" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">View</text>
+  <rect x="270" y="55" width="70" height="46" rx="10" fill="rgba(99, 102, 241, 0.25)" stroke="#6366f1" stroke-width="2" />
+  <text x="305" y="83" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Controller</text>
+  <text x="200" y="148" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="sans-serif" font-weight="600">CodeIgniter MVC &#8226; Fleet Telemetry</text>
+</svg>

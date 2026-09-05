@@ -18,8 +18,12 @@ const TRANSLATIONS = {
     nav_connect: "Mari Terhubung",
     nav_nightlight_on: "Matikan Night Light (Filter Layar Hangat)",
     nav_nightlight_off: "Aktifkan Night Light (Mode Nyaman Mata)",
-    toast_nightlight_on: "Mode Night Light Aktif (Warm Amber)",
+    toast_nightlight_on: "Mode Night Light Aktif",
     toast_nightlight_off: "Mode Standar Dikembalikan",
+    nav_perf_on: "Matikan Mode Performa",
+    nav_perf_off: "Mode Performa",
+    toast_perf_on: "Mode Performa Aktif",
+    toast_perf_off: "Mode Visual Lengkap Aktif",
 
     // Hero
     hero_badge: "Institut Teknologi Kalimantan (ITK) Alumnus",
@@ -140,8 +144,12 @@ const TRANSLATIONS = {
     contact_label_message: "Isi Pesan *",
     contact_placeholder_message: "Tuliskan pesan, rincian proyek, atau pertanyaan Anda...",
     contact_btn_send: "Kirim Pesan",
-    contact_toast_copied: "Alamat email berhasil disalin!",
-    contact_toast_sent: "Pesan Anda berhasil dikirim! Bobby akan segera merespons.",
+    contact_btn_sending: "Mengirim Pesan...",
+    contact_btn_sent: "Pesan Terkirim!",
+    contact_err_required: "Mohon lengkapi semua kolom yang wajib diisi (*).",
+    contact_err_email: "Format alamat email tidak valid.",
+    contact_toast_copied: "Alamat email berhasil disalin ke clipboard!",
+    contact_toast_sent: "Terima kasih {name}! Pesan Anda telah diterima. Bobby akan segera menghubungi Anda di {email}.",
 
     // Footer
     footer_tagline: "Sistem Informasi • Institut Teknologi Kalimantan (ITK)",
@@ -163,8 +171,12 @@ const TRANSLATIONS = {
     nav_connect: "Get in Touch",
     nav_nightlight_on: "Disable Night Light (Warm Screen Filter)",
     nav_nightlight_off: "Enable Night Light (Eye Comfort Mode)",
-    toast_nightlight_on: "Night Light Enabled (Warm Amber)",
+    toast_nightlight_on: "Night Light Mode Active",
     toast_nightlight_off: "Standard Mode Restored",
+    nav_perf_on: "Disable Performance Mode",
+    nav_perf_off: "Performance Mode",
+    toast_perf_on: "Performance Mode Active",
+    toast_perf_off: "Full Visual Mode Active",
 
     // Hero
     hero_badge: "Institut Teknologi Kalimantan (ITK) Alumnus",
@@ -180,10 +192,10 @@ const TRANSLATIONS = {
       "Full-Stack Web Systems",
       "Institut Teknologi Kalimantan"
     ],
-    terminal_status: "Open for opportunities",
+    terminal_status: "Open for Collaboration",
 
     // Stats
-    stat_itk_label: "Information Systems Alum",
+    stat_itk_label: "Information Systems Alumnus",
     stat_syntax_label: "Peer-Reviewed Journal Author",
     stat_webqual_label: "4.0 Empirical Evaluation",
     stat_fullstack_label: "MVC & Web Architecture",
@@ -195,8 +207,8 @@ const TRANSLATIONS = {
     explorer_pill_1: "WebQual 4.0 & IPA Matrix",
     explorer_pill_2: "CodeIgniter MVC Architecture",
     explorer_pill_3: "Relational DB & Normalization",
-    explorer_pill_4: "Community Digital Platforms",
-    explorer_pill_5: "Security & Clean Code",
+    explorer_pill_4: "Community Digitalization",
+    explorer_pill_5: "System Security & Validation",
 
     // About
     about_tagline: "Background",
@@ -217,76 +229,80 @@ const TRANSLATIONS = {
     timeline_2_title: "Journal Publication: SIREM (CodeIgniter)",
     timeline_2_inst: "Syntax: Journal of Software Engineering, CS & IT",
     timeline_2_desc: "Designed and engineered the SIREM web ecosystem with CodeIgniter MVC and co-authored the research paper published in peer-reviewed Syntax Journal.",
-    timeline_3_title: "Lamaru Tourism Digital Transformation",
-    timeline_3_inst: "ITK Community Development Department",
+    timeline_3_title: "Lamaru Tourism Digitalization Optimization",
+    timeline_3_inst: "ITK Community Service Program",
     timeline_3_desc: "Collaborated on coastal tourism optimization and local MSME empowerment through digital information architecture in Lamaru, East Kalimantan.",
 
     // Skills
-    skills_tagline: "Expertise",
+    skills_tagline: "Competencies",
     skills_title: "Technical Skills & Tooling",
-    skills_subtitle: "Languages, frameworks, databases, and methodologies applied across systems development and evaluation.",
+    skills_subtitle: "Technologies, programming languages, frameworks, and methodologies applied across systems development and evaluation.",
     skill_tab_all: "All Fields",
     skill_tab_backend: "Backend & Databases",
     skill_tab_frontend: "Frontend & UI",
-    skill_tab_analysis: "Analysis & Quality",
+    skill_tab_analysis: "System Analysis & Quality",
 
     // Projects
-    projects_tagline: "Showcase",
-    projects_title: "Featured Works & Documentation",
-    projects_subtitle: "Verified portfolio encompassing institutional research, operational management systems, and community initiatives.",
+    projects_tagline: "Projects & Publications",
+    projects_title: "Featured Works & Project Documentation",
+    projects_subtitle: "Verified portfolio encompassing institutional research, operational management systems, and community empowerment initiatives.",
     proj_filter_all: "All Projects",
     proj_filter_research: "Research & WebQual",
     proj_filter_web: "Web Information Systems",
-    proj_filter_community: "Community Platforms",
-    proj_btn_view: "Explore Details & Analysis",
+    proj_filter_community: "Community Service",
+    proj_btn_view: "View Details & Analysis",
     modal_title_default: "Project Details",
-    modal_section_desc: "Overview & Methodology",
-    modal_section_metrics: "Key Parameters & Outcomes",
-    modal_section_tech: "Technologies & Instruments",
+    modal_section_desc: "Description & Methodology",
+    modal_section_metrics: "Key Parameters & Outcomes Summary",
+    modal_section_tech: "Related Technologies & Instruments",
     modal_btn_close: "Close",
-    modal_btn_demo: "Official Reference",
+    modal_btn_demo: "Official Link",
 
     // Publications
-    pub_tagline: "Scholarly Work",
+    pub_tagline: "Academic Documentation",
     pub_title: "Scientific Publications & Repositories",
-    pub_subtitle: "Indexed research papers and institutional contributions publicly accessible via academic repositories.",
+    pub_subtitle: "Indexed research papers and publications publicly accessible on institutional repositories and software engineering journals.",
     pub_1_badge: "Undergraduate Thesis / ITK Repository (2023)",
     pub_1_title: "Quality Analysis of Universitas Balikpapan SIAT Academic Website Using WebQual 4.0 and Importance-Performance Analysis",
-    pub_1_desc: "Empirical study measuring SIAT UNIBA website quality through WebQual 4.0 dimensions (Usability, Information, Service Interaction) and IPA quadrant plotting to pinpoint functional enhancement priorities.",
+    pub_1_desc: "Empirical study measuring SIAT UNIBA website quality through WebQual 4.0 dimensions (Usability, Information, Service Interaction) and IPA quadrant plotting to determine functional enhancement and user interface priorities.",
     pub_1_btn: "Visit ITK Repository",
     pub_2_badge: "Syntax Journal (2021)",
     pub_2_title: "Development of Web-Based Car Rental Information System (SIREM) Using CodeIgniter Framework",
-    pub_2_desc: "Software engineering publication detailing a web-based vehicle rental system built with CodeIgniter. Implemented fleet management workflows, reservation scheduling, and relational database billing.",
+    pub_2_desc: "Software engineering publication detailing a web-based vehicle rental system built with CodeIgniter framework. Implemented fleet management workflows, reservation scheduling, and relational database billing calculation.",
     pub_2_btn: "Read on Syntax Journal",
 
     // Socials
-    social_tagline: "Presence",
-    social_title: "Online Profiles & Social Hub",
+    social_tagline: "Socials",
+    social_title: "Profiles & Online Presence",
     social_subtitle: "Official channels to connect directly with Bobby Kamal Aizan.",
     social_email_handle: "Direct Contact",
 
     // Contact
     contact_tagline: "Contact",
     contact_title: "Send a Message or Consultation",
-    contact_subtitle: "Discuss web systems engineering, quality auditing, or software engineering collaboration opportunities.",
+    contact_subtitle: "Discuss information systems development needs, website quality auditing, or software engineering collaboration opportunities.",
     contact_info_heading: "Contact Information",
     contact_info_desc: "Open for technical discussions regarding web architectures, information systems implementations, and data-driven quality research.",
     contact_email_title: "Email Address",
     contact_loc_title: "Location",
     contact_loc_val: "Balikpapan, East Kalimantan, Indonesia",
     contact_status_title: "Status",
-    contact_status_val: "Open for Global Opportunities",
+    contact_status_val: "Open for Collaboration Opportunities",
     contact_label_name: "Full Name *",
     contact_placeholder_name: "Enter your name",
     contact_label_email: "Email Address *",
     contact_placeholder_email: "name@email.com",
-    contact_label_subject: "Inquiry Subject",
-    contact_placeholder_subject: "Topic or project overview",
-    contact_label_message: "Message *",
-    contact_placeholder_message: "Write your message, project timeline, or inquiry...",
+    contact_label_subject: "Message Subject",
+    contact_placeholder_subject: "Topic or purpose of discussion",
+    contact_label_message: "Message Body *",
+    contact_placeholder_message: "Write your message, project details, or questions...",
     contact_btn_send: "Send Message",
+    contact_btn_sending: "Sending Message...",
+    contact_btn_sent: "Message Sent Successfully!",
+    contact_err_required: "Please fill out all required fields (*).",
+    contact_err_email: "Please enter a valid email address.",
     contact_toast_copied: "Email address copied to clipboard!",
-    contact_toast_sent: "Your message has been sent! Bobby will reach out to you shortly.",
+    contact_toast_sent: "Thank you {name}! Your message has been received. Bobby will reach out to you shortly at {email}.",
 
     // Footer
     footer_tagline: "Information Systems • Institut Teknologi Kalimantan (ITK)",
@@ -343,6 +359,9 @@ function setLanguage(lang, smooth = true) {
       if (typeof initNightLightToggle === 'function') {
         initNightLightToggle();
       }
+      if (typeof initPerformanceEngine === 'function') {
+        initPerformanceEngine();
+      }
       if (typeof showHudToast === 'function' && smooth) {
         const toastMsg = lang === 'id' ? 'Bahasa Indonesia Aktif' : 'English Language Active';
         const flagIcon = lang === 'id' ? 'bi-translate' : 'bi-translate';
@@ -365,6 +384,9 @@ function setLanguage(lang, smooth = true) {
     }
     if (typeof refreshAllSegmentedPills === 'function') {
       refreshAllSegmentedPills();
+    }
+    if (typeof initPerformanceEngine === 'function') {
+      initPerformanceEngine();
     }
   }
 }

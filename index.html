@@ -14,6 +14,48 @@
     content="Bobby Kamal Aizan, Software Engineer, Information Systems, Institut Teknologi Kalimantan, ITK, SIAT WebQual, Sirem Car Rental, Web Developer">
   <meta name="author" content="Bobby Kamal Aizan">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bobby-portofolio.vercel.app">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bobby-portofolio.vercel.app">
+  <meta property="og:title" content="Bobby Kamal Aizan | Software Engineer & Information Systems Specialist">
+  <meta property="og:description"
+    content="Personal portfolio of Bobby Kamal Aizan — Software Engineer, Information Systems Specialist, and ITK alumnus.">
+  <meta property="og:image" content="https://bobby-portofolio.vercel.app/assets/images/projects/siat-webqual.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://bobby-portofolio.vercel.app">
+  <meta name="twitter:title" content="Bobby Kamal Aizan | Software Engineer & Information Systems Specialist">
+  <meta name="twitter:description"
+    content="Personal portfolio of Bobby Kamal Aizan — Software Engineer, Information Systems Specialist, and ITK alumnus.">
+  <meta name="twitter:image" content="https://bobby-portofolio.vercel.app/assets/images/projects/siat-webqual.svg">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bobby Kamal Aizan",
+    "url": "https://bobby-portofolio.vercel.app",
+    "jobTitle": "Software Engineer & Information Systems Specialist",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Institut Teknologi Kalimantan"
+    },
+    "knowsAbout": [
+      "Software Engineering",
+      "Information Systems Architecture",
+      "WebQual 4.0",
+      "Importance-Performance Analysis (IPA)",
+      "MVC Architecture",
+      "JavaScript",
+      "PHP",
+      "SQL"
+    ]
+  }
+  </script>
 
   <!-- Apple San Francisco & Inter Typography Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +69,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Apple Pro Liquid Glass Stylesheets -->
-  <link rel="stylesheet" href="css/glassmorphism.css?v=3.8">
-  <link rel="stylesheet" href="css/style.css?v=3.8">
+  <link rel="stylesheet" href="css/glassmorphism.css?v=5.6">
+  <link rel="stylesheet" href="css/style.css?v=5.6">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml"
@@ -104,10 +146,51 @@
             <button class="lang-btn-pro lang-btn-en" title="English">EN</button>
           </div>
 
+          <!-- Glassmorphism Intensity Controller (iOS 26 Glass Slider) -->
+          <div class="glass-control-wrapper" id="glass-controller-container">
+            <button class="btn-glass-icon-pro" id="glass-slider-toggle-btn" aria-label="Tingkat Glassmorphism"
+              title="iOS 26 Glass Slider" aria-expanded="false">
+              <i class="bi bi-droplet-half" id="glass-slider-nav-icon"></i>
+            </button>
+
+            <!-- Apple iOS 26 Glass Slider Popover -->
+            <div class="ios-26-slider-popover" id="ios-glass-popover" role="dialog" aria-label="Tingkat Glassmorphism">
+              <div class="ios-26-slider-container">
+                <button type="button" class="ios-26-side-icon ios-26-icon-left" id="glass-icon-min" title="Matte (Min)" aria-label="Minimal Glass">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="7" width="12" height="12" rx="3" />
+                    <path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+                  </svg>
+                </button>
+                <div class="ios-26-slider-track" id="desktop-ios-slider" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" tabindex="0">
+                  <div class="ios-26-rail-bg"></div>
+                  <div class="ios-26-rail-fill" id="desktop-slider-fill"></div>
+                  <div class="ios-26-glass-thumb" id="desktop-slider-thumb">
+                    <div class="ios-26-thumb-core"></div>
+                    <div class="ios-26-thumb-specular"></div>
+                    <div class="ios-26-thumb-rim-bottom"></div>
+                  </div>
+                </div>
+                <button type="button" class="ios-26-side-icon ios-26-icon-right" id="glass-icon-max" title="Hyper Crystal (Max)" aria-label="Maximum Glass">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 8h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z" opacity="0.4" />
+                    <rect x="8" y="4" width="13" height="13" rx="3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- Night Light Switcher (Comfort Warmth Mode) -->
           <button class="btn-glass-icon-pro" id="nightlight-toggle-btn" aria-label="Toggle Night Light"
             title="Night Light (Mode Nyaman Mata)">
             <i class="bi bi-lamp" id="nightlight-icon"></i>
+          </button>
+
+          <!-- Performance Mode Switcher (⚡ 60 FPS Ultra Smooth / Eco Mode) -->
+          <button class="btn-glass-icon-pro" id="perf-toggle-btn" aria-label="Toggle Performance Mode"
+            title="Mode Performa">
+            <i class="bi bi-speedometer2" id="perf-icon"></i>
           </button>
 
           <!-- Theme Switcher -->
@@ -132,11 +215,19 @@
 
   <!-- Mobile Menu Drawer -->
   <div class="mobile-menu-drawer" id="mobile-drawer">
-    <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+    <div class="flex justify-between items-center mb-3 pb-3 border-b border-white/10">
       <div class="flex items-center gap-2">
+        <button class="btn-glass-icon-pro" id="mobile-glass-toggle-btn" aria-label="Tingkat Glassmorphism"
+          title="Efek Kaca">
+          <i class="bi bi-droplet-half"></i>
+        </button>
         <button class="btn-glass-icon-pro" id="mobile-nightlight-toggle-btn" aria-label="Toggle Night Light"
           title="Night Light">
           <i class="bi bi-lamp" id="mobile-nightlight-icon"></i>
+        </button>
+        <button class="btn-glass-icon-pro" id="mobile-perf-toggle-btn" aria-label="Toggle Performance Mode"
+          title="Mode Performa">
+          <i class="bi bi-speedometer2" id="mobile-perf-icon"></i>
         </button>
         <button class="btn-glass-icon-pro" id="mobile-theme-toggle-btn" aria-label="Toggle Theme" title="Switch Theme">
           <i class="bi bi-sun-fill" id="mobile-theme-icon"></i>
@@ -146,6 +237,33 @@
         <div class="lang-morph-pill"></div>
         <button class="lang-btn-pro lang-btn-id active">ID</button>
         <button class="lang-btn-pro lang-btn-en">EN</button>
+      </div>
+    </div>
+
+    <!-- Mobile iOS 26 Glass Slider -->
+    <div class="mobile-ios-26-slider-container mb-4" id="mobile-glass-card">
+      <div class="ios-26-slider-container w-full">
+        <button type="button" class="ios-26-side-icon ios-26-icon-left" id="mobile-glass-icon-min" title="Matte (Min)" aria-label="Minimal Glass">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="12" height="12" rx="3" />
+            <path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+          </svg>
+        </button>
+        <div class="ios-26-slider-track" id="mobile-ios-slider" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" tabindex="0">
+          <div class="ios-26-rail-bg"></div>
+          <div class="ios-26-rail-fill" id="mobile-slider-fill"></div>
+          <div class="ios-26-glass-thumb" id="mobile-slider-thumb">
+            <div class="ios-26-thumb-core"></div>
+            <div class="ios-26-thumb-specular"></div>
+            <div class="ios-26-thumb-rim-bottom"></div>
+          </div>
+        </div>
+        <button type="button" class="ios-26-side-icon ios-26-icon-right" id="mobile-glass-icon-max" title="Hyper Crystal (Max)" aria-label="Maximum Glass">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 8h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z" opacity="0.4" />
+            <rect x="8" y="4" width="13" height="13" rx="3" />
+          </svg>
+        </button>
       </div>
     </div>
     <a href="#hero" class="nav-link-item" data-i18n="nav_home">Home</a>
@@ -994,7 +1112,7 @@
     onclick="if(event.target === this) closeProjectModal()">
     <div class="apple-glass-modal-card">
       <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close modal">
-        <i class="bi bi-x-lg"></i>
+        <img src="assets/icons/close-x.svg" alt="Tutup" width="14" height="14">
       </button>
       <h3 class="text-xl md:text-2xl font-bold mb-4" id="projectModalTitle" data-i18n="modal_title_default">Detail
         Proyek</h3>
@@ -1038,10 +1156,10 @@
   </button>
 
   <!-- Project Scripts with i18n Engine (No Bootstrap Dependency) -->
-  <script src="js/i18n.js?v=3.8"></script>
-  <script src="js/projects-data.js?v=3.8"></script>
-  <script src="js/main.js?v=3.8"></script>
-  <script src="js/contact.js?v=3.8"></script>
+  <script defer src="js/i18n.js?v=5.6"></script>
+  <script defer src="js/projects-data.js?v=5.6"></script>
+  <script defer src="js/main.js?v=5.6"></script>
+  <script defer src="js/contact.js?v=5.6"></script>
 </body>
 
 </html>

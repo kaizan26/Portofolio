@@ -73,6 +73,7 @@ function showHudToast(message, iconClass = 'bi-lamp-fill') {
 
 /* ==========================================================================
    1. THEME TOGGLE (APPLE PRO LIQUID DARK / CERAMIC PEARL)
+   Circular Reveal Transition Originating from Button Position
    ========================================================================== */
 function initThemeToggle() {
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -84,30 +85,148 @@ function initThemeToggle() {
   document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
 
-  function toggleThemeAction(btn) {
+  let isTransitioning = false;
+
+  async function toggleThemeAction(btn, event) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-    if (btn) btn.classList.add('morphing');
-    setTimeout(() => {
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('bobby-portfolio-theme', newTheme);
-      updateThemeIcon(newTheme);
-      if (btn) btn.classList.remove('morphing');
+    // Calculate exact button center coordinates
+    let x, y;
+    if (btn) {
+      const rect = btn.getBoundingClientRect();
+      x = rect.left + rect.width / 2;
+      y = rect.top + rect.height / 2;
+    } else if (event && event.clientX) {
+      x = event.clientX;
+      y = event.clientY;
+    } else {
+      x = window.innerWidth / 2;
+      y = 40;
+    }
 
-      const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
-      const toastText = newTheme === 'light'
-        ? (currentLang === 'en' ? 'Ceramic Pearl Light Mode' : 'Mode Pearl Light Aktif')
-        : (currentLang === 'en' ? 'Pro Liquid Dark Mode' : 'Mode Liquid Dark Aktif');
-      showHudToast(toastText, newTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill');
-    }, 150);
+    // Maximum distance from button to the 4 viewport corners
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    // Tactile button micro-animation
+    if (btn) {
+      btn.classList.add('morphing', 'btn-theme-active-pulse');
+    }
+
+    const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
+    const toastText = newTheme === 'light'
+      ? (currentLang === 'en' ? 'Ceramic Pearl Light Mode' : 'Mode Pearl Light Aktif')
+      : (currentLang === 'en' ? 'Pro Liquid Dark Mode' : 'Mode Liquid Dark Aktif');
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const supportsViewTransitions = typeof document.startViewTransition === 'function' && !prefersReducedMotion;
+
+    if (supportsViewTransitions) {
+      document.documentElement.classList.add('theme-transitioning');
+
+      const transition = document.startViewTransition(() => {
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('bobby-portfolio-theme', newTheme);
+        updateThemeIcon(newTheme);
+        if (typeof globalApplyGlassLevel === 'function') {
+          globalApplyGlassLevel(currentGlassLevel, false);
+        }
+      });
+
+      transition.ready.then(() => {
+        try {
+          const clipPath = [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`
+          ];
+          document.documentElement.animate(
+            {
+              clipPath: clipPath
+            },
+            {
+              duration: 650,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              pseudoElement: '::view-transition-new(root)'
+            }
+          );
+        } catch (err) {
+          // Graceful fallback if pseudoElement animate is unsupported
+        }
+      }).catch(() => {});
+
+      try {
+        await transition.finished;
+      } catch (e) {
+        // Handled: transition interrupted or cancelled
+      } finally {
+        document.documentElement.classList.remove('theme-transitioning');
+        if (btn) btn.classList.remove('morphing', 'btn-theme-active-pulse');
+        isTransitioning = false;
+        showHudToast(toastText, newTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill');
+      }
+    } else {
+      // Fallback for browsers without View Transitions API or when reduced motion is preferred
+      if (prefersReducedMotion) {
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('bobby-portfolio-theme', newTheme);
+        updateThemeIcon(newTheme);
+        if (typeof globalApplyGlassLevel === 'function') {
+          globalApplyGlassLevel(currentGlassLevel, false);
+        }
+        if (btn) btn.classList.remove('morphing', 'btn-theme-active-pulse');
+        isTransitioning = false;
+        showHudToast(toastText, newTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill');
+        return;
+      }
+
+      // Smooth circular ripple overlay fallback
+      const ripple = document.createElement('div');
+      ripple.className = 'theme-fallback-ripple';
+      const rippleSize = 12;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      ripple.style.width = `${rippleSize}px`;
+      ripple.style.height = `${rippleSize}px`;
+      ripple.style.backgroundColor = newTheme === 'light' ? '#f2f2f6' : '#030306';
+      document.body.appendChild(ripple);
+
+      // Trigger expansion animation
+      ripple.getBoundingClientRect();
+      const scaleMultiplier = (endRadius * 2.2) / rippleSize;
+      ripple.style.transform = `translate(-50%, -50%) scale(${scaleMultiplier})`;
+
+      setTimeout(() => {
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('bobby-portfolio-theme', newTheme);
+        updateThemeIcon(newTheme);
+        if (typeof globalApplyGlassLevel === 'function') {
+          globalApplyGlassLevel(currentGlassLevel, false);
+        }
+      }, 260);
+
+      setTimeout(() => {
+        ripple.style.opacity = '0';
+        if (btn) btn.classList.remove('morphing', 'btn-theme-active-pulse');
+        isTransitioning = false;
+        showHudToast(toastText, newTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill');
+        setTimeout(() => {
+          if (ripple.parentNode) ripple.remove();
+        }, 350);
+      }, 650);
+    }
   }
 
   if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => toggleThemeAction(themeToggleBtn));
+    themeToggleBtn.addEventListener('click', (e) => toggleThemeAction(themeToggleBtn, e));
   }
   if (mobileThemeToggleBtn) {
-    mobileThemeToggleBtn.addEventListener('click', () => toggleThemeAction(mobileThemeToggleBtn));
+    mobileThemeToggleBtn.addEventListener('click', (e) => toggleThemeAction(mobileThemeToggleBtn, e));
   }
 
   function updateThemeIcon(theme) {
@@ -124,6 +243,336 @@ function initThemeToggle() {
       if (mobileThemeToggleBtn) mobileThemeToggleBtn.setAttribute('title', titleText);
     }
   }
+}
+
+/* ==========================================================================
+   1.2. APPLE iOS 26 GLASS ANIMATION SLIDER
+   Interactive horizontal glass capsule slider based on iOS 26 concept
+   ========================================================================== */
+let globalApplyGlassLevel = null;
+let currentGlassLevel = 75;
+
+function initIosGlassSlider() {
+  const toggleBtn = document.getElementById('glass-slider-toggle-btn');
+  const popover = document.getElementById('ios-glass-popover');
+
+  // Desktop slider elements
+  const desktopSlider = document.getElementById('desktop-ios-slider');
+  const desktopFill = document.getElementById('desktop-slider-fill');
+  const desktopThumb = document.getElementById('desktop-slider-thumb');
+  const minIcon = document.getElementById('glass-icon-min');
+  const maxIcon = document.getElementById('glass-icon-max');
+
+  // Mobile slider elements
+  const mobileToggleBtn = document.getElementById('mobile-glass-toggle-btn');
+  const mobileSlider = document.getElementById('mobile-ios-slider');
+  const mobileFill = document.getElementById('mobile-slider-fill');
+  const mobileThumb = document.getElementById('mobile-slider-thumb');
+  const mobileMinIcon = document.getElementById('mobile-glass-icon-min');
+  const mobileMaxIcon = document.getElementById('mobile-glass-icon-max');
+
+  const cores = document.querySelectorAll('.ios-26-thumb-core');
+
+  const savedLevelStr = localStorage.getItem('bobby-portfolio-glass-level');
+  const savedLevel = savedLevelStr !== null ? parseInt(savedLevelStr, 10) : 75;
+  currentGlassLevel = (!isNaN(savedLevel) && savedLevel >= 0 && savedLevel <= 100) ? savedLevel : 75;
+
+  let glideAnimationTimer = null;
+
+  function applyGlassLevel(level, save = true, animate = false) {
+    level = Math.max(0, Math.min(100, Math.round(level)));
+    const prevLevel = currentGlassLevel;
+    currentGlassLevel = level;
+    if (save) {
+      localStorage.setItem('bobby-portfolio-glass-level', level);
+    }
+
+    const factor = level / 75; // 75 is baseline 1.0
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+    // Blur calculations
+    const blurBase = Math.round(20 * factor);
+    const blurSm = Math.round(10 * factor);
+    const blurLg = Math.round(28 * factor);
+    const blurXl = Math.round(36 * factor);
+
+    const rootStyle = document.documentElement.style;
+    rootStyle.setProperty('--glass-factor', factor.toFixed(2));
+    rootStyle.setProperty('--glass-blur', `${blurBase}px`);
+    rootStyle.setProperty('--glass-blur-sm', `${blurSm}px`);
+    rootStyle.setProperty('--glass-blur-lg', `${blurLg}px`);
+    rootStyle.setProperty('--glass-blur-xl', `${blurXl}px`);
+
+    // Dynamic glass background opacities
+    if (isLight) {
+      const cardA = (0.94 - 0.35 * (level / 100)).toFixed(2);
+      const navA = (0.92 - 0.32 * (level / 100)).toFixed(2);
+      rootStyle.setProperty('--glass-bg-card', `rgba(255, 255, 255, ${cardA})`);
+      rootStyle.setProperty('--glass-bg-nav', `rgba(255, 255, 255, ${navA})`);
+    } else {
+      const cardA = (0.85 - 0.52 * (level / 100)).toFixed(2);
+      const navA = (0.88 - 0.48 * (level / 100)).toFixed(2);
+      rootStyle.setProperty('--glass-bg-card', `rgba(25, 25, 36, ${cardA})`);
+      rootStyle.setProperty('--glass-bg-nav', `rgba(20, 20, 28, ${navA})`);
+    }
+
+    // Saturation and border reflection
+    const sat = Math.round(110 + 120 * (level / 100));
+    rootStyle.setProperty('--glass-saturate', `${sat}%`);
+    const borderA = (0.05 + 0.16 * (level / 100)).toFixed(2);
+    rootStyle.setProperty('--glass-border', `rgba(255, 255, 255, ${borderA})`);
+
+    // Update UI elements with fluid physics
+    updateUI(level, animate, prevLevel);
+  }
+
+  globalApplyGlassLevel = applyGlassLevel;
+
+  function updateUI(level, animate, prevLevel) {
+    const delta = level - (prevLevel !== undefined ? prevLevel : level);
+    const allThumbs = [desktopThumb, mobileThumb].filter(Boolean);
+    const allFills = [desktopFill, mobileFill].filter(Boolean);
+
+    cores.forEach(c => {
+      c.style.opacity = level <= 2 ? '0' : '1';
+    });
+
+    if (animate && Math.abs(delta) > 1) {
+      // Smooth fluid glide transition
+      allFills.forEach(f => f.style.transition = 'width 0.4s cubic-bezier(0.34, 1.25, 0.64, 1)');
+      allThumbs.forEach(t => {
+        t.style.transition = 'left 0.4s cubic-bezier(0.34, 1.25, 0.64, 1)';
+        t.style.transform = '';
+        t.classList.remove('glide-right', 'glide-left', 'fluid-bounce');
+        t.classList.add(delta > 0 ? 'glide-right' : 'glide-left');
+      });
+
+      clearTimeout(glideAnimationTimer);
+      glideAnimationTimer = setTimeout(() => {
+        allThumbs.forEach(t => {
+          t.classList.remove('glide-right', 'glide-left');
+          void t.offsetWidth; // trigger reflow
+          t.classList.add('fluid-bounce');
+        });
+        setTimeout(() => {
+          allThumbs.forEach(t => t.classList.remove('fluid-bounce'));
+        }, 550);
+      }, 190);
+    } else if (!animate) {
+      // Active dragging: disable transition for direct responsive touch
+      allFills.forEach(f => f.style.transition = 'none');
+      allThumbs.forEach(t => t.style.transition = 'none');
+    }
+
+    if (desktopFill) desktopFill.style.width = `${level}%`;
+    if (desktopThumb) desktopThumb.style.left = `${level}%`;
+    if (desktopSlider) desktopSlider.setAttribute('aria-valuenow', level);
+
+    if (mobileFill) mobileFill.style.width = `${level}%`;
+    if (mobileThumb) mobileThumb.style.left = `${level}%`;
+    if (mobileSlider) mobileSlider.setAttribute('aria-valuenow', level);
+  }
+
+  // Initial apply
+  applyGlassLevel(currentGlassLevel, false, false);
+
+  // Popover toggle for desktop navbar button
+  if (toggleBtn && popover) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = popover.classList.contains('show');
+      if (isOpen) {
+        popover.classList.remove('show');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        popover.classList.add('show');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        // Trigger subtle arrival bounce
+        if (desktopThumb) {
+          desktopThumb.classList.remove('fluid-bounce');
+          void desktopThumb.offsetWidth;
+          desktopThumb.classList.add('fluid-bounce');
+          setTimeout(() => desktopThumb.classList.remove('fluid-bounce'), 550);
+        }
+      }
+    });
+
+    popover.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (popover.classList.contains('show') && !popover.contains(e.target) && e.target !== toggleBtn && !toggleBtn.contains(e.target)) {
+        popover.classList.remove('show');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popover.classList.contains('show')) {
+        popover.classList.remove('show');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Mobile toggle button inside drawer
+  const mobileGlassCard = document.getElementById('mobile-glass-card');
+  if (mobileToggleBtn) {
+    mobileToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (mobileGlassCard) {
+        const isCollapsed = mobileGlassCard.classList.contains('collapsed');
+        mobileGlassCard.classList.toggle('collapsed', !isCollapsed);
+        mobileToggleBtn.classList.toggle('active', isCollapsed);
+        if (isCollapsed && mobileThumb) {
+          mobileThumb.classList.remove('fluid-bounce');
+          void mobileThumb.offsetWidth;
+          mobileThumb.classList.add('fluid-bounce');
+          setTimeout(() => mobileThumb.classList.remove('fluid-bounce'), 550);
+        }
+      }
+    });
+  }
+
+  // Hook up side min / max icons to fluidly glide to preset levels
+  if (minIcon) minIcon.addEventListener('click', () => applyGlassLevel(10, true, true));
+  if (maxIcon) maxIcon.addEventListener('click', () => applyGlassLevel(100, true, true));
+  if (mobileMinIcon) mobileMinIcon.addEventListener('click', () => applyGlassLevel(10, true, true));
+  if (mobileMaxIcon) mobileMaxIcon.addEventListener('click', () => applyGlassLevel(100, true, true));
+
+  // Fluid velocity physics slider controller
+  function setupHorizontalSlider(track, thumb) {
+    if (!track || !thumb) return;
+    let isDragging = false;
+    let lastX = 0;
+    let lastTime = 0;
+    let decayTimer = null;
+    let startX = 0;
+
+    function getTrackPct(clientX) {
+      const rect = track.getBoundingClientRect();
+      const clampedX = Math.max(rect.left, Math.min(rect.right, clientX));
+      return Math.round(((clampedX - rect.left) / rect.width) * 100);
+    }
+
+    function handlePointerMove(clientX) {
+      const now = performance.now();
+      const dt = Math.max(1, now - lastTime);
+      const dx = clientX - lastX;
+      const vx = dx / dt; // velocity in px/ms
+
+      lastX = clientX;
+      lastTime = now;
+
+      // Real-time fluid velocity squash & stretch
+      // As user accelerates sideways, droplet elongates horizontally and squashes vertically
+      const speed = Math.min(Math.abs(vx) * 0.22, 0.40); // max 40% elongation
+      const scaleX = (1 + speed).toFixed(3);
+      const scaleY = (1 / Math.sqrt(1 + speed)).toFixed(3);
+      const skewX = Math.max(-10, Math.min(10, -vx * 6)).toFixed(1);
+
+      thumb.style.transform = `translate(-50%, -50%) scaleX(${scaleX}) scaleY(${scaleY}) skewX(${skewX}deg)`;
+
+      // Decay deformation back to round droplet if dragging stops without releasing
+      clearTimeout(decayTimer);
+      decayTimer = setTimeout(() => {
+        if (isDragging) {
+          thumb.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+      }, 70);
+
+      const pct = getTrackPct(clientX);
+      applyGlassLevel(pct, true, false);
+    }
+
+    track.addEventListener('mousedown', (e) => {
+      // If clicking directly on side icons, don't trigger track drag
+      if (e.target.closest('.ios-26-side-icon')) return;
+
+      const targetPct = getTrackPct(e.clientX);
+      const diff = Math.abs(targetPct - currentGlassLevel);
+
+      // If user tapped far from the thumb, glide smoothly with liquid stretch & bounce!
+      if (diff > 5 && !e.target.closest('.ios-26-glass-thumb')) {
+        applyGlassLevel(targetPct, true, true);
+        return;
+      }
+
+      isDragging = true;
+      startX = e.clientX;
+      lastX = e.clientX;
+      lastTime = performance.now();
+      track.classList.add('dragging');
+      thumb.classList.remove('glide-right', 'glide-left', 'fluid-bounce');
+      handlePointerMove(e.clientX);
+    });
+
+    track.addEventListener('touchstart', (e) => {
+      if (!e.touches[0] || e.target.closest('.ios-26-side-icon')) return;
+
+      const clientX = e.touches[0].clientX;
+      const targetPct = getTrackPct(clientX);
+      const diff = Math.abs(targetPct - currentGlassLevel);
+
+      if (diff > 5 && !e.target.closest('.ios-26-glass-thumb')) {
+        applyGlassLevel(targetPct, true, true);
+        return;
+      }
+
+      isDragging = true;
+      startX = clientX;
+      lastX = clientX;
+      lastTime = performance.now();
+      track.classList.add('dragging');
+      thumb.classList.remove('glide-right', 'glide-left', 'fluid-bounce');
+      handlePointerMove(clientX);
+    }, { passive: true });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      handlePointerMove(e.clientX);
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || !e.touches[0]) return;
+      handlePointerMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    const stopDragging = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('dragging');
+      clearTimeout(decayTimer);
+
+      // Clear inline transform and execute elastic jelly spring rebound
+      thumb.style.transform = '';
+      thumb.classList.remove('fluid-bounce');
+      void thumb.offsetWidth; // trigger reflow
+      thumb.classList.add('fluid-bounce');
+      setTimeout(() => {
+        thumb.classList.remove('fluid-bounce');
+      }, 550);
+    };
+
+    window.addEventListener('mouseup', stopDragging);
+    window.addEventListener('touchend', stopDragging);
+
+    // Keyboard navigation with fluid animation
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        applyGlassLevel(currentGlassLevel + 6, true, true);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        applyGlassLevel(currentGlassLevel - 6, true, true);
+      }
+    });
+  }
+
+  // Initialize both desktop and mobile sliders
+  setupHorizontalSlider(desktopSlider, desktopThumb);
+  setupHorizontalSlider(mobileSlider, mobileThumb);
 }
 
 /* ==========================================================================
@@ -169,8 +618,8 @@ function initNightLightToggle() {
 
     const iconClass = isActive ? 'bi bi-lamp-fill' : 'bi bi-lamp';
     const tooltip = isActive
-      ? (dict ? dict.nav_nightlight_on : 'Matikan Night Light (Filter Layar Hangat)')
-      : (dict ? dict.nav_nightlight_off : 'Aktifkan Night Light (Mode Nyaman Mata)');
+      ? (dict?.nav_nightlight_on || (currentLang === 'en' ? 'Disable Night Light' : 'Matikan Night Light (Filter Layar Hangat)'))
+      : (dict?.nav_nightlight_off || (currentLang === 'en' ? 'Enable Night Light' : 'Aktifkan Night Light (Mode Nyaman Mata)'));
 
     if (nightLightBtn) {
       nightLightBtn.classList.toggle('nightlight-active', isActive);
@@ -186,9 +635,85 @@ function initNightLightToggle() {
 
     if (triggerToast) {
       const toastText = isActive
-        ? (dict ? dict.toast_nightlight_on : '🌙 Mode Night Light Aktif (Warm Amber)')
-        : (dict ? dict.toast_nightlight_off : '☀️ Mode Standar Dikembalikan');
+        ? (dict?.toast_nightlight_on || (currentLang === 'en' ? 'Night Light Mode Active' : 'Mode Night Light Aktif'))
+        : (dict?.toast_nightlight_off || (currentLang === 'en' ? 'Standard Mode Restored' : 'Mode Standar Dikembalikan'));
       showHudToast(toastText, isActive ? 'bi-lamp-fill' : 'bi-lamp');
+    }
+  }
+}
+
+/* ==========================================================================
+   1.6. ADAPTIVE 60 FPS PERFORMANCE ENGINE (FOR ENTRY-LEVEL HARDWARE)
+   ========================================================================== */
+function initPerformanceEngine() {
+  const perfBtn = document.getElementById('perf-toggle-btn');
+  const mobilePerfBtn = document.getElementById('mobile-perf-toggle-btn');
+  const perfIcon = document.getElementById('perf-icon');
+  const mobilePerfIcon = document.getElementById('mobile-perf-icon');
+
+  const savedPerf = localStorage.getItem('bobby-portfolio-perf');
+
+  // Auto-detect entry-level hardware: 4 or fewer CPU threads, or low RAM <= 4GB
+  const isEntryLevelDevice = (typeof navigator !== 'undefined') && (
+    (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+    (navigator.deviceMemory && navigator.deviceMemory <= 4)
+  );
+
+  // Default to performance mode on entry-level hardware unless user manually changed it
+  const initialPerfState = savedPerf !== null ? (savedPerf === 'true') : isEntryLevelDevice;
+  applyPerfState(initialPerfState, false);
+
+  function togglePerfAction(btn) {
+    const currentState = document.documentElement.getAttribute('data-perf-mode') === 'true';
+    const newState = !currentState;
+
+    if (btn) btn.classList.add('morphing');
+    setTimeout(() => {
+      applyPerfState(newState, true);
+      localStorage.setItem('bobby-portfolio-perf', newState ? 'true' : 'false');
+      if (btn) btn.classList.remove('morphing');
+    }, 150);
+  }
+
+  if (perfBtn) {
+    perfBtn.addEventListener('click', () => togglePerfAction(perfBtn));
+  }
+  if (mobilePerfBtn) {
+    mobilePerfBtn.addEventListener('click', () => togglePerfAction(mobilePerfBtn));
+  }
+
+  function applyPerfState(isActive, triggerToast = false) {
+    if (isActive) {
+      document.documentElement.setAttribute('data-perf-mode', 'true');
+    } else {
+      document.documentElement.removeAttribute('data-perf-mode');
+    }
+
+    const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
+    const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
+
+    const iconClass = isActive ? 'bi bi-lightning-charge-fill' : 'bi bi-speedometer2';
+    const tooltip = isActive
+      ? (dict?.nav_perf_on || (currentLang === 'en' ? 'Disable Performance Mode' : 'Matikan Mode Performa'))
+      : (dict?.nav_perf_off || (currentLang === 'en' ? 'Performance Mode' : 'Mode Performa'));
+
+    if (perfBtn) {
+      perfBtn.classList.toggle('perf-active', isActive);
+      perfBtn.setAttribute('title', tooltip);
+    }
+    if (mobilePerfBtn) {
+      mobilePerfBtn.classList.toggle('perf-active', isActive);
+      mobilePerfBtn.setAttribute('title', tooltip);
+    }
+
+    if (perfIcon) perfIcon.className = iconClass;
+    if (mobilePerfIcon) mobilePerfIcon.className = iconClass;
+
+    if (triggerToast) {
+      const toastText = isActive
+        ? (dict?.toast_perf_on || (currentLang === 'en' ? 'Performance Mode Active' : '⚡ Mode Performa Aktif'))
+        : (dict?.toast_perf_off || (currentLang === 'en' ? 'Full Visual Mode Active' : '✨ Mode Visual Lengkap Aktif'));
+      showHudToast(toastText, isActive ? 'bi-lightning-charge-fill' : 'bi-speedometer2');
     }
   }
 }
@@ -219,6 +744,11 @@ function initInteractiveBackground() {
   ];
 
   function animateFluidLayers(now) {
+    if (document.hidden || document.documentElement.getAttribute('data-perf-mode') === 'true') {
+      isAnimating = false;
+      return;
+    }
+
     const deltaMs = now - lastTimestamp;
     lastTimestamp = now;
     // Normalize to 60fps timebase (~16.67ms) so physics feel identical on 60/90/120/144Hz displays
@@ -254,6 +784,7 @@ function initInteractiveBackground() {
   }
 
   window.addEventListener('mousemove', (e) => {
+    if (document.documentElement.getAttribute('data-perf-mode') === 'true') return;
     mouseX = e.clientX;
     mouseY = e.clientY;
 
@@ -263,6 +794,12 @@ function initInteractiveBackground() {
       requestAnimationFrame(animateFluidLayers);
     }
   }, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      isAnimating = false;
+    }
+  });
 }
 
 /* ==========================================================================
@@ -537,18 +1074,44 @@ function initAmbientCursorGlow() {
 
   if (window.matchMedia("(pointer: fine)").matches) {
     let glowVisible = false;
+    let glowRafScheduled = false;
+    let targetX = 0;
+    let targetY = 0;
 
     window.addEventListener('mousemove', (e) => {
-      glow.style.transform = `translate3d(${e.clientX - 210}px, ${e.clientY - 210}px, 0)`;
-      if (!glowVisible) {
-        glow.style.opacity = '1';
-        glowVisible = true;
+      if (document.hidden || document.documentElement.getAttribute('data-perf-mode') === 'true') {
+        if (glowVisible) {
+          glow.style.opacity = '0';
+          glowVisible = false;
+        }
+        return;
+      }
+      targetX = e.clientX - 210;
+      targetY = e.clientY - 210;
+
+      if (!glowRafScheduled) {
+        glowRafScheduled = true;
+        requestAnimationFrame(() => {
+          glow.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+          if (!glowVisible) {
+            glow.style.opacity = '1';
+            glowVisible = true;
+          }
+          glowRafScheduled = false;
+        });
       }
     }, { passive: true });
 
     document.addEventListener('mouseleave', () => {
       glow.style.opacity = '0';
       glowVisible = false;
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        glow.style.opacity = '0';
+        glowVisible = false;
+      }
     });
   } else {
     glow.style.display = 'none';
@@ -605,6 +1168,20 @@ function initTerminalTabs() {
   const terminalContainer = document.querySelector('.terminal-tabs');
   if (!terminalTabs.length || !codeBody) return;
 
+  function setSnippet(key) {
+    if (TERMINAL_SNIPPETS[key]) {
+      codeBody.style.opacity = '0';
+      codeBody.style.transform = 'translateY(4px)';
+      codeBody.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+
+      setTimeout(() => {
+        codeBody.innerHTML = TERMINAL_SNIPPETS[key].trim();
+        codeBody.style.opacity = '1';
+        codeBody.style.transform = 'translateY(0)';
+      }, 90);
+    }
+  }
+
   terminalTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       terminalTabs.forEach(t => t.classList.remove('active'));
@@ -612,21 +1189,16 @@ function initTerminalTabs() {
       if (terminalContainer) {
         updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
       }
-
-      const snippetKey = tab.getAttribute('data-snippet');
-      if (TERMINAL_SNIPPETS[snippetKey]) {
-        codeBody.style.opacity = '0';
-        codeBody.style.transform = 'translateY(6px)';
-        codeBody.style.transition = 'all 0.2s ease';
-
-        setTimeout(() => {
-          codeBody.innerHTML = TERMINAL_SNIPPETS[snippetKey].trim();
-          codeBody.style.opacity = '1';
-          codeBody.style.transform = 'translateY(0)';
-        }, 120);
-      }
+      setSnippet(tab.getAttribute('data-snippet'));
     });
   });
+
+  const activeTab = document.querySelector('.terminal-tab-btn.active');
+  if (activeTab && terminalContainer) {
+    setTimeout(() => {
+      updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
+    }, 100);
+  }
 }
 
 /* ==========================================================================
@@ -638,25 +1210,43 @@ function init3DSpotlightCards() {
   const cards = document.querySelectorAll('.glass-card, .hero-terminal-glass, .stats-bar-card, .apple-explorer-wrapper, .stage-device-frame');
 
   cards.forEach(card => {
+    let cardRect = null;
+    let rafScheduled = false;
+
+    card.addEventListener('mouseenter', () => {
+      if (document.documentElement.getAttribute('data-perf-mode') === 'true') return;
+      cardRect = card.getBoundingClientRect();
+    }, { passive: true });
+
     card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      if (document.documentElement.getAttribute('data-perf-mode') === 'true') return;
+      if (!cardRect) cardRect = card.getBoundingClientRect();
 
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+      const x = e.clientX - cardRect.left;
+      const y = e.clientY - cardRect.top;
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -5;
-      const rotateY = ((x - centerX) / centerX) * 5;
+      if (!rafScheduled) {
+        rafScheduled = true;
+        requestAnimationFrame(() => {
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
 
-      card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(8px) translateY(-2px)`;
-    });
+          const centerX = cardRect.width / 2;
+          const centerY = cardRect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -4;
+          const rotateY = ((x - centerX) / centerX) * 4;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(6px)`;
+          rafScheduled = false;
+        });
+      }
+    }, { passive: true });
 
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0) translateY(0)';
-    });
+      rafScheduled = false;
+      cardRect = null;
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+    }, { passive: true });
   });
 }
 
@@ -664,120 +1254,15 @@ function init3DSpotlightCards() {
    9. APPLE PRO INTERACTIVE ARCHITECTURE EXPLORER
    ========================================================================== */
 function renderExplorerStageSVG(type) {
-  if (type === 'webqual') {
-    return `
-      <svg class="stage-svg-visual" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="420" height="260" rx="16" fill="rgba(255, 159, 10, 0.05)" stroke="rgba(255, 159, 10, 0.3)" stroke-width="1.5" />
-        <line x1="230" y1="30" x2="230" y2="270" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" stroke-dasharray="4 4" />
-        <line x1="30" y1="150" x2="430" y2="150" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" stroke-dasharray="4 4" />
-        
-        <circle cx="230" cy="150" r="85" stroke="rgba(255, 159, 10, 0.25)" stroke-width="1.5" stroke-dasharray="6 6" />
-        <polygon points="230,85 295,130 265,210 195,210 165,130" fill="rgba(255, 159, 10, 0.2)" stroke="#ff9f0a" stroke-width="2.5" />
-        
-        <circle cx="230" cy="85" r="6" fill="#ff9f0a" />
-        <text x="230" y="72" text-anchor="middle" fill="#ff9f0a" font-size="11" font-weight="bold">Usability (4.6)</text>
-        
-        <circle cx="295" cy="130" r="6" fill="#ff9f0a" />
-        <text x="345" y="135" text-anchor="middle" fill="#ff9f0a" font-size="11" font-weight="bold">Information (4.8)</text>
-        
-        <circle cx="165" cy="130" r="6" fill="#ff9f0a" />
-        <text x="110" y="135" text-anchor="middle" fill="#ff9f0a" font-size="11" font-weight="bold">Service (4.4)</text>
-        
-        <text x="330" y="55" fill="#38bdf8" font-size="10" font-weight="bold">Quadrant II: Keep Up</text>
-        <text x="130" y="55" fill="#ff453a" font-size="10" font-weight="bold">Quadrant I: Priority</text>
-      </svg>
-    `;
-  } else if (type === 'mvc') {
-    return `
-      <svg class="stage-svg-visual" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="420" height="260" rx="16" fill="rgba(41, 151, 255, 0.05)" stroke="rgba(41, 151, 255, 0.3)" stroke-width="1.5" />
-        
-        <!-- Controller Node -->
-        <rect x="175" y="50" width="110" height="50" rx="12" fill="rgba(41, 151, 255, 0.25)" stroke="#2997ff" stroke-width="2" />
-        <text x="230" y="80" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">Controller</text>
-        
-        <!-- Model Node -->
-        <rect x="70" y="180" width="110" height="50" rx="12" fill="rgba(175, 82, 222, 0.25)" stroke="#af52de" stroke-width="2" />
-        <text x="125" y="210" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">Model (DB)</text>
-        
-        <!-- View Node -->
-        <rect x="280" y="180" width="110" height="50" rx="12" fill="rgba(48, 209, 88, 0.25)" stroke="#30d158" stroke-width="2" />
-        <text x="335" y="210" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">View (UI)</text>
-        
-        <!-- Connection Paths -->
-        <path d="M 210,100 L 140,180" stroke="#2997ff" stroke-width="2" stroke-dasharray="5 5" />
-        <path d="M 250,100 L 320,180" stroke="#30d158" stroke-width="2" stroke-dasharray="5 5" />
-        <path d="M 180,205 L 280,205" stroke="#af52de" stroke-width="1.5" stroke-dasharray="4 4" />
-        
-        <circle cx="175" cy="140" r="4" fill="#2997ff" />
-        <circle cx="285" cy="140" r="4" fill="#30d158" />
-      </svg>
-    `;
-  } else if (type === 'database') {
-    return `
-      <svg class="stage-svg-visual" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="420" height="260" rx="16" fill="rgba(48, 209, 88, 0.05)" stroke="rgba(48, 209, 88, 0.3)" stroke-width="1.5" />
-        
-        <!-- Table 1: Users -->
-        <rect x="50" y="60" width="140" height="85" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(48, 209, 88, 0.6)" stroke-width="1.5" />
-        <rect x="50" y="60" width="140" height="24" rx="10 10 0 0" fill="rgba(48, 209, 88, 0.3)" />
-        <text x="120" y="77" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">users (PK)</text>
-        <text x="62" y="102" fill="#86868b" font-size="9.5">🔑 id: INT</text>
-        <text x="62" y="118" fill="#86868b" font-size="9.5">👤 name: VARCHAR</text>
-        <text x="62" y="134" fill="#86868b" font-size="9.5">📧 email: VARCHAR</text>
-        
-        <!-- Table 2: Rentals -->
-        <rect x="270" y="60" width="140" height="85" rx="10" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(56, 189, 248, 0.6)" stroke-width="1.5" />
-        <rect x="270" y="60" width="140" height="24" rx="10 10 0 0" fill="rgba(56, 189, 248, 0.3)" />
-        <text x="340" y="77" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">rentals (FK)</text>
-        <text x="282" y="102" fill="#86868b" font-size="9.5">🔑 id: INT</text>
-        <text x="282" y="118" fill="#86868b" font-size="9.5">🔗 user_id: INT</text>
-        <text x="282" y="134" fill="#86868b" font-size="9.5">🚗 car_id: INT</text>
-        
-        <!-- Relation Line -->
-        <path d="M 190,102 C 230,102 230,118 270,118" stroke="#30d158" stroke-width="2" fill="none" />
-        <circle cx="190" cy="102" r="3" fill="#30d158" />
-        <circle cx="270" cy="118" r="3" fill="#30d158" />
-        
-        <text x="230" y="240" text-anchor="middle" fill="#30d158" font-size="12" font-weight="bold">Third Normal Form (3NF) Verified</text>
-      </svg>
-    `;
-  } else if (type === 'community') {
-    return `
-      <svg class="stage-svg-visual" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="420" height="260" rx="16" fill="rgba(175, 82, 222, 0.05)" stroke="rgba(175, 82, 222, 0.3)" stroke-width="1.5" />
-        <path d="M 50,150 Q 150,80 230,140 T 410,120" stroke="rgba(175, 82, 222, 0.4)" stroke-width="3" fill="none" />
-        
-        <!-- Pin 1 -->
-        <circle cx="120" cy="110" r="18" fill="rgba(175, 82, 222, 0.2)" stroke="#af52de" stroke-width="2" />
-        <circle cx="120" cy="110" r="5" fill="#af52de" />
-        <text x="120" y="145" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Pantai Lamaru</text>
-        
-        <!-- Pin 2 -->
-        <circle cx="260" cy="160" r="18" fill="rgba(41, 151, 255, 0.2)" stroke="#2997ff" stroke-width="2" />
-        <circle cx="260" cy="160" r="5" fill="#2997ff" />
-        <text x="260" y="195" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Sentra UMKM</text>
-        
-        <!-- Pin 3 -->
-        <circle cx="360" cy="110" r="18" fill="rgba(48, 209, 88, 0.2)" stroke="#30d158" stroke-width="2" />
-        <circle cx="360" cy="110" r="5" fill="#30d158" />
-        <text x="360" y="145" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Ekowisata</text>
-      </svg>
-    `;
-  } else {
-    return `
-      <svg class="stage-svg-visual" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="420" height="260" rx="16" fill="rgba(255, 45, 85, 0.05)" stroke="rgba(255, 45, 85, 0.3)" stroke-width="1.5" />
-        
-        <path d="M 230,60 L 310,100 V 170 C 310,215 230,245 230,245 C 230,245 150,215 150,170 V 100 Z" fill="rgba(255, 45, 85, 0.18)" stroke="#ff2d55" stroke-width="2.5" />
-        <circle cx="230" cy="140" r="24" fill="rgba(255, 45, 85, 0.3)" stroke="#ff2d55" stroke-width="2" />
-        <path d="M 222,140 L 228,146 L 240,134" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-        
-        <text x="230" y="195" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">RBAC & Data Encryption</text>
-        <text x="230" y="270" text-anchor="middle" fill="#ff2d55" font-size="11">SQLi & XSS Shield Active</text>
-      </svg>
-    `;
-  }
+  const svgs = {
+    webqual: 'assets/images/explorer/explorer-webqual.svg',
+    mvc: 'assets/images/explorer/explorer-mvc.svg',
+    database: 'assets/images/explorer/explorer-database.svg',
+    community: 'assets/images/explorer/explorer-community.svg',
+    security: 'assets/images/explorer/explorer-security.svg'
+  };
+  const src = svgs[type] || svgs.webqual;
+  return `<img src="${src}" class="stage-svg-visual" alt="Arsitektur Sistem - ${type}" loading="lazy" decoding="async">`;
 }
 
 function initAppleFeatureExplorer() {
@@ -852,47 +1337,13 @@ function initAppleFeatureExplorer() {
    10. BESPOKE SVG PROJECT BANNERS (APPLE LIQUID GLASS)
    ========================================================================== */
 function getProjectBannerSVG(projectId) {
-  if (projectId === 'siat-webqual') {
-    return `
-      <svg class="project-banner-svg" viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="200" cy="80" r="58" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.5" stroke-dasharray="4 4" />
-        <circle cx="200" cy="80" r="38" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" />
-        <line x1="200" y1="12" x2="200" y2="148" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.2" />
-        <line x1="130" y1="80" x2="270" y2="80" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.2" />
-        <polygon points="200,28 244,65 224,120 176,120 156,65" fill="rgba(56, 189, 248, 0.22)" stroke="#38bdf8" stroke-width="2.5" />
-        <circle cx="200" cy="28" r="5" fill="#38bdf8" />
-        <circle cx="244" cy="65" r="5" fill="#38bdf8" />
-        <circle cx="224" cy="120" r="5" fill="#38bdf8" />
-        <circle cx="176" cy="120" r="5" fill="#38bdf8" />
-        <circle cx="156" cy="65" r="5" fill="#38bdf8" />
-        <text x="200" y="148" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="sans-serif" font-weight="600">WebQual 4.0 &bull; IPA Matrix Analysis</text>
-      </svg>
-    `;
-  } else if (projectId === 'sirem-fleet') {
-    return `
-      <svg class="project-banner-svg" viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 70,80 Q 140,25 200,80 T 330,80" stroke="rgba(168, 85, 247, 0.5)" stroke-width="2.5" fill="none" stroke-dasharray="6 6" />
-        <rect x="60" y="55" width="70" height="46" rx="10" fill="rgba(168, 85, 247, 0.25)" stroke="#a855f7" stroke-width="2" />
-        <text x="95" y="83" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Model</text>
-        <rect x="165" y="55" width="70" height="46" rx="10" fill="rgba(236, 72, 153, 0.25)" stroke="#ec4899" stroke-width="2" />
-        <text x="200" y="83" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">View</text>
-        <rect x="270" y="55" width="70" height="46" rx="10" fill="rgba(99, 102, 241, 0.25)" stroke="#6366f1" stroke-width="2" />
-        <text x="305" y="83" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Controller</text>
-        <text x="200" y="148" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="sans-serif" font-weight="600">CodeIgniter MVC &bull; Fleet Telemetry</text>
-      </svg>
-    `;
-  } else {
-    return `
-      <svg class="project-banner-svg" viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 110,100 Q 150,45 200,95 T 290,70" stroke="rgba(16, 185, 129, 0.5)" stroke-width="3" fill="none" />
-        <circle cx="150" cy="62" r="16" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" stroke-width="2" />
-        <circle cx="150" cy="62" r="5" fill="#10b981" />
-        <circle cx="250" cy="80" r="16" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="2" />
-        <circle cx="250" cy="80" r="5" fill="#06b6d4" />
-        <text x="200" y="148" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="sans-serif" font-weight="600">GIS Tourism &bull; Community Digitalization</text>
-      </svg>
-    `;
-  }
+  const bannerMap = {
+    'siat-webqual': 'assets/images/projects/siat-webqual.svg',
+    'sirem-fleet': 'assets/images/projects/sirem-fleet.svg',
+    'lamaru-smart-tourism': 'assets/images/projects/lamaru-tourism.svg'
+  };
+  const src = bannerMap[projectId] || 'assets/images/projects/siat-webqual.svg';
+  return `<img src="${src}" class="project-banner-svg" alt="Preview Proyek ${projectId}" loading="lazy" decoding="async">`;
 }
 
 /* ==========================================================================
@@ -932,10 +1383,10 @@ function initProjectsRender() {
           </div>
           
           <div class="project-actions pt-2">
-            <button class="btn-apple-project-action" onclick="event.stopPropagation(); openProjectModal('${proj.id}')">
+            <button type="button" class="btn-apple-project-action" onclick="event.stopPropagation(); openProjectModal('${proj.id}')">
               <span>${viewDetailsText}</span>
               <div class="action-icon-circle">
-                <i class="bi bi-arrow-up-right"></i>
+                <img src="assets/icons/arrow-up-right.svg" alt="Detail" width="13" height="13">
               </div>
             </button>
           </div>
@@ -975,6 +1426,60 @@ function initProjectFilter() {
   });
 }
 
+// Lightweight in-modal markdown formatter
+function formatInlineMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>');
+}
+
+function formatProjectMarkdown(mdText) {
+  if (!mdText) return '';
+  const lines = mdText.split('\n');
+  let html = '';
+  let inList = false;
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      continue;
+    }
+
+    if (trimmed.startsWith('### ')) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      const title = trimmed.replace(/^###\s+/, '');
+      html += `<h6 class="modal-subheading">${formatInlineMarkdown(title)}</h6>`;
+    } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      if (!inList) {
+        html += '<ul class="modal-bullet-list">';
+        inList = true;
+      }
+      const item = trimmed.replace(/^[-*]\s+/, '');
+      html += `<li>${formatInlineMarkdown(item)}</li>`;
+    } else {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      html += `<p class="modal-desc-p mb-2">${formatInlineMarkdown(trimmed)}</p>`;
+    }
+  }
+
+  if (inList) {
+    html += '</ul>';
+  }
+
+  return html;
+}
+
 // Global Apple Glass Modal Trigger
 window.openProjectModal = function (projectId) {
   if (typeof getLocalizedProjects !== 'function') return;
@@ -1002,12 +1507,12 @@ window.openProjectModal = function (projectId) {
       </div>
       
       <div class="mb-6">
-        <h5 class="font-bold text-lg mb-2 text-white">${sectionDesc}</h5>
-        <div class="text-secondary text-sm md:text-base leading-relaxed" style="white-space: pre-line;">${project.fullDescription}</div>
+        <h5 class="modal-section-title">${sectionDesc}</h5>
+        <div class="modal-desc-body">${formatProjectMarkdown(project.fullDescription)}</div>
       </div>
       
       <div class="mb-6">
-        <h5 class="font-bold text-lg mb-3 text-white">${sectionMetrics}</h5>
+        <h5 class="modal-section-title">${sectionMetrics}</h5>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           ${project.metrics.map(m => `
             <div class="glass-card-subtle p-3 text-center">
@@ -1019,7 +1524,7 @@ window.openProjectModal = function (projectId) {
       </div>
       
       <div>
-        <h5 class="font-bold text-lg mb-2 text-white">${sectionTech}</h5>
+        <h5 class="modal-section-title">${sectionTech}</h5>
         <div class="flex flex-wrap gap-2">
           ${project.techStack.map(t => `<span class="tech-chip">${t}</span>`).join('')}
         </div>
@@ -1249,84 +1754,15 @@ function initScrollReveal() {
   }
 }
 
-/* ==========================================================================
-   15. DEVELOPER TERMINAL TABS
-   ========================================================================== */
-function initTerminalTabs() {
-  const tabBtns = document.querySelectorAll('.terminal-tab-btn');
-  const codeBody = document.getElementById('terminal-code-body');
-  const morphPill = document.getElementById('terminal-morph-pill');
-  if (!tabBtns.length || !codeBody) return;
-
-  const snippets = {
-    overview: `<span class="term-comment"># Engineer & Information Systems Profile</span>
-<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
-  <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
-  <span class="term-prop">almaMater</span>: <span class="term-string">"ITK Kalimantan"</span>,
-  <span class="term-prop">focus</span>: [
-    <span class="term-string">"Web Systems"</span>,
-    <span class="term-string">"Info Architecture"</span>,
-    <span class="term-string">"UX Analytics"</span>
-  ],
-  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & IPA"</span>,
-  <span class="term-prop">status</span>: <span class="term-val">"Available for Collaboration"</span>
-};
-
-<span class="term-cmd">console</span>.log(<span class="term-string">"System operational."</span>);`,
-    research: `<span class="term-comment">-- Research Database Structure (WebQual 4.0 & SIAT)</span>
-<span class="term-keyword">SELECT</span> 
-  dimensi_webqual, 
-  <span class="term-cmd">AVG</span>(nilai_persepsi) <span class="term-keyword">AS</span> mean_performance,
-  <span class="term-cmd">AVG</span>(nilai_harapan) <span class="term-keyword">AS</span> mean_importance,
-  kuadran_ipa
-<span class="term-keyword">FROM</span> riset_evaluasi_siat
-<span class="term-keyword">GROUP BY</span> dimensi_webqual
-<span class="term-keyword">ORDER BY</span> mean_importance <span class="term-keyword">DESC</span>;`,
-    stack: `{
-  <span class="term-prop">"architecture"</span>: <span class="term-string">"Model-View-Controller (MVC)"</span>,
-  <span class="term-prop">"languages"</span>: [<span class="term-string">"PHP"</span>, <span class="term-string">"JavaScript"</span>, <span class="term-string">"SQL"</span>],
-  <span class="term-prop">"frameworks"</span>: [<span class="term-string">"CodeIgniter"</span>, <span class="term-string">"Laravel"</span>, <span class="term-string">"Bootstrap"</span>],
-  <span class="term-prop">"databases"</span>: [<span class="term-string">"MySQL"</span>, <span class="term-string">"PostgreSQL"</span>],
-  <span class="term-prop">"methodology"</span>: <span class="term-string">"WebQual 4.0 & IPA"</span>
-}`
-  };
-
-  function updatePill(btn) {
-    if (!morphPill || !btn) return;
-    const parentRect = btn.parentElement.getBoundingClientRect();
-    const btnRect = btn.getBoundingClientRect();
-    const leftOffset = btnRect.left - parentRect.left + btn.parentElement.scrollLeft;
-
-    morphPill.style.transform = `translateX(${leftOffset}px)`;
-    morphPill.style.width = `${btnRect.width}px`;
-    morphPill.style.opacity = '1';
-  }
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      updatePill(btn);
-
-      const snippetKey = btn.getAttribute('data-snippet');
-      if (snippets[snippetKey]) {
-        codeBody.innerHTML = snippets[snippetKey];
-      }
-    });
-  });
-
-  const activeBtn = document.querySelector('.terminal-tab-btn.active');
-  if (activeBtn) {
-    setTimeout(() => updatePill(activeBtn), 50);
-  }
-}
 
 /* ==========================================================================
    SINGLE APPLICATION INITIALIZATION PIPELINE
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+  initPerformanceEngine();
   initNightLightToggle();
   initThemeToggle();
+  initIosGlassSlider();
   initDynamicTyping();
   initTerminalTabs();
   initAmbientCursorGlow();
