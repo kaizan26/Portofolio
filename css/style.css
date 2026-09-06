@@ -1123,12 +1123,16 @@ section {
    ========================================================================== */
 .contact-glass-box {
   padding: 44px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-info-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 
 .contact-info-item {
@@ -1140,6 +1144,15 @@ section {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--glass-border);
   transition: var(--transition-fast);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-info-content {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .contact-info-content h6 {
@@ -1148,6 +1161,9 @@ section {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-info-content p {
@@ -1155,6 +1171,8 @@ section {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .btn-copy-email {
@@ -1167,6 +1185,7 @@ section {
   padding: 4px 8px;
   border-radius: 6px;
   transition: var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .btn-copy-email:hover {
@@ -1498,22 +1517,92 @@ section {
     white-space: nowrap !important;
     flex-shrink: 0 !important;
   }
+
+  /* Contact Section Mobile Adaptation */
+  .container-custom {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .contact-glass-box {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .contact-layout-grid {
+    gap: 28px;
+  }
+
+  .contact-heading-title {
+    font-size: 1.22rem;
+    margin-bottom: 10px;
+  }
+
+  .contact-info-list {
+    gap: 12px;
+  }
+
+  .contact-info-item {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .contact-info-content h6 {
+    font-size: 0.72rem;
+  }
+
+  .contact-info-content p {
+    font-size: 0.86rem;
+  }
+
+  .btn-copy-email {
+    font-size: 1.05rem;
+    padding: 4px 6px;
+  }
+
+  .contact-form-grid {
+    gap: 14px;
+  }
+
+  .contact-form-grid .form-floating-label {
+    margin-bottom: 0;
+  }
 }
 
-/* ==========================================================================
+@media (max-width: 380px) {
+  .contact-glass-box {
+    padding: 20px 14px;
+  }
+
+  .contact-info-item {
+    padding: 10px 10px;
+    gap: 10px;
+  }
+
+  .contact-info-content p {
+    font-size: 0.8rem;
+  }
+
+  .sf-icon-squircle {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+}
+
 /* ==========================================================================
    CONTACT SECTION 2-COLUMN DEDICATED LAYOUT
    ========================================================================== */
 .contact-layout-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 36px;
   width: 100%;
 }
 
 @media (min-width: 992px) {
   .contact-layout-grid {
-    grid-template-columns: 5fr 7fr;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: 48px;
     align-items: flex-start;
   }
@@ -1530,13 +1619,14 @@ section {
 
 .contact-form-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
   .contact-form-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .contact-form-full {

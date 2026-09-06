@@ -2243,6 +2243,8 @@ html.theme-transitioning *::after {
 
 .glass-input {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 13px 16px;
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.04);
