@@ -878,30 +878,10 @@ function updateNavMorphPill(targetItem = null) {
   }
 }
 
-function updateIslandMorphPill(targetItem = null) {
-  const island = document.getElementById('dynamic-island');
-  const pill = document.getElementById('island-morph-pill');
-  if (!island || !pill) return;
-
-  const target = targetItem || island.querySelector('.island-btn.active') || island.querySelector('.island-btn');
-  if (!target) return;
-
-  const offsetLeft = target.offsetLeft;
-  const width = target.offsetWidth;
-
-  if (width > 0) {
-    pill.style.opacity = '1';
-    pill.style.transform = `translateX(${offsetLeft}px)`;
-    pill.style.width = `${width}px`;
-  }
-}
-
 function initUnifiedScrollManager() {
   const progressBar = document.getElementById('scroll-progress');
-  const island = document.getElementById('dynamic-island');
   const backToTopBtn = document.getElementById('back-to-top');
   const allNavLinks = document.querySelectorAll('.nav-links-desktop .nav-link-item, #mobile-drawer .nav-link-item');
-  const islandBtns = island ? island.querySelectorAll('.island-btn') : [];
   const watermarks = document.querySelectorAll('.section-parallax-watermark');
 
   let lastScrollY = window.scrollY || 0;
@@ -918,7 +898,6 @@ function initUnifiedScrollManager() {
     resizeTimeout = setTimeout(() => {
       cacheSectionPositions();
       updateNavMorphPill();
-      if (typeof updateIslandMorphPill === 'function') updateIslandMorphPill();
     }, 120);
   }, { passive: true });
 
@@ -938,19 +917,6 @@ function initUnifiedScrollManager() {
       if (docHeight > 0) {
         const progress = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
         progressBar.style.width = `${progress}%`;
-      }
-    }
-
-    // 2. Dynamic Island Capsule Visibility
-    if (island) {
-      if (scrollY > 300) {
-        island.style.opacity = '1';
-        island.style.pointerEvents = 'auto';
-        island.style.transform = 'translateX(-50%) translateY(0)';
-      } else {
-        island.style.opacity = '0';
-        island.style.pointerEvents = 'none';
-        island.style.transform = 'translateX(-50%) translateY(20px)';
       }
     }
 
@@ -1053,22 +1019,6 @@ function initUnifiedScrollManager() {
       if (navChanged) {
         updateNavMorphPill();
       }
-
-      // Sync Dynamic Island buttons
-      if (islandBtns.length) {
-        let islandChanged = false;
-        islandBtns.forEach(btn => {
-          const isMatch = btn.getAttribute('href') === `#${activeSectionId}`;
-          if (isMatch && !btn.classList.contains('active')) {
-            islandChanged = true;
-          }
-          btn.classList.toggle('active', isMatch);
-        });
-
-        if (islandChanged) {
-          updateIslandMorphPill();
-        }
-      }
     }
 
     scrollTicking = false;
@@ -1086,7 +1036,7 @@ function initUnifiedScrollManager() {
 }
 
 /* ==========================================================================
-   4. DESKTOP NAVBAR & DYNAMIC ISLAND PILL INTERACTION
+   4. DESKTOP NAVBAR PILL INTERACTION
    ========================================================================== */
 function initNavbarInteractions() {
   const desktopContainer = document.querySelector('.nav-links-desktop');
@@ -1106,25 +1056,6 @@ function initNavbarInteractions() {
   });
 
   desktopContainer.addEventListener('mouseleave', () => updateNavMorphPill());
-}
-
-function initDynamicIslandInteractions() {
-  const island = document.getElementById('dynamic-island');
-  if (!island) return;
-
-  const islandBtns = island.querySelectorAll('.island-btn');
-  setTimeout(() => updateIslandMorphPill(), 150);
-
-  islandBtns.forEach(btn => {
-    btn.addEventListener('mouseenter', () => updateIslandMorphPill(btn));
-    btn.addEventListener('click', () => {
-      islandBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      updateIslandMorphPill(btn);
-    });
-  });
-
-  island.addEventListener('mouseleave', () => updateIslandMorphPill());
 }
 
 /* ==========================================================================
@@ -1697,7 +1628,6 @@ function refreshAllSegmentedPills() {
   if (projectsContainer) updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
   if (terminalContainer) updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
   if (typeof updateNavMorphPill === 'function') updateNavMorphPill();
-  if (typeof updateIslandMorphPill === 'function') updateIslandMorphPill();
 }
 window.refreshAllSegmentedPills = refreshAllSegmentedPills;
 
@@ -1890,7 +1820,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSkillTabs();
   initAllSegmentedMorphPills();
   initNavbarInteractions();
-  initDynamicIslandInteractions();
   initMobileMenu();
   initBackToTop();
   initScrollReveal();

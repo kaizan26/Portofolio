@@ -10,6 +10,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -1701,8 +1702,7 @@ h6>i,
 .btn-apple-cta>i,
 .filter-btn>i,
 .skill-tab-btn>i,
-.glass-badge>i,
-.island-btn>i {
+.glass-badge>i {
   margin-inline-end: 8px !important;
 }
 
