@@ -755,6 +755,8 @@ function initInteractiveBackground() {
   let mouseY = window.innerHeight / 2;
   let currentX = mouseX;
   let currentY = mouseY;
+  let scrollY = window.scrollY || 0;
+  let currentScrollY = scrollY;
   let isAnimating = false;
   let lastTimestamp = performance.now();
 
@@ -765,6 +767,9 @@ function initInteractiveBackground() {
     { factorX: -0.06, factorY: -0.07 },
     { factorX: 0.1, factorY: 0.08 }
   ];
+
+  // Pronounced multi-plane vertical parallax drift rates per orb layer
+  const layerScrollFactors = [-0.38, -0.52, -0.42, -0.22, -0.14];
 
   function animateFluidLayers(now) {
     if (document.hidden || document.documentElement.getAttribute('data-perf-mode') === 'true') {
@@ -780,26 +785,29 @@ function initInteractiveBackground() {
 
     currentX += (mouseX - currentX) * lerpFactor;
     currentY += (mouseY - currentY) * lerpFactor;
+    currentScrollY += (scrollY - currentScrollY) * lerpFactor;
 
     const deltaX = (currentX - window.innerWidth / 2);
     const deltaY = (currentY - window.innerHeight / 2);
 
     orbLayers.forEach((layer, index) => {
       const phys = layerPhysics[index % layerPhysics.length];
+      const sFactor = layerScrollFactors[index % layerScrollFactors.length];
       const moveX = (deltaX * phys.factorX).toFixed(2);
-      const moveY = (deltaY * phys.factorY).toFixed(2);
+      const moveY = (deltaY * phys.factorY + currentScrollY * sFactor).toFixed(2);
       layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
     });
 
     if (titaniumGlow) {
       const glowX = (deltaX * 0.04).toFixed(2);
-      const glowY = (deltaY * 0.03).toFixed(2);
+      const glowY = (deltaY * 0.03 + currentScrollY * -0.07).toFixed(2);
       titaniumGlow.style.transform = `translateX(calc(-50% + ${glowX}px)) translateY(${glowY}px)`;
     }
 
     // Stop RAF loop when settled to save CPU/GPU cycles
-    const isSettled = Math.abs(mouseX - currentX) < 0.08 && Math.abs(mouseY - currentY) < 0.08;
-    if (!isSettled) {
+    const isMouseSettled = Math.abs(mouseX - currentX) < 0.08 && Math.abs(mouseY - currentY) < 0.08;
+    const isScrollSettled = Math.abs(scrollY - currentScrollY) < 0.5;
+    if (!isMouseSettled || !isScrollSettled) {
       requestAnimationFrame(animateFluidLayers);
     } else {
       isAnimating = false;
@@ -810,6 +818,17 @@ function initInteractiveBackground() {
     if (document.documentElement.getAttribute('data-perf-mode') === 'true') return;
     mouseX = e.clientX;
     mouseY = e.clientY;
+
+    if (!isAnimating) {
+      isAnimating = true;
+      lastTimestamp = performance.now();
+      requestAnimationFrame(animateFluidLayers);
+    }
+  }, { passive: true });
+
+  window.addEventListener('scroll', () => {
+    if (document.documentElement.getAttribute('data-perf-mode') === 'true') return;
+    scrollY = window.scrollY || 0;
 
     if (!isAnimating) {
       isAnimating = true;
@@ -883,6 +902,12 @@ function initUnifiedScrollManager() {
   const backToTopBtn = document.getElementById('back-to-top');
   const allNavLinks = document.querySelectorAll('.nav-links-desktop .nav-link-item, #mobile-drawer .nav-link-item');
   const islandBtns = island ? island.querySelectorAll('.island-btn') : [];
+  const watermarks = document.querySelectorAll('.section-parallax-watermark');
+
+  let lastScrollY = window.scrollY || 0;
+  let lastScrollTime = performance.now();
+  let smoothVelocity = 0;
+  let tiltResetTimeout = null;
 
   cacheSectionPositions();
 
@@ -938,7 +963,72 @@ function initUnifiedScrollManager() {
       }
     }
 
-    // 4. Navbar ScrollSpy using Cached Offsets (No synchronous DOM layout reading)
+    // 4. Multi-Plane Layered Parallax Engine (Zero Layout Thrashing GPU CSS Vars)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isPerf = document.documentElement.getAttribute('data-perf-mode') === 'true';
+
+    if (!prefersReducedMotion && !isPerf) {
+      // Calculate instantaneous and smoothed scroll velocity (px/ms)
+      const now = performance.now();
+      const dt = Math.max(10, now - lastScrollTime);
+      const instantVelocity = (scrollY - lastScrollY) / dt;
+      smoothVelocity += (instantVelocity - smoothVelocity) * 0.18;
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+
+      // Dynamic velocity pitch tilt (subtle momentum physical response)
+      const tiltDeg = Math.max(-2.5, Math.min(2.5, smoothVelocity * 1.8));
+      document.documentElement.style.setProperty('--scroll-velocity-tilt', `${tiltDeg.toFixed(2)}deg`);
+
+      // Damping return to neutral 0deg when scroll pauses
+      clearTimeout(tiltResetTimeout);
+      tiltResetTimeout = setTimeout(() => {
+        smoothVelocity = 0;
+        document.documentElement.style.setProperty('--scroll-velocity-tilt', '0deg');
+      }, 120);
+
+      // Hero Text Spatial Departure (subtle scale & fade as user descends into the page)
+      if (scrollY < 750) {
+        const departureRatio = Math.min(1, scrollY / 650);
+        const heroTextY = (scrollY * -0.09).toFixed(1);
+        const heroTextScale = (1 - departureRatio * 0.04).toFixed(3);
+        const heroTextOpacity = (1 - departureRatio * 0.45).toFixed(2);
+        document.documentElement.style.setProperty('--hero-text-y', `${heroTextY}px`);
+        document.documentElement.style.setProperty('--hero-text-scale', heroTextScale);
+        document.documentElement.style.setProperty('--hero-text-opacity', heroTextOpacity);
+      }
+
+      // Pronounced float lag for Hero Terminal (up to -145px)
+      const terminalY = Math.max(-145, Math.min(25, scrollY * -0.15));
+      document.documentElement.style.setProperty('--parallax-scroll-terminal', `${terminalY.toFixed(1)}px`);
+
+      // Elevated floating stats dock (sweeping upward glide up to -75px)
+      const statsY = Math.max(-75, Math.min(20, (scrollY - 100) * -0.09));
+      document.documentElement.style.setProperty('--parallax-scroll-stats', `${statsY.toFixed(1)}px`);
+
+      // Pronounced multi-plane stagger for alternating cards (-42px to +42px)
+      const stagger1 = Math.max(-42, Math.min(42, Math.sin(scrollY * 0.0022) * 36));
+      const stagger2 = Math.max(-42, Math.min(42, -Math.sin(scrollY * 0.0022) * 36));
+      document.documentElement.style.setProperty('--parallax-scroll-stagger-1', `${stagger1.toFixed(1)}px`);
+      document.documentElement.style.setProperty('--parallax-scroll-stagger-2', `${stagger2.toFixed(1)}px`);
+
+      // Deep Architectural Watermarks (Sweeping 100px+ vertical glide with viewport culling)
+      if (watermarks.length) {
+        watermarks.forEach(wm => {
+          const parent = wm.parentElement;
+          if (!parent) return;
+          const rect = parent.getBoundingClientRect();
+          if (rect.bottom > -250 && rect.top < window.innerHeight + 250) {
+            const factor = parseFloat(wm.getAttribute('data-parallax-factor')) || 0.32;
+            const distFromMid = rect.top - window.innerHeight * 0.35;
+            const moveY = (distFromMid * factor).toFixed(1);
+            wm.style.transform = `translateX(-50%) translate3d(0, ${moveY}px, 0)`;
+          }
+        });
+      }
+    }
+
+    // 5. Navbar ScrollSpy using Cached Offsets (No synchronous DOM layout reading)
     const spyPosition = scrollY + 220;
     let activeSectionId = 'hero';
 
@@ -1387,8 +1477,10 @@ function initProjectsRender() {
     'lamaru-smart-tourism': 'banner-lamaru'
   };
 
-  projectsGrid.innerHTML = projects.map((proj) => `
-    <div class="col-lg-4 col-md-6 mb-4 project-item" data-category="${proj.category}">
+  projectsGrid.innerHTML = projects.map((proj, idx) => {
+    const staggerClass = idx % 2 === 0 ? 'parallax-card-stagger-1' : 'parallax-card-stagger-2';
+    return `
+    <div class="col-lg-4 col-md-6 mb-4 project-item ${staggerClass}" data-category="${proj.category}">
       <div class="glass-card project-card" onclick="openProjectModal('${proj.id}')">
         <div class="project-glass-banner ${bannerClasses[proj.id] || 'banner-siat'}">
           ${getProjectBannerSVG(proj.id)}
@@ -1417,8 +1509,8 @@ function initProjectsRender() {
           </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   init3DSpotlightCards();
 }

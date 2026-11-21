@@ -310,6 +310,136 @@
   -webkit-transform: translateZ(0);
 }
 
+/* ==========================================================================
+   APPLE PRO LAYERED PARALLAX ENGINE
+   Zero-layout-thrashing GPU transforms for multi-plane depth
+   ========================================================================== */
+:root {
+  --parallax-scroll-terminal: 0px;
+  --parallax-scroll-stats: 0px;
+  --parallax-scroll-stagger-1: 0px;
+  --parallax-scroll-stagger-2: 0px;
+  --scroll-velocity-tilt: 0deg;
+  --hero-text-y: 0px;
+  --hero-text-scale: 1;
+  --hero-text-opacity: 1;
+}
+
+.hero-text-spatial {
+  will-change: transform, opacity;
+  transform: translate3d(0, var(--hero-text-y, 0px), 0) scale(var(--hero-text-scale, 1));
+  opacity: var(--hero-text-opacity, 1);
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.1s ease-out;
+}
+
+.parallax-hero-terminal {
+  transform: translate3d(0, var(--parallax-scroll-terminal, 0px), 0) rotateX(calc(var(--scroll-velocity-tilt, 0deg) * -1.2));
+  transform-origin: center top;
+  will-change: transform;
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parallax-stats-dock {
+  position: relative;
+  z-index: 8;
+  transform: translate3d(0, var(--parallax-scroll-stats, 0px), 0);
+  will-change: transform;
+  margin-top: -36px;
+  margin-bottom: 28px;
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parallax-card-stagger-1 {
+  transform: translate3d(0, var(--parallax-scroll-stagger-1, 0px), 0) rotateX(var(--scroll-velocity-tilt, 0deg));
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parallax-card-stagger-2 {
+  transform: translate3d(0, var(--parallax-scroll-stagger-2, 0px), 0) rotateX(calc(var(--scroll-velocity-tilt, 0deg) * -0.8));
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Deep Architectural Watermarks */
+.section-parallax-watermark {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%) translate3d(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+  color: var(--text-primary);
+  opacity: 0.058;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.section-parallax-watermark .watermark-title {
+  font-family: var(--font-heading);
+  font-size: clamp(4.2rem, 13vw, 11.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.section-parallax-watermark .watermark-sub {
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(0.68rem, 1.3vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  opacity: 0.70;
+  margin-top: -4px;
+  color: var(--primary, #2997ff);
+}
+
+[data-theme="light"] .section-parallax-watermark {
+  opacity: 0.075;
+  color: #000000;
+}
+
+[data-theme="light"] .section-parallax-watermark .watermark-sub {
+  color: #0071e3;
+}
+
+@media (max-width: 767.98px) {
+  .parallax-stats-dock { margin-top: 0; margin-bottom: 0; }
+  .section-parallax-watermark { font-size: clamp(2.5rem, 8vw, 4.5rem); top: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-text-spatial,
+  .parallax-hero-terminal,
+  .parallax-stats-dock,
+  .parallax-card-stagger-1,
+  .parallax-card-stagger-2,
+  .section-parallax-watermark {
+    transform: none !important;
+    will-change: auto !important;
+    transition: none !important;
+  }
+}
+
+html[data-perf-mode="true"] .hero-text-spatial,
+html[data-perf-mode="true"] .parallax-hero-terminal,
+html[data-perf-mode="true"] .parallax-stats-dock,
+html[data-perf-mode="true"] .parallax-card-stagger-1,
+html[data-perf-mode="true"] .parallax-card-stagger-2,
+html[data-perf-mode="true"] .section-parallax-watermark {
+  transform: none !important;
+  will-change: auto !important;
+  transition: none !important;
+}
+
 .ambient-titanium-glow {
   position: absolute;
   top: -120px;
