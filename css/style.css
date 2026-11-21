@@ -100,8 +100,8 @@ a:hover {
   height: 32px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: var(--glass-refract-subtle);
+  -webkit-backdrop-filter: var(--glass-refract-subtle);
   border: 1px solid var(--glass-border);
   color: var(--text-secondary);
   font-size: 1.1rem;
@@ -150,8 +150,8 @@ a:hover {
   left: 12px;
   right: 12px;
   background: var(--glass-bg-elevated);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: var(--glass-refract-nav);
+  -webkit-backdrop-filter: var(--glass-refract-nav);
   border: 1px solid var(--glass-border-highlight);
   border-radius: 24px;
   padding: 18px;
@@ -374,8 +374,8 @@ section {
 .hero-terminal-glass {
   border-radius: var(--radius-xl);
   background: var(--glass-bg-card);
-  backdrop-filter: blur(var(--glass-blur-lg)) saturate(220%) contrast(108%);
-  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(220%) contrast(108%);
+  backdrop-filter: var(--glass-refract-card, blur(var(--glass-blur-lg)) saturate(220%) contrast(108%));
+  -webkit-backdrop-filter: var(--glass-refract-card, blur(var(--glass-blur-lg)) saturate(220%) contrast(108%));
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   overflow: hidden;
@@ -392,8 +392,25 @@ section {
   left: 0;
   right: 0;
   height: 1.5px;
-  background: linear-gradient(90deg, transparent 5%, rgba(255, 255, 255, 0.6) 50%, transparent 95%);
+  background: var(--liquid-dispersion-rim, linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.45) 20%, rgba(255, 255, 255, 0.85) 50%, rgba(175, 82, 222, 0.45) 80%, transparent 100%));
   pointer-events: none;
+  z-index: 3;
+}
+
+.hero-terminal-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--liquid-specular-glare, radial-gradient(420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.16) 0%, rgba(41, 151, 255, 0.08) 35%, transparent 70%));
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.35s ease;
+}
+
+.hero-terminal-glass:hover::after {
+  opacity: 1;
 }
 
 .hero-terminal-glass:hover {

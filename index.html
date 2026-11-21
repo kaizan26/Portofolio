@@ -69,8 +69,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Apple Pro Liquid Glass Stylesheets -->
-  <link rel="stylesheet" href="css/glassmorphism.css?v=5.7">
-  <link rel="stylesheet" href="css/style.css?v=5.7">
+  <link rel="stylesheet" href="css/glassmorphism.css?v=6.4">
+  <link rel="stylesheet" href="css/style.css?v=6.4">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml"
@@ -78,6 +78,25 @@
 </head>
 
 <body class="antialiased">
+
+  <!-- Apple Liquid Glass Optical Refraction Pipeline (Silky Smooth Fluid Lensing) -->
+  <svg width="0" height="0" class="pointer-events-none" style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0;" aria-hidden="true">
+    <defs>
+      <!-- Main Liquid Glass Refraction (Cards, Terminal, Bento, Modal) -->
+      <filter id="liquid-refract-filter" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.008" numOctaves="3" seed="42" result="fluidNoise" />
+        <feGaussianBlur in="fluidNoise" stdDeviation="7" result="smoothFluidNoise" />
+        <feDisplacementMap id="filter-displace-main" in="SourceGraphic" in2="smoothFluidNoise" scale="22" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+
+      <!-- Silky Fluid Refraction (Navbar, Dynamic Island, Pills) -->
+      <filter id="liquid-refract-nav" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.005 0.007" numOctaves="3" seed="77" result="fluidNoiseNav" />
+        <feGaussianBlur in="fluidNoiseNav" stdDeviation="8" result="smoothFluidNoiseNav" />
+        <feDisplacementMap id="filter-displace-nav" in="SourceGraphic" in2="smoothFluidNoiseNav" scale="14" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
 
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress-bar" id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
@@ -100,6 +119,8 @@
     <div class="liquid-orb-layer" id="orb-layer-5">
       <div class="liquid-orb liquid-orb-5"></div>
     </div>
+    <!-- Apple Liquid Glass Studio WebGL2 Lens Layer (Transparent - Preserves Original Background) -->
+    <canvas id="liquid-glass-lens-canvas" class="liquid-glass-lens-canvas"></canvas>
   </div>
 
   <!-- Interactive Mouse Ambient Glow -->
@@ -1126,39 +1147,16 @@
     </div>
   </div>
 
-  <!-- Interactive Apple Dynamic Island Floating Launcher Capsule with Fluid Morph Pill -->
-  <div class="dynamic-island-capsule" id="dynamic-island"
-    style="opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(20px);">
-    <div class="island-morph-pill" id="island-morph-pill"></div>
-    <a href="#hero" class="island-btn active">
-      <span class="brand-icon" style="width:20px;height:20px;font-size:0.7rem;border-radius:5px;">B</span>
-      <span>Bobby</span>
-    </a>
-    <div class="island-divider"></div>
-    <a href="#explorer" class="island-btn">
-      <i class="bi bi-cpu text-info"></i>
-      <span data-i18n="nav_explorer">Arsitektur</span>
-    </a>
-    <a href="#projects" class="island-btn">
-      <i class="bi bi-folder-check text-warning"></i>
-      <span data-i18n="nav_projects">Proyek</span>
-    </a>
-    <div class="island-divider"></div>
-    <a href="#contact" class="island-btn">
-      <i class="bi bi-chat-dots-fill"></i>
-      <span data-i18n="nav_contact">Kontak</span>
-    </a>
-  </div>
-
   <!-- Back to Top Floating Glass Pill -->
   <button id="back-to-top" class="btn-back-to-top" title="Kembali ke atas" aria-label="Kembali ke atas">
     <i class="bi bi-chevron-up"></i>
   </button>
 
-  <!-- Project Scripts with i18n Engine (No Bootstrap Dependency) -->
+  <!-- Project Scripts with i18n Engine & Liquid Glass Studio Engine -->
   <script defer src="js/i18n.js?v=5.6"></script>
   <script defer src="js/projects-data.js?v=5.6"></script>
-  <script defer src="js/main.js?v=5.6"></script>
+  <script defer src="js/liquid-glass-engine.js?v=6.4"></script>
+  <script defer src="js/main.js?v=6.4"></script>
   <script defer src="js/contact.js?v=5.6"></script>
 </body>
 

@@ -137,6 +137,9 @@ function initThemeToggle() {
         if (typeof globalApplyGlassLevel === 'function') {
           globalApplyGlassLevel(currentGlassLevel, false);
         }
+        if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setTheme === 'function') {
+          window.LiquidGlassStudio.setTheme(newTheme);
+        }
       });
 
       transition.ready.then(() => {
@@ -179,6 +182,9 @@ function initThemeToggle() {
         if (typeof globalApplyGlassLevel === 'function') {
           globalApplyGlassLevel(currentGlassLevel, false);
         }
+        if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setTheme === 'function') {
+          window.LiquidGlassStudio.setTheme(newTheme);
+        }
         if (btn) btn.classList.remove('morphing', 'btn-theme-active-pulse');
         isTransitioning = false;
         showHudToast(toastText, newTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill');
@@ -207,6 +213,9 @@ function initThemeToggle() {
         updateThemeIcon(newTheme);
         if (typeof globalApplyGlassLevel === 'function') {
           globalApplyGlassLevel(currentGlassLevel, false);
+        }
+        if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setTheme === 'function') {
+          window.LiquidGlassStudio.setTheme(newTheme);
         }
       }, 260);
 
@@ -290,37 +299,43 @@ function initIosGlassSlider() {
     const factor = level / 75; // 75 is baseline 1.0
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
-    // Blur calculations
-    const blurBase = Math.round(20 * factor);
-    const blurSm = Math.round(10 * factor);
-    const blurLg = Math.round(28 * factor);
-    const blurXl = Math.round(36 * factor);
-
+    // Zero-blur pure crystal Liquid Glass transmission (no frosted fog)
     const rootStyle = document.documentElement.style;
     rootStyle.setProperty('--glass-factor', factor.toFixed(2));
-    rootStyle.setProperty('--glass-blur', `${blurBase}px`);
-    rootStyle.setProperty('--glass-blur-sm', `${blurSm}px`);
-    rootStyle.setProperty('--glass-blur-lg', `${blurLg}px`);
-    rootStyle.setProperty('--glass-blur-xl', `${blurXl}px`);
+    rootStyle.setProperty('--glass-blur', '0px');
+    rootStyle.setProperty('--glass-blur-sm', '0px');
+    rootStyle.setProperty('--glass-blur-lg', '0px');
+    rootStyle.setProperty('--glass-blur-xl', '0px');
 
-    // Dynamic glass background opacities
+    // Dynamic liquid glass background sheen gradients (Water crystal body)
     if (isLight) {
-      const cardA = (0.94 - 0.35 * (level / 100)).toFixed(2);
-      const navA = (0.92 - 0.32 * (level / 100)).toFixed(2);
-      rootStyle.setProperty('--glass-bg-card', `rgba(255, 255, 255, ${cardA})`);
-      rootStyle.setProperty('--glass-bg-nav', `rgba(255, 255, 255, ${navA})`);
+      const cardA = (0.75 - 0.25 * (level / 100)).toFixed(2);
+      const navA = (0.88 - 0.15 * (level / 100)).toFixed(2);
+      rootStyle.setProperty('--glass-bg-card', `linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.40) 50%, rgba(245, 245, 255, ${cardA}) 100%)`);
+      rootStyle.setProperty('--glass-bg-nav', `linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(240, 240, 250, ${navA}) 100%)`);
     } else {
-      const cardA = (0.85 - 0.52 * (level / 100)).toFixed(2);
-      const navA = (0.88 - 0.48 * (level / 100)).toFixed(2);
-      rootStyle.setProperty('--glass-bg-card', `rgba(25, 25, 36, ${cardA})`);
-      rootStyle.setProperty('--glass-bg-nav', `rgba(20, 20, 28, ${navA})`);
+      const cardA = (0.45 - 0.15 * (level / 100)).toFixed(2);
+      const navA = (0.82 - 0.12 * (level / 100)).toFixed(2);
+      rootStyle.setProperty('--glass-bg-card', `linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 35%, rgba(15, 15, 24, ${cardA}) 100%)`);
+      rootStyle.setProperty('--glass-bg-nav', `linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 30%, rgba(14, 14, 24, ${navA}) 100%)`);
     }
 
     // Saturation and border reflection
-    const sat = Math.round(110 + 120 * (level / 100));
+    const sat = Math.round(180 + 60 * (level / 100));
     rootStyle.setProperty('--glass-saturate', `${sat}%`);
-    const borderA = (0.05 + 0.16 * (level / 100)).toFixed(2);
+    const borderA = (0.08 + 0.16 * (level / 100)).toFixed(2);
     rootStyle.setProperty('--glass-border', `rgba(255, 255, 255, ${borderA})`);
+
+    // Scale live optical liquid glass clarity & vivid saturation (pure crystal cards, subtle diffused floating nav)
+    const navBlur = Math.round(5 + 4 * (level / 100)); // ~8px crystal diffusion, airy & crisp
+    rootStyle.setProperty('--glass-refract-card', `saturate(${sat}%) contrast(110%)`);
+    rootStyle.setProperty('--glass-refract-nav', `blur(${navBlur}px) saturate(${Math.round(sat * 1.05)}%) contrast(108%)`);
+    rootStyle.setProperty('--glass-refract-subtle', `saturate(${sat}%) contrast(108%)`);
+
+    // Scale WebGL2 Liquid Glass Studio physical optics (iyinchao parameters)
+    if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setIntensity === 'function') {
+      window.LiquidGlassStudio.setIntensity(level);
+    }
 
     // Update UI elements with fluid physics
     updateUI(level, animate, prevLevel);
@@ -613,6 +628,10 @@ function initNightLightToggle() {
       document.documentElement.removeAttribute('data-night-light');
     }
 
+    if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setNightLight === 'function') {
+      window.LiquidGlassStudio.setNightLight(isActive);
+    }
+
     const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
     const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
 
@@ -687,6 +706,10 @@ function initPerformanceEngine() {
       document.documentElement.setAttribute('data-perf-mode', 'true');
     } else {
       document.documentElement.removeAttribute('data-perf-mode');
+    }
+
+    if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setPerformanceMode === 'function') {
+      window.LiquidGlassStudio.setPerformanceMode(isActive);
     }
 
     const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
@@ -1207,7 +1230,9 @@ function initTerminalTabs() {
 function init3DSpotlightCards() {
   if (!window.matchMedia("(pointer: fine)").matches) return;
 
-  const cards = document.querySelectorAll('.glass-card, .hero-terminal-glass, .stats-bar-card, .apple-explorer-wrapper, .stage-device-frame');
+  const cards = document.querySelectorAll(
+    '.glass-card, .hero-terminal-glass, .stats-bar-card, .apple-explorer-wrapper, .stage-device-frame, .about-glass-card, .project-card, .publication-row-card, .social-connect-card, .apple-contact-wrapper'
+  );
 
   cards.forEach(card => {
     let cardRect = null;
