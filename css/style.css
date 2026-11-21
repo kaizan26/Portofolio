@@ -16,6 +16,9 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 body {
@@ -23,7 +26,9 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.65;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
   position: relative;
   transition: background-color 0.4s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
@@ -253,8 +258,16 @@ a:hover {
   box-sizing: border-box;
 }
 
+main {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
 section {
-  width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
   padding: 105px 0;
   position: relative;
   display: flex;
@@ -587,8 +600,8 @@ section {
    ========================================================================== */
 .stats-bar-card {
   padding: 24px 32px;
-  margin-top: -10px;
-  margin-bottom: 50px;
+  margin-top: 0;
+  margin-bottom: 40px;
   width: 100%;
 }
 

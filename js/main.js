@@ -929,11 +929,12 @@ function initUnifiedScrollManager() {
       }
     }
 
-    // 4. Multi-Plane Layered Parallax Engine (Zero Layout Thrashing GPU CSS Vars)
+    // 4. Multi-Plane Layered Parallax Engine (Desktop Multi-Plane Depth)
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isPerf = document.documentElement.getAttribute('data-perf-mode') === 'true';
+    const isMobileLayout = window.innerWidth <= 991;
 
-    if (!prefersReducedMotion && !isPerf) {
+    if (!prefersReducedMotion && !isPerf && !isMobileLayout) {
       // Calculate instantaneous and smoothed scroll velocity (px/ms)
       const now = performance.now();
       const dt = Math.max(10, now - lastScrollTime);
@@ -964,31 +965,31 @@ function initUnifiedScrollManager() {
         document.documentElement.style.setProperty('--hero-text-opacity', heroTextOpacity);
       }
 
-      // Pronounced float lag for Hero Terminal (up to -145px)
-      const terminalY = Math.max(-145, Math.min(25, scrollY * -0.15));
+      // Smooth float lag for Hero Terminal (up to -70px on desktop)
+      const terminalY = Math.max(-70, Math.min(20, scrollY * -0.10));
       document.documentElement.style.setProperty('--parallax-scroll-terminal', `${terminalY.toFixed(1)}px`);
 
-      // Elevated floating stats dock (sweeping upward glide up to -75px)
-      const statsY = Math.max(-75, Math.min(20, (scrollY - 100) * -0.09));
+      // Gentle elevated stats dock glide (max -20px on desktop, preventing any collision)
+      const statsY = Math.max(-20, Math.min(10, (scrollY - 100) * -0.04));
       document.documentElement.style.setProperty('--parallax-scroll-stats', `${statsY.toFixed(1)}px`);
 
-      // Pronounced multi-plane stagger for alternating cards (-42px to +42px)
-      const stagger1 = Math.max(-42, Math.min(42, Math.sin(scrollY * 0.0022) * 36));
-      const stagger2 = Math.max(-42, Math.min(42, -Math.sin(scrollY * 0.0022) * 36));
+      // Multi-plane stagger for alternating cards on desktop (-32px to +32px)
+      const stagger1 = Math.max(-32, Math.min(32, Math.sin(scrollY * 0.0022) * 28));
+      const stagger2 = Math.max(-32, Math.min(32, -Math.sin(scrollY * 0.0022) * 28));
       document.documentElement.style.setProperty('--parallax-scroll-stagger-1', `${stagger1.toFixed(1)}px`);
       document.documentElement.style.setProperty('--parallax-scroll-stagger-2', `${stagger2.toFixed(1)}px`);
 
-      // Deep Architectural Watermarks (Sweeping 100px+ vertical glide with viewport culling)
+      // Deep Architectural Watermarks (Sweeping vertical glide with viewport culling on desktop)
       if (watermarks.length) {
         watermarks.forEach(wm => {
           const parent = wm.parentElement;
           if (!parent) return;
           const rect = parent.getBoundingClientRect();
           if (rect.bottom > -250 && rect.top < window.innerHeight + 250) {
-            const factor = parseFloat(wm.getAttribute('data-parallax-factor')) || 0.32;
+            const factor = parseFloat(wm.getAttribute('data-parallax-factor')) || 0.22;
             const distFromMid = rect.top - window.innerHeight * 0.35;
             const moveY = (distFromMid * factor).toFixed(1);
-            wm.style.transform = `translateX(-50%) translate3d(0, ${moveY}px, 0)`;
+            wm.style.transform = `translate3d(0, ${moveY}px, 0)`;
           }
         });
       }
