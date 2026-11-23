@@ -243,6 +243,12 @@ function initThemeToggle() {
     const iconClass = isLight ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
     const titleText = isLight ? 'Switch to Liquid Dark Mode' : 'Switch to Pearl Light Mode';
 
+    // Synchronize Dynamic Theme Color Meta Tag (Feature 4)
+    const metaThemeColor = document.getElementById('theme-color-meta');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', isLight ? '#f5f5f7' : '#0e0e16');
+    }
+
     if (themeIcon) {
       themeIcon.className = iconClass;
       if (themeToggleBtn) themeToggleBtn.setAttribute('title', titleText);
@@ -252,6 +258,18 @@ function initThemeToggle() {
       if (mobileThemeToggleBtn) mobileThemeToggleBtn.setAttribute('title', titleText);
     }
   }
+
+  // Programmatic Theme Setter (Callable from CLI or external controls)
+  window.setPortfolioTheme = function(targetTheme) {
+    if (targetTheme !== 'dark' && targetTheme !== 'light') {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      targetTheme = cur === 'dark' ? 'light' : 'dark';
+    }
+    document.documentElement.setAttribute('data-theme', targetTheme);
+    localStorage.setItem('bobby-portfolio-theme', targetTheme);
+    updateThemeIcon(targetTheme);
+    return targetTheme;
+  };
 }
 
 /* ==========================================================================
@@ -739,6 +757,17 @@ function initPerformanceEngine() {
       showHudToast(toastText, isActive ? 'bi-lightning-charge-fill' : 'bi-speedometer2');
     }
   }
+
+  // Programmatic Performance Setter (Callable from CLI or external controls)
+  window.setPortfolioPerfMode = function(targetState, triggerToast = true) {
+    if (typeof targetState !== 'boolean') {
+      const cur = document.documentElement.getAttribute('data-perf-mode') === 'true';
+      targetState = !cur;
+    }
+    applyPerfState(targetState, triggerToast);
+    localStorage.setItem('bobby-portfolio-perf', targetState ? 'true' : 'false');
+    return targetState;
+  };
 }
 
 /* ==========================================================================
@@ -1167,50 +1196,54 @@ function initAmbientCursorGlow() {
    7. TERMINAL CONSOLE TABS WITH MORPH PILL
    ========================================================================== */
 const TERMINAL_SNIPPETS = {
-  overview: `
-<span class="term-comment"># Engineer & Information Systems Profile</span>
-<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
+  overview: `<span class="term-comment"># Professional & Administrative Systems Profile</span>
+<span class="term-keyword">const</span> <span class="term-prop">professional</span> = {
   <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
+  <span class="term-prop">role</span>: <span class="term-string">"Administrator Transportation"</span>,
+  <span class="term-prop">company</span>: <span class="term-string">"PT. Abicam"</span>,
   <span class="term-prop">almaMater</span>: <span class="term-string">"Institut Teknologi Kalimantan (ITK)"</span>,
-  <span class="term-prop">focus</span>: [<span class="term-string">"Web Systems"</span>, <span class="term-string">"Information Architecture"</span>, <span class="term-string">"UX Analytics"</span>],
-  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & Importance-Performance Analysis"</span>,
-  <span class="term-prop">status</span>: <span class="term-val">"Available for Engineering & Systems Collaboration"</span>
+  <span class="term-prop">degree</span>: <span class="term-string">"Bachelor of Computer Science (GPA: 3.63)"</span>,
+  <span class="term-prop">keyStrengths</span>: [
+    <span class="term-string">"Data Management"</span>,
+    <span class="term-string">"Fleet Coordination"</span>,
+    <span class="term-string">"SOP Development"</span>
+  ],
+  <span class="term-prop">status</span>: <span class="term-val">"Active Transportation Administrator"</span>
 };
+<span class="term-cmd">console</span>.log(<span class="term-string">"Operational integrity verified."</span>);`,
 
-<span class="term-cmd">console</span>.log(<span class="term-string">"System initialized with high reliability."</span>);
-`,
-
-  research: `
-<span class="term-comment">-- WebQual 4.0 & IPA Matrix Evaluation Query</span>
+  research: `<span class="term-comment">-- Transportation Logistics & Operational Scheduling Query</span>
 <span class="term-keyword">SELECT</span> 
-  dimension,
-  <span class="term-cmd">AVG</span>(usability_score) <span class="term-keyword">AS</span> usability,
-  <span class="term-cmd">AVG</span>(info_quality_score) <span class="term-keyword">AS</span> info_quality,
-  <span class="term-cmd">AVG</span>(service_interaction_score) <span class="term-keyword">AS</span> service_interaction,
-  <span class="term-keyword">CASE</span> 
-    <span class="term-keyword">WHEN</span> performance < importance <span class="term-keyword">THEN</span> <span class="term-string">'Quadrant I: Concentrate Here'</span>
-    <span class="term-keyword">ELSE</span> <span class="term-string">'Quadrant II: Keep Up Good Work'</span>
-  <span class="term-keyword">END AS</span> ipa_priority
-<span class="term-keyword">FROM</span> siat_academic_evaluations
-<span class="term-keyword">GROUP BY</span> dimension;
-`,
+  fleet_id,
+  route_destination,
+  driver_assignment,
+  permit_validity_status,
+  compliance_check
+<span class="term-keyword">FROM</span> pt_abicam_transportation_fleet
+<span class="term-keyword">WHERE</span> operational_status = <span class="term-string">'Active'</span>
+<span class="term-keyword">ORDER BY</span> travel_schedule <span class="term-keyword">ASC</span>;
+<span class="term-comment">-- Managed by: Bobby Kamal Aizan (PT. Abicam)</span>`,
 
-  stack: `
-<span class="term-comment">/* Verified Technical Tooling */</span>
+  stack: `<span class="term-comment">/* Core Professional & Technical Competencies */</span>
 {
-  <span class="term-prop">"languages"</span>: [<span class="term-string">"JavaScript (ES6+)"</span>, <span class="term-string">"PHP"</span>, <span class="term-string">"SQL"</span>, <span class="term-string">"HTML5/CSS3"</span>],
-  <span class="term-prop">"frameworks"</span>: [<span class="term-string">"CodeIgniter"</span>, <span class="term-string">"Laravel"</span>, <span class="term-string">"Bootstrap 5"</span>, <span class="term-string">"Tailwind"</span>],
-  <span class="term-prop">"databases"</span>: [<span class="term-string">"MySQL"</span>, <span class="term-string">"PostgreSQL"</span>],
-  <span class="term-prop">"methods"</span>: [<span class="term-string">"WebQual 4.0"</span>, <span class="term-string">"IPA Matrix"</span>, <span class="term-string">"MVC Architecture"</span>],
-  <span class="term-prop">"tools"</span>: [<span class="term-string">"Git"</span>, <span class="term-string">"SPSS"</span>, <span class="term-string">"Figma"</span>, <span class="term-string">"VS Code"</span>]
-}
-`
+  <span class="term-prop">"hardSkills"</span>: [<span class="term-string">"Microsoft Office (Word, Excel, PowerPoint)"</span>, <span class="term-string">"Data Management"</span>, <span class="term-string">"Fleet Administration"</span>],
+  <span class="term-prop">"softSkills"</span>: [<span class="term-string">"Detail-Oriented"</span>, <span class="term-string">"Excellent Time Management"</span>, <span class="term-string">"Problem Solving"</span>],
+  <span class="term-prop">"systems"</span>: [<span class="term-string">"SOP Formulation"</span>, <span class="term-string">"Regulatory Compliance"</span>, <span class="term-string">"General Computer Systems"</span>],
+  <span class="term-prop">"languages"</span>: [<span class="term-string">"Indonesian (Fluent)"</span>, <span class="term-string">"English (Fluent)"</span>]
+}`
 };
 
 function initTerminalTabs() {
   const terminalTabs = document.querySelectorAll('.terminal-tab-btn');
   const codeBody = document.getElementById('terminal-code-body');
   const terminalContainer = document.querySelector('.terminal-tabs');
+  const codeView = document.getElementById('terminal-code-view');
+  const cliView = document.getElementById('terminal-cli-view');
+  const cliLog = document.getElementById('cli-output-log');
+  const cliInput = document.getElementById('cli-terminal-input');
+  const cliForm = document.getElementById('cli-terminal-form');
+  const cliChips = document.querySelectorAll('.cli-chip');
+
   if (!terminalTabs.length || !codeBody) return;
 
   function setSnippet(key) {
@@ -1227,6 +1260,19 @@ function initTerminalTabs() {
     }
   }
 
+  function switchTerminalView(snippetKey) {
+    if (snippetKey === 'interactive') {
+      if (codeView) codeView.style.display = 'none';
+      if (cliView) cliView.style.display = 'flex';
+    } else {
+      if (cliView) cliView.style.display = 'none';
+      if (codeView) {
+        codeView.style.display = 'block';
+        setSnippet(snippetKey);
+      }
+    }
+  }
+
   terminalTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       terminalTabs.forEach(t => t.classList.remove('active'));
@@ -1234,15 +1280,227 @@ function initTerminalTabs() {
       if (terminalContainer) {
         updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
       }
-      setSnippet(tab.getAttribute('data-snippet'));
+      const snippetKey = tab.getAttribute('data-snippet');
+      switchTerminalView(snippetKey);
     });
   });
 
   const activeTab = document.querySelector('.terminal-tab-btn.active');
-  if (activeTab && terminalContainer) {
+  const activeSnippet = activeTab ? activeTab.getAttribute('data-snippet') : 'interactive';
+  switchTerminalView(activeSnippet);
+  if (terminalContainer) {
     setTimeout(() => {
       updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
     }, 100);
+  }
+
+  // --- Interactive CLI Terminal Engine (Feature 2 - Non-Scroll Compact Mode) ---
+  const commandHistory = [];
+  let historyIndex = -1;
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function getActiveLang() {
+    return localStorage.getItem('bobby-portfolio-lang') || document.documentElement.lang || 'id';
+  }
+
+  function executeCliCommand(cmdString) {
+    if (!cliLog) return;
+    const trimmed = cmdString.trim();
+    if (!trimmed) return;
+
+    const parts = trimmed.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const args = parts.slice(1);
+    const lang = getActiveLang();
+    const isEn = lang === 'en';
+
+    if (cmd === 'clear') {
+      cliLog.innerHTML = `
+        <div class="cli-motd-header">
+          <div class="text-cyan-400 font-semibold text-xs"><i class="bi bi-terminal-fill me-1"></i> BobbyOS v2.4 (x86_64-darwin) &bull; Shell Active</div>
+          <div class="text-muted text-xs mt-0.5">${isEn ? 'Type <span class="cli-highlight">help</span> or tap chips above.' : 'Ketik <span class="cli-highlight">help</span> atau klik chip di atas.'}</div>
+        </div>
+      `;
+      return;
+    }
+
+    let outputHtml = '';
+
+    switch (cmd) {
+      case 'help':
+        outputHtml = isEn
+          ? `<strong>Commands:</strong> <span class="cli-highlight">bio</span>, <span class="cli-highlight">skills</span>, <span class="cli-highlight">projects</span>, <span class="cli-highlight">publications</span>, <span class="cli-highlight">cv</span>, <span class="cli-highlight">contact</span>, <span class="cli-highlight">theme</span>, <span class="cli-highlight">perf</span>, <span class="cli-highlight">clear</span>`
+          : `<strong>Perintah:</strong> <span class="cli-highlight">bio</span>, <span class="cli-highlight">skills</span>, <span class="cli-highlight">projects</span>, <span class="cli-highlight">publications</span>, <span class="cli-highlight">cv</span>, <span class="cli-highlight">contact</span>, <span class="cli-highlight">theme</span>, <span class="cli-highlight">perf</span>, <span class="cli-highlight">clear</span>`;
+        break;
+
+      case 'bio':
+        outputHtml = isEn
+          ? `<strong>Bobby Kamal Aizan, S.Kom</strong> &bull; Information Systems Alumnus (ITK, GPA 3.63) &bull; Administrator Transportation at PT. Abicam (Dec 2022 – Present) &bull; SOP Development Intern at Balai Diklat Keuangan.`
+          : `<strong>Bobby Kamal Aizan, S.Kom</strong> &bull; Lulusan S1 Sistem Informasi ITK (IPK 3.63) &bull; Administrator Transportation di PT. Abicam (Des 2022 – Sekarang) &bull; Magang Pengembangan SOP di Balai Diklat Keuangan.`;
+        break;
+
+      case 'skills':
+        outputHtml = `<strong>Keahlian:</strong> Microsoft Office (Word, Excel, PowerPoint), Data Management, Fleet &amp; Route Scheduling, SOP Formulation, Procedural Compliance, General Computer Knowledge, Indonesian &amp; English.`;
+        break;
+
+      case 'projects':
+        outputHtml = isEn
+          ? `[1] <strong>PT. Abicam</strong>: Fleet &amp; Route Optimization &bull; [2] <strong>Balai Diklat Keuangan</strong>: SOP Online Learning &bull; [3] <strong>ITK Information Systems</strong>: Data Architecture. <em>Type 'cv' for full document.</em>`
+          : `[1] <strong>PT. Abicam</strong>: Optimalisasi Armada &amp; Rute &bull; [2] <strong>Balai Diklat Keuangan</strong>: SOP Pembelajaran Daring &bull; [3] <strong>Sistem Informasi ITK</strong>: Arsitektur Data. <em>Ketik 'cv' untuk dokumen lengkap.</em>`;
+        break;
+
+      case 'publications':
+        outputHtml = isEn
+          ? `&bull; <strong>SOP Development:</strong> Online learning guidelines at Balai Diklat Keuangan &bull; <strong>Academic Research:</strong> Information Systems at Institut Teknologi Kalimantan (GPA 3.63).`
+          : `&bull; <strong>Pengembangan SOP:</strong> Prosedur pembelajaran daring di Balai Diklat Keuangan &bull; <strong>Riset Akademik:</strong> Sistem Informasi di Institut Teknologi Kalimantan (IPK 3.63).`;
+        break;
+
+      case 'cv':
+        {
+          const mode = args[0] ? args[0].toLowerCase() : 'quicklook';
+          if (mode === 'ats') {
+            outputHtml = `<span class="text-success"><i class="bi bi-file-earmark-text me-1"></i> [OK] Membuka CV <strong>Format ATS (HR Parser Ready)</strong>...</span>`;
+            setTimeout(() => {
+              if (typeof window.openCvModal === 'function') window.openCvModal('ats');
+            }, 150);
+          } else {
+            outputHtml = `<span class="text-info"><i class="bi bi-apple me-1"></i> [OK] Membuka CV <strong>Apple QuickLook</strong> (Tersedia tombol opsi Standar ATS)...</span>`;
+            setTimeout(() => {
+              if (typeof window.openCvModal === 'function') window.openCvModal('quicklook');
+            }, 150);
+          }
+        }
+        break;
+
+      case 'contact':
+        outputHtml = isEn
+          ? `Email: <a href="mailto:bobbykamalaizan@gmail.com" class="text-primary underline">bobbykamalaizan@gmail.com</a> &bull; Location: Balikpapan, Indonesia &bull; <a href="https://linkedin.com/in/bobbykamalaizan" target="_blank" class="text-info underline">LinkedIn</a> &bull; <a href="#contact" class="text-success underline">Send Message</a>`
+          : `Email: <a href="mailto:bobbykamalaizan@gmail.com" class="text-primary underline">bobbykamalaizan@gmail.com</a> &bull; Lokasi: Balikpapan, Indonesia &bull; <a href="https://linkedin.com/in/bobbykamalaizan" target="_blank" class="text-info underline">LinkedIn</a> &bull; <a href="#contact" class="text-success underline">Form Kontak</a>`;
+        break;
+
+      case 'theme':
+        {
+          const mode = args[0] ? args[0].toLowerCase() : 'toggle';
+          let appliedTheme = '';
+          if (typeof window.setPortfolioTheme === 'function') {
+            appliedTheme = window.setPortfolioTheme(mode);
+          }
+          outputHtml = `<span class="text-info"><i class="bi bi-circle-half me-1"></i> Theme updated: <strong>${appliedTheme || mode}</strong></span>`;
+        }
+        break;
+
+      case 'perf':
+        {
+          const mode = args[0] ? args[0].toLowerCase() : 'toggle';
+          let target = null;
+          if (mode === 'on') target = true;
+          else if (mode === 'off') target = false;
+          if (typeof window.setPortfolioPerfMode === 'function') {
+            target = window.setPortfolioPerfMode(target, true);
+          }
+          outputHtml = `<span class="text-warning"><i class="bi bi-lightning-charge me-1"></i> Performance mode: <strong>${target ? 'ENABLED' : 'DISABLED'}</strong></span>`;
+        }
+        break;
+
+      case 'sudo':
+        if (args.join(' ').toLowerCase().includes('hire')) {
+          outputHtml = `⚡ <strong class="text-success">ACCESS GRANTED!</strong> Mengarahkan ke form kontak / pesan Bobby...`;
+          setTimeout(() => {
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              window.location.href = 'mailto:bobbykamalaizan@gmail.com?subject=Peluang%20Kolaborasi%20Profesional';
+            }
+          }, 500);
+        } else {
+          outputHtml = `<span class="text-danger">sudo: permission denied. (Coba '<span class="cli-highlight">sudo hire bobby</span>' 😉)</span>`;
+        }
+        break;
+
+      case 'whoami':
+        outputHtml = `visitor@bobby-portfolio (guest session) &bull; Terminal active`;
+        break;
+
+      case 'date':
+        outputHtml = new Date().toLocaleString(isEn ? 'en-US' : 'id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+        break;
+
+      default:
+        outputHtml = `<span class="text-danger">command not found: "${escapeHtml(trimmed)}".</span> Ketik <span class="cli-highlight">help</span> atau klik chip.`;
+        break;
+    }
+
+    const logEntry = document.createElement('div');
+    logEntry.className = 'cli-log-entry';
+    logEntry.innerHTML = `
+      <div class="cli-log-cmd">
+        <span class="cli-prompt-user">bobby</span><span class="cli-prompt-at">@</span><span class="cli-prompt-host">itk</span><span class="cli-prompt-symbol">:~$</span>
+        <span class="text-white">${escapeHtml(trimmed)}</span>
+      </div>
+      <div class="cli-log-result">${outputHtml}</div>
+    `;
+    cliLog.innerHTML = '';
+    cliLog.appendChild(logEntry);
+  }
+
+  // Handle Form Submission
+  if (cliForm && cliInput) {
+    cliForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = cliInput.value.trim();
+      if (!val) return;
+      commandHistory.push(val);
+      historyIndex = commandHistory.length;
+      cliInput.value = '';
+      executeCliCommand(val);
+    });
+
+    cliInput.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (commandHistory.length > 0 && historyIndex > 0) {
+          historyIndex--;
+          cliInput.value = commandHistory[historyIndex];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          cliInput.value = commandHistory[historyIndex];
+        } else {
+          historyIndex = commandHistory.length;
+          cliInput.value = '';
+        }
+      }
+    });
+  }
+
+  // Handle Chips Click
+  if (cliChips.length) {
+    cliChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const cmd = chip.getAttribute('data-cmd');
+        if (!cmd) return;
+        const interactiveTab = document.getElementById('tab-cli-interactive');
+        if (interactiveTab && !interactiveTab.classList.contains('active')) {
+          terminalTabs.forEach(t => t.classList.remove('active'));
+          interactiveTab.classList.add('active');
+          if (terminalContainer) {
+            updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
+          }
+          switchTerminalView('interactive');
+        }
+        commandHistory.push(cmd);
+        historyIndex = commandHistory.length;
+        if (cliInput) cliInput.value = '';
+        executeCliCommand(cmd);
+      });
+    });
   }
 }
 
@@ -1595,9 +1853,88 @@ window.closeProjectModal = function () {
   }
 };
 
+// Global Apple QuickLook CV Modal Trigger with Dual Format (Feature 3 & ATS Option)
+window.openCvModal = function (format = 'quicklook') {
+  const cvModalBackdrop = document.getElementById('appleCvModal');
+  if (cvModalBackdrop) {
+    if (format === 'ats') {
+      window.switchCvFormat('ats');
+    } else if (format === 'quicklook') {
+      window.switchCvFormat('quicklook');
+    }
+    cvModalBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+window.switchCvFormat = function (format) {
+  const btnQuicklook = document.getElementById('btnCvFormatQuicklook');
+  const btnAts = document.getElementById('btnCvFormatAts');
+  const viewQuicklook = document.getElementById('cvViewQuicklook');
+  const viewAts = document.getElementById('cvViewAts');
+  const activeLabel = document.getElementById('cvActiveModeLabel');
+  const isEn = (document.documentElement.lang === 'en');
+
+  if (format === 'ats') {
+    if (btnQuicklook) {
+      btnQuicklook.classList.remove('active');
+      btnQuicklook.setAttribute('aria-selected', 'false');
+    }
+    if (btnAts) {
+      btnAts.classList.add('active');
+      btnAts.setAttribute('aria-selected', 'true');
+    }
+    if (viewQuicklook) viewQuicklook.classList.remove('active');
+    if (viewAts) viewAts.classList.add('active');
+    if (activeLabel) {
+      activeLabel.textContent = isEn ? 'Format: Standard ATS (HR Parser Ready)' : 'Format: Standar ATS (HR Parser Ready)';
+    }
+  } else {
+    if (btnAts) {
+      btnAts.classList.remove('active');
+      btnAts.setAttribute('aria-selected', 'false');
+    }
+    if (btnQuicklook) {
+      btnQuicklook.classList.add('active');
+      btnQuicklook.setAttribute('aria-selected', 'true');
+    }
+    if (viewAts) viewAts.classList.remove('active');
+    if (viewQuicklook) viewQuicklook.classList.add('active');
+    if (activeLabel) {
+      activeLabel.textContent = isEn ? 'Format: Apple QuickLook (Visual)' : 'Format: Apple QuickLook (Visual)';
+    }
+  }
+};
+
+window.closeCvModal = function () {
+  const cvModalBackdrop = document.getElementById('appleCvModal');
+  if (cvModalBackdrop) {
+    cvModalBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+};
+
+window.printCv = function () {
+  const cvModalBackdrop = document.getElementById('appleCvModal');
+  if (cvModalBackdrop && !cvModalBackdrop.classList.contains('open')) {
+    window.openCvModal();
+  }
+  setTimeout(() => {
+    window.print();
+  }, 60);
+};
+
+window.addEventListener('beforeprint', () => {
+  const cvModalBackdrop = document.getElementById('appleCvModal');
+  if (cvModalBackdrop) {
+    cvModalBackdrop.classList.add('open');
+  }
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeProjectModal();
+    closeCvModal();
   }
 });
 

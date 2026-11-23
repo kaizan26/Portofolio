@@ -65,12 +65,17 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
+  <!-- Dynamic Theme Color, PWA Manifest & App Icons -->
+  <meta name="theme-color" id="theme-color-meta" content="#0e0e16">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.svg">
+
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Apple Pro Liquid Glass Stylesheets -->
-  <link rel="stylesheet" href="css/glassmorphism.css?v=7.3">
-  <link rel="stylesheet" href="css/style.css?v=7.3">
+  <link rel="stylesheet" href="css/glassmorphism.css?v=7.4">
+  <link rel="stylesheet" href="css/style.css?v=7.4">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml"
@@ -322,38 +327,36 @@
 
             <div class="hero-role-wrapper">
               <span data-i18n="hero_focus">Fokus pada</span>
-              <span class="gradient-text-cyan font-bold" id="typing-role">Software Engineering</span>
+              <span class="gradient-text-cyan font-bold" id="typing-role">Administrasi Transportasi</span>
               <span class="typing-cursor"></span>
             </div>
 
             <p class="hero-bio" data-i18n="hero_bio">
-              Software Engineer & Information Systems Specialist. Berpengalaman dalam pengembangan sistem informasi
-              berbasis web, arsitektur MVC (PHP / CodeIgniter / Laravel), JavaScript modern, serta evaluasi kualitas dan
-              user-experience sistem menggunakan metode empiris WebQual 4.0 dan Importance-Performance Analysis (IPA).
+              Profesional administrasi yang berorientasi pada detail dengan latar belakang akademis Sistem Informasi dari Institut Teknologi Kalimantan (IPK 3.63). Berpengalaman di PT. Abicam dalam optimalisasi rute dan jadwal armada, kepatuhan regulasi transportasi, manajemen data, dokumentasi administratif, koordinasi sistem operasional, serta penyusunan SOP di Balai Diklat Keuangan.
             </p>
 
             <div class="hero-cta-group">
-              <a href="#projects" class="btn-glass-primary">
-                <span data-i18n="hero_cta_projects">Lihat Karya & Riset</span>
+              <a href="#about" class="btn-glass-primary">
+                <span data-i18n="hero_cta_projects">Lihat Pengalaman &amp; Karier</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
               <a href="#contact" class="btn-glass-secondary">
                 <i class="bi bi-envelope"></i>
                 <span data-i18n="hero_cta_contact">Hubungi Saya</span>
               </a>
+              <button type="button" class="btn-glass-secondary" id="btn-quicklook-cv" onclick="openCvModal()">
+                <i class="bi bi-file-earmark-person"></i>
+                <span data-i18n="hero_cta_cv">Ringkasan CV</span>
+              </button>
             </div>
 
             <!-- Fast Tech Stack Badges -->
             <div class="flex items-center gap-2 flex-wrap">
-              <span class="text-muted text-xs font-semibold me-2" data-i18n="hero_stack_label">STACK:</span>
-              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-filetype-js text-warning"></i> JavaScript /
-                TS</span>
-              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-filetype-php text-primary"></i> PHP /
-                MVC</span>
-              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-database-fill text-success"></i> MySQL /
-                PG</span>
-              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-clipboard2-check text-info"></i> WebQual
-                4.0</span>
+              <span class="text-muted text-xs font-semibold me-2" data-i18n="hero_stack_label">KOMPETENSI:</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-file-earmark-spreadsheet text-success"></i> MS Excel &amp; Office</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-truck text-primary"></i> Armada &amp; Rute</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-folder2-open text-warning"></i> Data &amp; Arsip</span>
+              <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-check2-all text-info"></i> SOP &amp; Kepatuhan</span>
             </div>
           </div>
 
@@ -375,32 +378,64 @@
               <!-- Terminal Tab Controls with Morph Pill -->
               <div class="terminal-tabs">
                 <div class="terminal-morph-pill" id="terminal-morph-pill"></div>
-                <button class="terminal-tab-btn active" data-snippet="overview"><i
+                <button class="terminal-tab-btn active" data-snippet="interactive" id="tab-cli-interactive"><i
+                    class="bi bi-terminal-dash me-1"></i> terminal.sh <span class="cli-live-indicator">LIVE</span></button>
+                <button class="terminal-tab-btn" data-snippet="overview"><i
                     class="bi bi-file-earmark-code me-1"></i> overview.js</button>
                 <button class="terminal-tab-btn" data-snippet="research"><i class="bi bi-database-gear me-1"></i>
-                  research_matrix.sql</button>
+                  research.sql</button>
                 <button class="terminal-tab-btn" data-snippet="stack"><i class="bi bi-braces me-1"></i>
                   stack.json</button>
               </div>
 
               <!-- Terminal Content -->
               <div class="terminal-body">
-                <pre class="m-0" style="font-family: inherit;"><code id="terminal-code-body">
-<span class="term-comment"># Engineer & Information Systems Profile</span>
-<span class="term-keyword">const</span> <span class="term-prop">engineer</span> = {
+                <!-- Static Code Viewer (overview, research, stack) -->
+                <div id="terminal-code-view" style="display: none;">
+                  <pre class="m-0 p-0" style="font-family: inherit;"><code id="terminal-code-body"><span class="term-comment"># Professional & Administrative Systems Profile</span>
+<span class="term-keyword">const</span> <span class="term-prop">professional</span> = {
   <span class="term-prop">name</span>: <span class="term-string">"Bobby Kamal Aizan"</span>,
-  <span class="term-prop">almaMater</span>: <span class="term-string">"ITK Kalimantan"</span>,
-  <span class="term-prop">focus</span>: [
-    <span class="term-string">"Web Systems"</span>,
-    <span class="term-string">"Info Architecture"</span>,
-    <span class="term-string">"UX Analytics"</span>
+  <span class="term-prop">role</span>: <span class="term-string">"Administrator Transportation"</span>,
+  <span class="term-prop">company</span>: <span class="term-string">"PT. Abicam"</span>,
+  <span class="term-prop">almaMater</span>: <span class="term-string">"Institut Teknologi Kalimantan (ITK)"</span>,
+  <span class="term-prop">degree</span>: <span class="term-string">"Bachelor of Computer Science (GPA: 3.63)"</span>,
+  <span class="term-prop">keyStrengths</span>: [
+    <span class="term-string">"Data Management"</span>,
+    <span class="term-string">"Fleet Coordination"</span>,
+    <span class="term-string">"SOP Development"</span>
   ],
-  <span class="term-prop">researchArea</span>: <span class="term-string">"WebQual 4.0 & IPA"</span>,
-  <span class="term-prop">status</span>: <span class="term-val">"Available for Collaboration"</span>
+  <span class="term-prop">status</span>: <span class="term-val">"Active Transportation Administrator"</span>
 };
+<span class="term-cmd">console</span>.log(<span class="term-string">"Operational integrity verified."</span>);</code></pre>
+                </div>
 
-<span class="term-cmd">console</span>.log(<span class="term-string">"System operational."</span>);
-                </code></pre>
+                <!-- Interactive Developer CLI Terminal (terminal.sh - Default Primary Tab) -->
+                <div id="terminal-cli-view" class="cli-terminal-wrapper">
+                  <!-- Sleek Quick Chips Bar -->
+                  <div class="cli-chips-bar" id="cli-chips-container">
+                    <button type="button" class="cli-chip" data-cmd="help"><i class="bi bi-question-circle me-1"></i>help</button>
+                    <button type="button" class="cli-chip" data-cmd="bio"><i class="bi bi-person me-1"></i>bio</button>
+                    <button type="button" class="cli-chip" data-cmd="skills"><i class="bi bi-gear me-1"></i>skills</button>
+                    <button type="button" class="cli-chip" data-cmd="projects"><i class="bi bi-code-slash me-1"></i>projects</button>
+                    <button type="button" class="cli-chip" data-cmd="cv"><i class="bi bi-file-earmark-person me-1"></i>cv</button>
+                    <button type="button" class="cli-chip" data-cmd="contact"><i class="bi bi-envelope me-1"></i>contact</button>
+                    <button type="button" class="cli-chip" data-cmd="clear"><i class="bi bi-trash me-1"></i>clear</button>
+                  </div>
+
+                  <!-- Terminal Output Stream -->
+                  <div class="cli-output-log" id="cli-output-log">
+                    <div class="cli-motd-header">
+                      <div class="text-cyan-400 font-semibold text-xs"><i class="bi bi-terminal-fill me-1"></i> BobbyOS v2.4 (x86_64-darwin) &bull; Shell Active</div>
+                      <div class="text-muted text-xs mt-0.5" data-i18n="cli_welcome_hint">Ketik <span class="cli-highlight">help</span> atau klik chip di atas. Ketik <span class="cli-highlight">cv</span> untuk ringkasan CV.</div>
+                    </div>
+                  </div>
+
+                  <!-- Terminal Input Prompt -->
+                  <form class="cli-prompt-line" id="cli-terminal-form" onsubmit="return false;">
+                    <span class="cli-prompt-user">bobby</span><span class="cli-prompt-at">@</span><span class="cli-prompt-host">itk</span><span class="cli-prompt-symbol">:~$</span>
+                    <input type="text" id="cli-terminal-input" class="cli-terminal-input" autocomplete="off" spellcheck="false" placeholder="ketik perintah (help, bio, cv)..." aria-label="Terminal command input" />
+                  </form>
+                </div>
               </div>
 
               <!-- Terminal Footer Status -->
@@ -517,47 +552,40 @@
           <div class="reveal-on-scroll delay-100 parallax-card-stagger-2">
             <div class="glass-card about-card">
               <h3 class="font-bold text-xl mb-6 flex items-center gap-2.5">
-                <i class="bi bi-clock-history text-info"></i> <span data-i18n="timeline_heading">Jejak Akademik &
-                  Riset</span>
+                <i class="bi bi-clock-history text-info"></i> <span data-i18n="timeline_heading">Jejak Karier &amp; Pendidikan</span>
               </h3>
 
               <div class="timeline-container">
                 <!-- Milestone 1 -->
                 <div class="timeline-item">
                   <div class="timeline-dot"></div>
-                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> 2023</div>
-                  <h4 class="timeline-title" data-i18n="timeline_1_title">Penelitian Skripsi SIAT WebQual 4.0 & IPA</h4>
+                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> Des 2022 – Sekarang</div>
+                  <h4 class="timeline-title" data-i18n="timeline_1_title">Administrator Transportation — PT. Abicam</h4>
                   <div class="timeline-institution" data-i18n="timeline_1_inst"><i class="bi bi-building me-1"></i>
-                    Institut Teknologi Kalimantan (ITK) & Universitas Balikpapan</div>
-                  <p class="timeline-description" data-i18n="timeline_1_desc">Melakukan riset komprehensif evaluasi
-                    kualitas website Sistem Informasi Akademik Terpadu (SIAT) menggunakan instrumen WebQual 4.0 dan
-                    kuadran IPA. Terarsip di Repositori ITK.</p>
+                    PT. Abicam | Balikpapan (Des 2022 – Sekarang)</div>
+                  <p class="timeline-description" data-i18n="timeline_1_desc">Mengoptimalkan efisiensi operasional dengan menyempurnakan jadwal perjalanan dan rute armada, memastikan kepatuhan regulasi keselamatan, memfasilitasi komunikasi pengemudi-mekanik-pelanggan, dan mengelola perizinan serta sertifikasi kendaraan.</p>
                 </div>
 
                 <!-- Milestone 2 -->
                 <div class="timeline-item">
                   <div class="timeline-dot"></div>
-                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> 2021</div>
-                  <h4 class="timeline-title" data-i18n="timeline_2_title">Publikasi Jurnal Ilmiah: SIREM (CodeIgniter)
+                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> Januari 2024</div>
+                  <h4 class="timeline-title" data-i18n="timeline_2_title">Kelulusan S1 Sistem Informasi (IPK 3.63)
                   </h4>
-                  <div class="timeline-institution" data-i18n="timeline_2_inst"><i class="bi bi-journal-text me-1"></i>
-                    Syntax: Journal of Software Engineering, CS & IT</div>
-                  <p class="timeline-description" data-i18n="timeline_2_desc">Rancang bangun sistem informasi persewaan
-                    mobil (SIREM) berbasis web dengan framework CodeIgniter dan penulisan karya ilmiah yang diterbitkan
-                    pada jurnal terakreditasi.</p>
+                  <div class="timeline-institution" data-i18n="timeline_2_inst"><i class="bi bi-mortarboard me-1"></i>
+                    Institut Teknologi Kalimantan (ITK) — Jan 2024</div>
+                  <p class="timeline-description" data-i18n="timeline_2_desc">Lulus Sarjana Komputer (S.Kom) pada Fakultas Matematika dan Teknologi Informasi dengan predikat Sangat Memuaskan (IPK: 3.63/4.00).</p>
                 </div>
 
                 <!-- Milestone 3 -->
                 <div class="timeline-item">
                   <div class="timeline-dot"></div>
-                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> 2021</div>
-                  <h4 class="timeline-title" data-i18n="timeline_3_title">Optimalisasi Digitalisasi Pariwisata Lamaru
+                  <div class="timeline-date"><i class="bi bi-calendar-check me-1"></i> Jun 2021 – Agu 2021</div>
+                  <h4 class="timeline-title" data-i18n="timeline_3_title">Magang Pengembangan SOP Pembelajaran Daring
                   </h4>
-                  <div class="timeline-institution" data-i18n="timeline_3_inst"><i class="bi bi-people me-1"></i>
-                    Program Pengabdian Masyarakat ITK</div>
-                  <p class="timeline-description" data-i18n="timeline_3_desc">Kolaborasi optimalisasi potensi wisata
-                    lokal dan pemberdayaan UMKM melalui strategi integrasi sistem informasi di Kelurahan Lamaru,
-                    Balikpapan.</p>
+                  <div class="timeline-institution" data-i18n="timeline_3_inst"><i class="bi bi-bank me-1"></i>
+                    Balai Diklat Keuangan | Balikpapan (Jun 2021 – Agu 2021)</div>
+                  <p class="timeline-description" data-i18n="timeline_3_desc">Mengembangkan Standar Operasional Prosedur (SOP) terstruktur untuk mendukung inisiatif dan kelancaran program pembelajaran daring instansi.</p>
                 </div>
               </div>
             </div>
@@ -1175,17 +1203,321 @@
     </div>
   </div>
 
+  <!-- ==========================================================================
+       NATIVE TAILWIND APPLE GLASS MODAL: QUICKLOOK CV VIEWER
+       ========================================================================== -->
+  <div class="apple-glass-modal-backdrop" id="appleCvModal"
+    onclick="if(event.target === this) closeCvModal()">
+    <div class="apple-glass-modal-card cv-quicklook-card">
+      <!-- CV Window Header Topbar with Native macOS Traffic Controls (Red = Exit) & Format Switcher -->
+      <div class="cv-window-topbar">
+        <div class="terminal-dots cv-traffic-controls">
+          <button type="button" class="dot dot-red cv-exit-btn" onclick="closeCvModal()" aria-label="Close CV modal" title="Tutup (Esc)"></button>
+          <button type="button" class="dot dot-yellow cv-min-btn" onclick="closeCvModal()" aria-label="Tutup CV" title="Tutup CV"></button>
+          <button type="button" class="dot dot-green cv-zoom-btn" onclick="printCv()" aria-label="Cetak CV" title="Cetak / Simpan PDF (1 Halaman A4)"></button>
+        </div>
+        <div class="cv-window-title"><i class="bi bi-file-earmark-person me-1"></i> Curriculum Vitae — Bobby Kamal Aizan</div>
+        <!-- Format Switcher Segmented Control (QuickLook vs ATS) -->
+        <div class="cv-format-toggle-bar">
+          <div class="cv-segmented-control" role="tablist" aria-label="Format CV">
+            <button type="button" class="cv-segment-btn active" id="btnCvFormatQuicklook" onclick="switchCvFormat('quicklook')" role="tab" aria-selected="true" title="Tampilan Apple QuickLook Visual">
+              <i class="bi bi-apple me-1"></i> <span data-i18n="cv_tab_visual">QuickLook (Visual)</span>
+            </button>
+            <button type="button" class="cv-segment-btn" id="btnCvFormatAts" onclick="switchCvFormat('ats')" role="tab" aria-selected="false" title="Format ATS Standar HR Parser">
+              <i class="bi bi-file-earmark-text me-1"></i> <span data-i18n="cv_tab_ats">Standar ATS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           VIEW 1: APPLE QUICKLOOK VISUAL FORMAT (Default)
+           ==================================================================== -->
+      <div id="cvViewQuicklook" class="cv-format-view active">
+        <!-- CV Hero Header Profile -->
+        <div class="cv-profile-header">
+        <div class="cv-avatar-monogram">BA</div>
+        <div class="cv-profile-main">
+          <div class="flex items-center gap-2 flex-wrap mb-1">
+            <h3 class="cv-profile-name" data-i18n="modal_cv_name">Bobby Kamal Aizan, S.Kom</h3>
+            <span class="cv-badge-verified"><i class="bi bi-patch-check-fill text-primary"></i> <span data-i18n="modal_cv_badge">Profil Terverifikasi • Alumnus ITK (IPK 3.63)</span></span>
+          </div>
+          <p class="cv-profile-role text-muted" data-i18n="modal_cv_role">Administrator &amp; Information Systems Specialist</p>
+
+          <!-- Contact Details Strip -->
+          <div class="cv-contact-strip">
+            <span class="cv-contact-item"><i class="bi bi-geo-alt-fill text-danger"></i> Balikpapan, Indonesia</span>
+            <a href="mailto:bobbykamalaizan@gmail.com" class="cv-contact-item cv-contact-link"><i class="bi bi-envelope-fill text-primary"></i> bobbykamalaizan@gmail.com</a>
+            <a href="https://linkedin.com/in/bobbykamalaizan" target="_blank" rel="noopener noreferrer" class="cv-contact-item cv-contact-link"><i class="bi bi-linkedin text-info"></i> LinkedIn</a>
+            <a href="https://bobby-portofolio.vercel.app" target="_blank" rel="noopener noreferrer" class="cv-contact-item cv-contact-link"><i class="bi bi-globe text-primary"></i> bobby-portofolio.vercel.app</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Key Metrics Strip -->
+      <div class="cv-metrics-strip">
+        <div class="cv-metric-box">
+          <div class="cv-metric-val gradient-text">3.63</div>
+          <div class="cv-metric-lbl" data-i18n="stat_itk_label">IPK 3.63 (Sistem Informasi)</div>
+        </div>
+        <div class="cv-metric-box">
+          <div class="cv-metric-val gradient-text-cyan">PT. Abicam</div>
+          <div class="cv-metric-lbl" data-i18n="stat_syntax_label">Administrator Transportasi</div>
+        </div>
+        <div class="cv-metric-box">
+          <div class="cv-metric-val gradient-text-orange">BDK</div>
+          <div class="cv-metric-lbl" data-i18n="stat_webqual_label">PT. Abicam (Des 2022 - Sekarang)</div>
+        </div>
+        <div class="cv-metric-box">
+          <div class="cv-metric-val gradient-text-green">MS Office</div>
+          <div class="cv-metric-lbl" data-i18n="stat_fullstack_label">MS Office &amp; Data Management</div>
+        </div>
+      </div>
+
+      <!-- CV Body Content -->
+      <div id="cvModalBody" class="cv-modal-content">
+        <!-- Executive Summary -->
+        <div class="cv-section-block">
+          <h5 class="cv-section-title">
+            <i class="bi bi-person-lines-fill text-primary"></i>
+            <span data-i18n="modal_cv_sec_summary">Executive Summary</span>
+          </h5>
+          <div class="cv-summary-card">
+            <p class="cv-p" data-i18n="modal_cv_summary_text">
+              Profesional administrasi yang berorientasi pada detail dengan latar belakang akademis Sistem Informasi dari Institut Teknologi Kalimantan. Berpengalaman dalam mengefisiensikan proses operasional, memiliki keterampilan kuat dalam manajemen data, dokumentasi administratif, dan koordinasi sistem untuk meningkatkan akurasi dan efisiensi. Dengan ketelitian tinggi dan pendekatan terstruktur dalam pemecahan masalah, saya unggul dalam pengelolaan rekam data, memastikan kepatuhan prosedural, serta mendukung operasional harian.
+            </p>
+          </div>
+        </div>
+
+        <!-- Two Column Bento: Experience & Education -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <!-- Experience -->
+          <div class="cv-section-block mb-0">
+            <h5 class="cv-section-title">
+              <i class="bi bi-briefcase-fill text-primary"></i>
+              <span data-i18n="modal_cv_sec_publication">Pengalaman Kerja Utama</span>
+            </h5>
+            <div class="cv-detail-card h-full">
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <h6 class="font-bold text-sm text-primary">PT. Abicam | Balikpapan</h6>
+                <span class="cv-year-pill">Des 2022 – Sekarang</span>
+              </div>
+              <div class="font-semibold text-xs mb-1">Administrator Transportation</div>
+              <div class="text-muted text-xs leading-relaxed" data-i18n="modal_cv_pub_desc">
+                Administrator Transportation di PT. Abicam (Des 2022 – Sekarang) &amp; Magang Pengembangan SOP di Balai Diklat Keuangan (Jun 2021 – Agu 2021).
+              </div>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div class="cv-section-block mb-0">
+            <h5 class="cv-section-title">
+              <i class="bi bi-mortarboard-fill text-info"></i>
+              <span data-i18n="modal_cv_sec_education">Pendidikan &amp; Almamater</span>
+            </h5>
+            <div class="cv-detail-card h-full">
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <h6 class="font-bold text-sm text-primary">S1 Sistem Informasi</h6>
+                <span class="cv-year-pill">Jan 2024</span>
+              </div>
+              <div class="font-semibold text-xs mb-1">Institut Teknologi Kalimantan (ITK)</div>
+              <div class="text-muted text-xs leading-relaxed" data-i18n="modal_cv_edu_desc">
+                Lulus Januari 2024 • Sarjana Komputer • Fakultas Matematika dan Teknologi Informasi • IPK: 3.63 (Sangat Memuaskan)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Competencies Matrix -->
+        <div class="cv-section-block">
+          <h5 class="cv-section-title">
+            <i class="bi bi-award-fill text-success"></i>
+            <span data-i18n="modal_cv_sec_tech">Kompetensi Utama (Core Competencies)</span>
+          </h5>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+            <div class="cv-tech-card">
+              <div class="cv-tech-heading" data-i18n="modal_cv_tech_languages">MICROSOFT OFFICE</div>
+              <div class="cv-tech-chips">
+                <span class="tech-chip">Microsoft Excel</span>
+                <span class="tech-chip">Microsoft Word</span>
+                <span class="tech-chip">PowerPoint</span>
+                <span class="tech-chip">Data Processing</span>
+              </div>
+            </div>
+
+            <div class="cv-tech-card">
+              <div class="cv-tech-heading" data-i18n="modal_cv_tech_backend">OPERASIONAL &amp; ARMADA</div>
+              <div class="cv-tech-chips">
+                <span class="tech-chip">Rute &amp; Jadwal</span>
+                <span class="tech-chip">Regulasi Armada</span>
+                <span class="tech-chip">Fleet Monitoring</span>
+                <span class="tech-chip">Koordinasi Driver</span>
+              </div>
+            </div>
+
+            <div class="cv-tech-card">
+              <div class="cv-tech-heading" data-i18n="modal_cv_tech_research">SISTEM &amp; DOKUMEN</div>
+              <div class="cv-tech-chips">
+                <span class="tech-chip">Penyusunan SOP</span>
+                <span class="tech-chip">Izin Kendaraan</span>
+                <span class="tech-chip">Sertifikasi Servis</span>
+                <span class="tech-chip">Sistem Informasi</span>
+              </div>
+            </div>
+
+            <div class="cv-tech-card">
+              <div class="cv-tech-heading" data-i18n="modal_cv_tech_tools">SOFT SKILLS &amp; BAHASA</div>
+              <div class="cv-tech-chips">
+                <span class="tech-chip">Detail-Oriented</span>
+                <span class="tech-chip">Time Management</span>
+                <span class="tech-chip">Bahasa Indonesia</span>
+                <span class="tech-chip">English (Fluent)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Printable Verification Footer (Visible only when printing) -->
+        <div class="cv-print-footer">
+          <div><i class="bi bi-patch-check-fill text-primary"></i> Portofolio Digital &amp; Curriculum Vitae Terverifikasi • https://bobby-portofolio.vercel.app</div>
+          <div class="cv-print-date">Balikpapan, Indonesia • 2026</div>
+        </div>
+      </div>
+      </div><!-- End #cvViewQuicklook -->
+
+      <!-- ====================================================================
+           VIEW 2: ATS-FRIENDLY RESUME (100% HR SCANNER & PARSER COMPLIANT)
+           Single-column semantic hierarchy, clear headings, bulleted action items,
+           machine-readable plain text, standard keywords, strictly 1-page A4.
+           ==================================================================== -->
+      <div id="cvViewAts" class="cv-format-view">
+        <div class="cv-ats-document">
+          <!-- ATS Header -->
+          <div class="cv-ats-header">
+            <h1 class="cv-ats-name">BOBBY KAMAL AIZAN</h1>
+            <div class="cv-ats-title" data-i18n="modal_cv_role">Administrator &amp; Information Systems Specialist</div>
+            <div class="cv-ats-contact">
+              <span>Balikpapan, Indonesia</span>
+              <span>&bull;</span>
+              <a href="mailto:bobbykamalaizan@gmail.com">bobbykamalaizan@gmail.com</a>
+              <span>&bull;</span>
+              <a href="https://linkedin.com/in/bobbykamalaizan" target="_blank" rel="noopener noreferrer">linkedin.com/in/bobbykamalaizan</a>
+              <span>&bull;</span>
+              <a href="https://bobby-portofolio.vercel.app" target="_blank" rel="noopener noreferrer">bobby-portofolio.vercel.app</a>
+            </div>
+            <div class="cv-ats-divider"></div>
+          </div>
+
+          <!-- 1. Professional Summary -->
+          <div class="cv-ats-section">
+            <h2 class="cv-ats-section-heading" data-i18n="cv_ats_summary_title">ABOUT ME (RINGKASAN PROFESIONAL)</h2>
+            <p class="cv-ats-p" data-i18n="cv_ats_summary_text">
+              Profesional administrasi yang berorientasi pada detail dengan latar belakang akademis Sistem Informasi dari Institut Teknologi Kalimantan. Berpengalaman dalam mengefisiensikan proses operasional, memiliki keterampilan kuat dalam manajemen data, dokumentasi administratif, dan koordinasi sistem untuk meningkatkan akurasi dan efisiensi. Dengan ketelitian tinggi dan pendekatan terstruktur dalam pemecahan masalah, saya unggul dalam pengelolaan rekam data, memastikan kepatuhan prosedural, serta mendukung operasional harian.
+            </p>
+          </div>
+
+          <!-- 2. Experience -->
+          <div class="cv-ats-section">
+            <h2 class="cv-ats-section-heading" data-i18n="cv_ats_exp_title">EXPERIENCE (PENGALAMAN KERJA)</h2>
+            <!-- Job 1 -->
+            <div class="cv-ats-item">
+              <div class="cv-ats-item-header">
+                <span class="cv-ats-item-title" data-i18n="cv_ats_exp_job1_role">Administrator Transportation</span>
+                <span class="cv-ats-item-meta" data-i18n="cv_ats_exp_job1_period">Des 2022 – Sekarang</span>
+              </div>
+              <div class="cv-ats-item-sub" data-i18n="cv_ats_exp_job1_company">PT. Abicam | Balikpapan</div>
+              <ul class="cv-ats-list">
+                <li data-i18n="cv_ats_exp_job1_b1">Mengoptimalkan efisiensi operasional dengan menyempurnakan jadwal perjalanan dan rute armada.</li>
+                <li data-i18n="cv_ats_exp_job1_b2">Memastikan kepatuhan terhadap regulasi transportasi, menjaga standar keselamatan dan operasional melalui pemantauan kinerja armada secara berkala.</li>
+                <li data-i18n="cv_ats_exp_job1_b3">Memfasilitasi komunikasi antara pengemudi, mekanik, dan pelanggan, meningkatkan kepuasan pelanggan serta meminimalkan kendala mobilitas.</li>
+                <li data-i18n="cv_ats_exp_job1_b4">Mengelola dokumentasi administratif, termasuk laporan perjalanan, izin kendaraan, dan sertifikasi pemeliharaan, memastikan kelengkapan serta pembaruan tepat waktu.</li>
+              </ul>
+            </div>
+            <!-- Job 2 -->
+            <div class="cv-ats-item">
+              <div class="cv-ats-item-header">
+                <span class="cv-ats-item-title" data-i18n="cv_ats_exp_job2_role">Intern</span>
+                <span class="cv-ats-item-meta" data-i18n="cv_ats_exp_job2_period">Jun 2021 – Agu 2021</span>
+              </div>
+              <div class="cv-ats-item-sub" data-i18n="cv_ats_exp_job2_company">Balai Diklat Keuangan | Balikpapan</div>
+              <ul class="cv-ats-list">
+                <li data-i18n="cv_ats_exp_job2_b1">Mengembangkan Standar Operasional Prosedur (SOP) untuk inisiatif pembelajaran daring.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 3. Education -->
+          <div class="cv-ats-section">
+            <h2 class="cv-ats-section-heading" data-i18n="cv_ats_edu_title">EDUCATION (PENDIDIKAN)</h2>
+            <div class="cv-ats-item">
+              <div class="cv-ats-item-header">
+                <span class="cv-ats-item-title" data-i18n="cv_ats_edu_degree">Information Systems — Sarjana Komputer</span>
+                <span class="cv-ats-item-meta" data-i18n="cv_ats_edu_period">Januari 2024 | Balikpapan</span>
+              </div>
+              <div class="cv-ats-item-sub" data-i18n="cv_ats_edu_school">Institut Teknologi Kalimantan (ITK)</div>
+              <ul class="cv-ats-list">
+                <li data-i18n="cv_ats_edu_faculty">Sarjana Komputer, Fakultas Matematika dan Teknologi Informasi</li>
+                <li data-i18n="cv_ats_edu_gpa">Indeks Prestasi Kumulatif (IPK): 3.63 / 4.00 (Sangat Memuaskan)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 4. Skills -->
+          <div class="cv-ats-section">
+            <h2 class="cv-ats-section-heading" data-i18n="cv_ats_skills_title">SKILLS (KEAHLIAN)</h2>
+            <div class="cv-ats-skills-line">
+              <strong class="cv-ats-skills-label" data-i18n="cv_ats_skills_soft_lbl">Soft skills:</strong>
+              <span data-i18n="cv_ats_skills_soft_val">Berorientasi pada detail (detail-oriented) dan manajemen waktu yang sangat baik (excellent time management).</span>
+            </div>
+            <div class="cv-ats-skills-line">
+              <strong class="cv-ats-skills-label" data-i18n="cv_ats_skills_hard_lbl">Hard skills:</strong>
+              <span data-i18n="cv_ats_skills_hard_val">Mahir Microsoft Office (Word, Excel, dll.), koordinasi operasional armada, dan pengetahuan komputer umum.</span>
+            </div>
+            <div class="cv-ats-skills-line">
+              <strong class="cv-ats-skills-label" data-i18n="cv_ats_skills_lang_lbl">Languages:</strong>
+              <span data-i18n="cv_ats_skills_lang_val">Fasih berbahasa Indonesia dan Inggris (Fluent in Indonesian and English).</span>
+            </div>
+          </div>
+
+          <!-- ATS Printable Verification Footer -->
+          <div class="cv-print-footer cv-ats-print-footer">
+            <div>Curriculum Vitae Bobby Kamal Aizan, S.Kom • https://bobby-portofolio.vercel.app</div>
+            <div>Dokumen ATS Terverifikasi • 2026</div>
+          </div>
+        </div>
+      </div><!-- End #cvViewAts -->
+
+      <!-- CV Modal Footer Action Bar -->
+      <div class="cv-footer-actions">
+        <span id="cvActiveModeLabel" class="text-xs text-muted font-mono me-auto">Format: Apple QuickLook (Visual)</span>
+        <div class="flex items-center gap-2 flex-wrap">
+          <a href="#contact" class="btn-glass-primary py-2 px-5 text-sm inline-flex items-center gap-2" onclick="closeCvModal()">
+            <i class="bi bi-chat-dots-fill"></i>
+            <span data-i18n="modal_cv_invite_chat">Ajak Diskusi / Kolaborasi</span>
+          </a>
+          <button type="button" class="btn-glass-secondary py-2 px-4 text-sm inline-flex items-center gap-2" onclick="printCv()">
+            <i class="bi bi-printer"></i>
+            <span>Cetak / PDF</span>
+          </button>
+        </div>
+        <button class="btn-glass-secondary py-2 px-5 text-sm" onclick="closeCvModal()" data-i18n="modal_btn_close">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Back to Top Floating Glass Pill -->
   <button id="back-to-top" class="btn-back-to-top" title="Kembali ke atas" aria-label="Kembali ke atas">
     <i class="bi bi-chevron-up"></i>
   </button>
 
   <!-- Project Scripts with i18n Engine & Liquid Glass Studio Engine -->
-  <script defer src="js/i18n.js?v=5.6"></script>
-  <script defer src="js/projects-data.js?v=5.6"></script>
-  <script defer src="js/liquid-glass-engine.js?v=7.3"></script>
-  <script defer src="js/main.js?v=7.3"></script>
-  <script defer src="js/contact.js?v=5.6"></script>
+  <script defer src="js/i18n.js?v=7.4"></script>
+  <script defer src="js/projects-data.js?v=7.4"></script>
+  <script defer src="js/liquid-glass-engine.js?v=7.4"></script>
+  <script defer src="js/main.js?v=7.4"></script>
+  <script defer src="js/contact.js?v=7.4"></script>
 </body>
 
 </html>

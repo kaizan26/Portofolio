@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141422" />
+      <stop offset="50%" stop-color="#0e0e16" />
+      <stop offset="100%" stop-color="#050508" />
+    </linearGradient>
+    <linearGradient id="accentGrad512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2997ff" />
+      <stop offset="50%" stop-color="#5e5ce6" />
+      <stop offset="100%" stop-color="#af52de" />
+    </linearGradient>
+    <linearGradient id="glassBorder512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.45)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.08)" />
+    </linearGradient>
+  </defs>
+  <!-- Squircle Background -->
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#bgGrad512)" stroke="url(#glassBorder512)" stroke-width="4" />
+  <!-- Monogram Glyph 'B' with Tech Accents -->
+  <path d="M 165 128 L 272 128 C 315 128 342 149 342 181 C 342 205 325 221 301 229 C 333 240 352 261 352 293 C 352 331 320 357 272 357 L 165 357 Z M 213 171 L 213 219 L 264 219 C 288 219 301 208 301 195 C 301 179 288 171 264 171 Z M 213 261 L 213 314 L 272 314 C 296 314 312 301 312 288 C 312 272 296 261 272 261 Z" fill="url(#accentGrad512)" />
+  <!-- Small Terminal Accent Dot -->
+  <circle cx="352" cy="352" r="14" fill="#30d158" />
+</svg>

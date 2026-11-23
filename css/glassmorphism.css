@@ -1812,9 +1812,17 @@ html.theme-transitioning *::after {
   display: flex;
   background: rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid var(--glass-border);
-  padding: 4px 10px;
-  gap: 4px;
-  overflow-x: auto;
+  padding: 4px 8px;
+  gap: 3px;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.terminal-tabs::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .terminal-morph-pill {

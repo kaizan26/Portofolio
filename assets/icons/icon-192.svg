@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141422" />
+      <stop offset="50%" stop-color="#0e0e16" />
+      <stop offset="100%" stop-color="#050508" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2997ff" />
+      <stop offset="50%" stop-color="#5e5ce6" />
+      <stop offset="100%" stop-color="#af52de" />
+    </linearGradient>
+    <linearGradient id="glassBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.45)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.08)" />
+    </linearGradient>
+  </defs>
+  <!-- Squircle Background -->
+  <rect x="8" y="8" width="176" height="176" rx="42" fill="url(#bgGrad)" stroke="url(#glassBorder)" stroke-width="2" />
+  <!-- Monogram Glyph 'B' with Tech Accents -->
+  <path d="M 62 48 L 102 48 C 118 48 128 56 128 68 C 128 77 122 83 113 86 C 125 90 132 98 132 110 C 132 124 120 134 102 134 L 62 134 Z M 80 64 L 80 82 L 99 82 C 108 82 113 78 113 73 C 113 67 108 64 99 64 Z M 80 98 L 80 118 L 102 118 C 111 118 117 113 117 108 C 117 102 111 98 102 98 Z" fill="url(#accentGrad)" />
+  <!-- Small Terminal Accent Dot -->
+  <circle cx="132" cy="132" r="5" fill="#30d158" />
+</svg>
