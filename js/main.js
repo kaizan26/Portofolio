@@ -1,6 +1,5 @@
 /**
- * Bobby Kamal Aizan Portfolio - Apple Liquid Glass 3.0 Engine
- * Performance-tuned for mobile low-end devices and 120Hz/ProMotion high refresh rate displays.
+ * Bobby Kamal Aizan Portfolio - Main UI & Interactive Engine
  */
 
 let typingTimer = null;
@@ -121,8 +120,8 @@ function initThemeToggle() {
 
     const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
     const toastText = newTheme === 'light'
-      ? (currentLang === 'en' ? 'Ceramic Pearl Light Mode' : 'Mode Pearl Light Aktif')
-      : (currentLang === 'en' ? 'Pro Liquid Dark Mode' : 'Mode Liquid Dark Aktif');
+      ? (currentLang === 'en' ? 'Light Mode Active' : 'Mode Terang Aktif')
+      : (currentLang === 'en' ? 'Dark Mode Active' : 'Mode Gelap Aktif');
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const supportsViewTransitions = typeof document.startViewTransition === 'function' && !prefersReducedMotion;
@@ -134,12 +133,6 @@ function initThemeToggle() {
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('bobby-portfolio-theme', newTheme);
         updateThemeIcon(newTheme);
-        if (typeof globalApplyGlassLevel === 'function') {
-          globalApplyGlassLevel(currentGlassLevel, false);
-        }
-        if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setTheme === 'function') {
-          window.LiquidGlassStudio.setTheme(newTheme);
-        }
       });
 
       transition.ready.then(() => {
@@ -161,7 +154,7 @@ function initThemeToggle() {
         } catch (err) {
           // Graceful fallback if pseudoElement animate is unsupported
         }
-      }).catch(() => {});
+      }).catch(() => { });
 
       try {
         await transition.finished;
@@ -179,12 +172,6 @@ function initThemeToggle() {
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('bobby-portfolio-theme', newTheme);
         updateThemeIcon(newTheme);
-        if (typeof globalApplyGlassLevel === 'function') {
-          globalApplyGlassLevel(currentGlassLevel, false);
-        }
-        if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setTheme === 'function') {
-          window.LiquidGlassStudio.setTheme(newTheme);
-        }
         if (btn) btn.classList.remove('morphing', 'btn-theme-active-pulse');
         isTransitioning = false;
         showHudToast(toastText, newTheme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill');
@@ -211,12 +198,6 @@ function initThemeToggle() {
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('bobby-portfolio-theme', newTheme);
         updateThemeIcon(newTheme);
-        if (typeof globalApplyGlassLevel === 'function') {
-          globalApplyGlassLevel(currentGlassLevel, false);
-        }
-        if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setTheme === 'function') {
-          window.LiquidGlassStudio.setTheme(newTheme);
-        }
       }, 260);
 
       setTimeout(() => {
@@ -241,9 +222,13 @@ function initThemeToggle() {
   function updateThemeIcon(theme) {
     const isLight = theme === 'light';
     const iconClass = isLight ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
-    const titleText = isLight ? 'Switch to Liquid Dark Mode' : 'Switch to Pearl Light Mode';
+    const titleText = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
 
-    // Synchronize Dynamic Theme Color Meta Tag (Feature 4)
+    // Synchronize Dynamic Color-Scheme & Theme Color Meta Tags
+    const metaColorScheme = document.querySelector('meta[name="color-scheme"]');
+    if (metaColorScheme) {
+      metaColorScheme.setAttribute('content', isLight ? 'light' : 'dark');
+    }
     const metaThemeColor = document.getElementById('theme-color-meta');
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', isLight ? '#f5f5f7' : '#0e0e16');
@@ -259,8 +244,15 @@ function initThemeToggle() {
     }
   }
 
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'bobby-portfolio-theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+      document.documentElement.setAttribute('data-theme', e.newValue);
+      updateThemeIcon(e.newValue);
+    }
+  });
+
   // Programmatic Theme Setter (Callable from CLI or external controls)
-  window.setPortfolioTheme = function(targetTheme) {
+  window.setPortfolioTheme = function (targetTheme) {
     if (targetTheme !== 'dark' && targetTheme !== 'light') {
       const cur = document.documentElement.getAttribute('data-theme') || 'dark';
       targetTheme = cur === 'dark' ? 'light' : 'dark';
@@ -270,342 +262,6 @@ function initThemeToggle() {
     updateThemeIcon(targetTheme);
     return targetTheme;
   };
-}
-
-/* ==========================================================================
-   1.2. APPLE iOS 26 GLASS ANIMATION SLIDER
-   Interactive horizontal glass capsule slider based on iOS 26 concept
-   ========================================================================== */
-let globalApplyGlassLevel = null;
-let currentGlassLevel = 75;
-
-function initIosGlassSlider() {
-  const toggleBtn = document.getElementById('glass-slider-toggle-btn');
-  const popover = document.getElementById('ios-glass-popover');
-
-  // Desktop slider elements
-  const desktopSlider = document.getElementById('desktop-ios-slider');
-  const desktopFill = document.getElementById('desktop-slider-fill');
-  const desktopThumb = document.getElementById('desktop-slider-thumb');
-  const minIcon = document.getElementById('glass-icon-min');
-  const maxIcon = document.getElementById('glass-icon-max');
-
-  // Mobile slider elements
-  const mobileToggleBtn = document.getElementById('mobile-glass-toggle-btn');
-  const mobileSlider = document.getElementById('mobile-ios-slider');
-  const mobileFill = document.getElementById('mobile-slider-fill');
-  const mobileThumb = document.getElementById('mobile-slider-thumb');
-  const mobileMinIcon = document.getElementById('mobile-glass-icon-min');
-  const mobileMaxIcon = document.getElementById('mobile-glass-icon-max');
-
-  const cores = document.querySelectorAll('.ios-26-thumb-core');
-
-  const savedLevelStr = localStorage.getItem('bobby-portfolio-glass-level');
-  const savedLevel = savedLevelStr !== null ? parseInt(savedLevelStr, 10) : 75;
-  currentGlassLevel = (!isNaN(savedLevel) && savedLevel >= 0 && savedLevel <= 100) ? savedLevel : 75;
-
-  let glideAnimationTimer = null;
-
-  function applyGlassLevel(level, save = true, animate = false) {
-    level = Math.max(0, Math.min(100, Math.round(level)));
-    const prevLevel = currentGlassLevel;
-    currentGlassLevel = level;
-    if (save) {
-      localStorage.setItem('bobby-portfolio-glass-level', level);
-    }
-
-    const factor = level / 75; // 75 is baseline 1.0
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-
-    // Zero-blur pure crystal Liquid Glass transmission (no frosted fog)
-    const rootStyle = document.documentElement.style;
-    rootStyle.setProperty('--glass-factor', factor.toFixed(2));
-    rootStyle.setProperty('--glass-blur', '0px');
-    rootStyle.setProperty('--glass-blur-sm', '0px');
-    rootStyle.setProperty('--glass-blur-lg', '0px');
-    rootStyle.setProperty('--glass-blur-xl', '0px');
-
-    // Dynamic liquid glass background sheen gradients (Water crystal body)
-    if (isLight) {
-      const cardA = (0.75 - 0.25 * (level / 100)).toFixed(2);
-      const navA = (0.88 - 0.15 * (level / 100)).toFixed(2);
-      rootStyle.setProperty('--glass-bg-card', `linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.40) 50%, rgba(245, 245, 255, ${cardA}) 100%)`);
-      rootStyle.setProperty('--glass-bg-nav', `linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(240, 240, 250, ${navA}) 100%)`);
-    } else {
-      const cardA = (0.45 - 0.15 * (level / 100)).toFixed(2);
-      const navA = (0.82 - 0.12 * (level / 100)).toFixed(2);
-      rootStyle.setProperty('--glass-bg-card', `linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 35%, rgba(15, 15, 24, ${cardA}) 100%)`);
-      rootStyle.setProperty('--glass-bg-nav', `linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 30%, rgba(14, 14, 24, ${navA}) 100%)`);
-    }
-
-    // Saturation and border reflection
-    const sat = Math.round(180 + 60 * (level / 100));
-    rootStyle.setProperty('--glass-saturate', `${sat}%`);
-    const borderA = (0.08 + 0.16 * (level / 100)).toFixed(2);
-    rootStyle.setProperty('--glass-border', `rgba(255, 255, 255, ${borderA})`);
-
-    // Scale live optical liquid glass clarity & vivid saturation (pure crystal cards, subtle diffused floating nav)
-    const navBlur = Math.round(5 + 4 * (level / 100)); // ~8px crystal diffusion, airy & crisp
-    rootStyle.setProperty('--glass-refract-card', `saturate(${sat}%) contrast(110%)`);
-    rootStyle.setProperty('--glass-refract-nav', `blur(${navBlur}px) saturate(${Math.round(sat * 1.05)}%) contrast(108%)`);
-    rootStyle.setProperty('--glass-refract-subtle', `saturate(${sat}%) contrast(108%)`);
-
-    // Scale WebGL2 Liquid Glass Studio physical optics (iyinchao parameters)
-    if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setIntensity === 'function') {
-      window.LiquidGlassStudio.setIntensity(level);
-    }
-
-    // Update UI elements with fluid physics
-    updateUI(level, animate, prevLevel);
-  }
-
-  globalApplyGlassLevel = applyGlassLevel;
-
-  function updateUI(level, animate, prevLevel) {
-    const delta = level - (prevLevel !== undefined ? prevLevel : level);
-    const allThumbs = [desktopThumb, mobileThumb].filter(Boolean);
-    const allFills = [desktopFill, mobileFill].filter(Boolean);
-
-    cores.forEach(c => {
-      c.style.opacity = level <= 2 ? '0' : '1';
-    });
-
-    if (animate && Math.abs(delta) > 1) {
-      // Smooth fluid glide transition
-      allFills.forEach(f => f.style.transition = 'width 0.4s cubic-bezier(0.34, 1.25, 0.64, 1)');
-      allThumbs.forEach(t => {
-        t.style.transition = 'left 0.4s cubic-bezier(0.34, 1.25, 0.64, 1)';
-        t.style.transform = '';
-        t.classList.remove('glide-right', 'glide-left', 'fluid-bounce');
-        t.classList.add(delta > 0 ? 'glide-right' : 'glide-left');
-      });
-
-      clearTimeout(glideAnimationTimer);
-      glideAnimationTimer = setTimeout(() => {
-        allThumbs.forEach(t => {
-          t.classList.remove('glide-right', 'glide-left');
-          void t.offsetWidth; // trigger reflow
-          t.classList.add('fluid-bounce');
-        });
-        setTimeout(() => {
-          allThumbs.forEach(t => t.classList.remove('fluid-bounce'));
-        }, 550);
-      }, 190);
-    } else if (!animate) {
-      // Active dragging: disable transition for direct responsive touch
-      allFills.forEach(f => f.style.transition = 'none');
-      allThumbs.forEach(t => t.style.transition = 'none');
-    }
-
-    if (desktopFill) desktopFill.style.width = `${level}%`;
-    if (desktopThumb) desktopThumb.style.left = `${level}%`;
-    if (desktopSlider) desktopSlider.setAttribute('aria-valuenow', level);
-
-    if (mobileFill) mobileFill.style.width = `${level}%`;
-    if (mobileThumb) mobileThumb.style.left = `${level}%`;
-    if (mobileSlider) mobileSlider.setAttribute('aria-valuenow', level);
-  }
-
-  // Initial apply
-  applyGlassLevel(currentGlassLevel, false, false);
-
-  // Popover toggle for desktop navbar button
-  if (toggleBtn && popover) {
-    toggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = popover.classList.contains('show');
-      if (isOpen) {
-        popover.classList.remove('show');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      } else {
-        popover.classList.add('show');
-        toggleBtn.setAttribute('aria-expanded', 'true');
-        // Trigger subtle arrival bounce
-        if (desktopThumb) {
-          desktopThumb.classList.remove('fluid-bounce');
-          void desktopThumb.offsetWidth;
-          desktopThumb.classList.add('fluid-bounce');
-          setTimeout(() => desktopThumb.classList.remove('fluid-bounce'), 550);
-        }
-      }
-    });
-
-    popover.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-
-    document.addEventListener('click', (e) => {
-      if (popover.classList.contains('show') && !popover.contains(e.target) && e.target !== toggleBtn && !toggleBtn.contains(e.target)) {
-        popover.classList.remove('show');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && popover.classList.contains('show')) {
-        popover.classList.remove('show');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  // Mobile toggle button inside drawer
-  const mobileGlassCard = document.getElementById('mobile-glass-card');
-  if (mobileToggleBtn) {
-    mobileToggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (mobileGlassCard) {
-        const isCollapsed = mobileGlassCard.classList.contains('collapsed');
-        mobileGlassCard.classList.toggle('collapsed', !isCollapsed);
-        mobileToggleBtn.classList.toggle('active', isCollapsed);
-        if (isCollapsed && mobileThumb) {
-          mobileThumb.classList.remove('fluid-bounce');
-          void mobileThumb.offsetWidth;
-          mobileThumb.classList.add('fluid-bounce');
-          setTimeout(() => mobileThumb.classList.remove('fluid-bounce'), 550);
-        }
-      }
-    });
-  }
-
-  // Hook up side min / max icons to fluidly glide to preset levels
-  if (minIcon) minIcon.addEventListener('click', () => applyGlassLevel(10, true, true));
-  if (maxIcon) maxIcon.addEventListener('click', () => applyGlassLevel(100, true, true));
-  if (mobileMinIcon) mobileMinIcon.addEventListener('click', () => applyGlassLevel(10, true, true));
-  if (mobileMaxIcon) mobileMaxIcon.addEventListener('click', () => applyGlassLevel(100, true, true));
-
-  // Fluid velocity physics slider controller
-  function setupHorizontalSlider(track, thumb) {
-    if (!track || !thumb) return;
-    let isDragging = false;
-    let lastX = 0;
-    let lastTime = 0;
-    let decayTimer = null;
-    let startX = 0;
-
-    function getTrackPct(clientX) {
-      const rect = track.getBoundingClientRect();
-      const clampedX = Math.max(rect.left, Math.min(rect.right, clientX));
-      return Math.round(((clampedX - rect.left) / rect.width) * 100);
-    }
-
-    function handlePointerMove(clientX) {
-      const now = performance.now();
-      const dt = Math.max(1, now - lastTime);
-      const dx = clientX - lastX;
-      const vx = dx / dt; // velocity in px/ms
-
-      lastX = clientX;
-      lastTime = now;
-
-      // Real-time fluid velocity squash & stretch
-      // As user accelerates sideways, droplet elongates horizontally and squashes vertically
-      const speed = Math.min(Math.abs(vx) * 0.22, 0.40); // max 40% elongation
-      const scaleX = (1 + speed).toFixed(3);
-      const scaleY = (1 / Math.sqrt(1 + speed)).toFixed(3);
-      const skewX = Math.max(-10, Math.min(10, -vx * 6)).toFixed(1);
-
-      thumb.style.transform = `translate(-50%, -50%) scaleX(${scaleX}) scaleY(${scaleY}) skewX(${skewX}deg)`;
-
-      // Decay deformation back to round droplet if dragging stops without releasing
-      clearTimeout(decayTimer);
-      decayTimer = setTimeout(() => {
-        if (isDragging) {
-          thumb.style.transform = 'translate(-50%, -50%) scale(1)';
-        }
-      }, 70);
-
-      const pct = getTrackPct(clientX);
-      applyGlassLevel(pct, true, false);
-    }
-
-    track.addEventListener('mousedown', (e) => {
-      // If clicking directly on side icons, don't trigger track drag
-      if (e.target.closest('.ios-26-side-icon')) return;
-
-      const targetPct = getTrackPct(e.clientX);
-      const diff = Math.abs(targetPct - currentGlassLevel);
-
-      // If user tapped far from the thumb, glide smoothly with liquid stretch & bounce!
-      if (diff > 5 && !e.target.closest('.ios-26-glass-thumb')) {
-        applyGlassLevel(targetPct, true, true);
-        return;
-      }
-
-      isDragging = true;
-      startX = e.clientX;
-      lastX = e.clientX;
-      lastTime = performance.now();
-      track.classList.add('dragging');
-      thumb.classList.remove('glide-right', 'glide-left', 'fluid-bounce');
-      handlePointerMove(e.clientX);
-    });
-
-    track.addEventListener('touchstart', (e) => {
-      if (!e.touches[0] || e.target.closest('.ios-26-side-icon')) return;
-
-      const clientX = e.touches[0].clientX;
-      const targetPct = getTrackPct(clientX);
-      const diff = Math.abs(targetPct - currentGlassLevel);
-
-      if (diff > 5 && !e.target.closest('.ios-26-glass-thumb')) {
-        applyGlassLevel(targetPct, true, true);
-        return;
-      }
-
-      isDragging = true;
-      startX = clientX;
-      lastX = clientX;
-      lastTime = performance.now();
-      track.classList.add('dragging');
-      thumb.classList.remove('glide-right', 'glide-left', 'fluid-bounce');
-      handlePointerMove(clientX);
-    }, { passive: true });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      handlePointerMove(e.clientX);
-    });
-
-    window.addEventListener('touchmove', (e) => {
-      if (!isDragging || !e.touches[0]) return;
-      handlePointerMove(e.touches[0].clientX);
-    }, { passive: true });
-
-    const stopDragging = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      track.classList.remove('dragging');
-      clearTimeout(decayTimer);
-
-      // Clear inline transform and execute elastic jelly spring rebound
-      thumb.style.transform = '';
-      thumb.classList.remove('fluid-bounce');
-      void thumb.offsetWidth; // trigger reflow
-      thumb.classList.add('fluid-bounce');
-      setTimeout(() => {
-        thumb.classList.remove('fluid-bounce');
-      }, 550);
-    };
-
-    window.addEventListener('mouseup', stopDragging);
-    window.addEventListener('touchend', stopDragging);
-
-    // Keyboard navigation with fluid animation
-    track.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        applyGlassLevel(currentGlassLevel + 6, true, true);
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        applyGlassLevel(currentGlassLevel - 6, true, true);
-      }
-    });
-  }
-
-  // Initialize both desktop and mobile sliders
-  setupHorizontalSlider(desktopSlider, desktopThumb);
-  setupHorizontalSlider(mobileSlider, mobileThumb);
 }
 
 /* ==========================================================================
@@ -644,10 +300,6 @@ function initNightLightToggle() {
       document.documentElement.setAttribute('data-night-light', 'true');
     } else {
       document.documentElement.removeAttribute('data-night-light');
-    }
-
-    if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setNightLight === 'function') {
-      window.LiquidGlassStudio.setNightLight(isActive);
     }
 
     const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
@@ -726,10 +378,6 @@ function initPerformanceEngine() {
       document.documentElement.removeAttribute('data-perf-mode');
     }
 
-    if (window.LiquidGlassStudio && typeof window.LiquidGlassStudio.setPerformanceMode === 'function') {
-      window.LiquidGlassStudio.setPerformanceMode(isActive);
-    }
-
     const currentLang = localStorage.getItem('bobby-portfolio-lang') || 'id';
     const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
 
@@ -759,7 +407,7 @@ function initPerformanceEngine() {
   }
 
   // Programmatic Performance Setter (Callable from CLI or external controls)
-  window.setPortfolioPerfMode = function(targetState, triggerToast = true) {
+  window.setPortfolioPerfMode = function (targetState, triggerToast = true) {
     if (typeof targetState !== 'boolean') {
       const cur = document.documentElement.getAttribute('data-perf-mode') === 'true';
       targetState = !cur;
@@ -828,9 +476,9 @@ function initInteractiveBackground() {
     });
 
     if (titaniumGlow) {
-      const glowX = (deltaX * 0.04).toFixed(2);
-      const glowY = (deltaY * 0.03 + currentScrollY * -0.07).toFixed(2);
-      titaniumGlow.style.transform = `translateX(calc(-50% + ${glowX}px)) translateY(${glowY}px)`;
+      const glowX = (deltaX * 0.015).toFixed(2);
+      const glowY = (deltaY * 0.02 + currentScrollY * -0.05).toFixed(2);
+      titaniumGlow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0)`;
     }
 
     // Stop RAF loop when settled to save CPU/GPU cycles
@@ -911,7 +559,13 @@ function initUnifiedScrollManager() {
   const progressBar = document.getElementById('scroll-progress');
   const backToTopBtn = document.getElementById('back-to-top');
   const allNavLinks = document.querySelectorAll('.nav-links-desktop .nav-link-item, #mobile-drawer .nav-link-item');
-  const watermarks = document.querySelectorAll('.section-parallax-watermark');
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let prefersReducedMotion = reducedMotionQuery.matches;
+  if (typeof reducedMotionQuery.addEventListener === 'function') {
+    reducedMotionQuery.addEventListener('change', (e) => {
+      prefersReducedMotion = e.matches;
+    });
+  }
 
   let lastScrollY = window.scrollY || 0;
   let lastScrollTime = performance.now();
@@ -959,7 +613,6 @@ function initUnifiedScrollManager() {
     }
 
     // 4. Multi-Plane Layered Parallax Engine (Desktop Multi-Plane Depth)
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isPerf = document.documentElement.getAttribute('data-perf-mode') === 'true';
     const isMobileLayout = window.innerWidth <= 991;
 
@@ -1007,21 +660,6 @@ function initUnifiedScrollManager() {
       const stagger2 = Math.max(-32, Math.min(32, -Math.sin(scrollY * 0.0022) * 28));
       document.documentElement.style.setProperty('--parallax-scroll-stagger-1', `${stagger1.toFixed(1)}px`);
       document.documentElement.style.setProperty('--parallax-scroll-stagger-2', `${stagger2.toFixed(1)}px`);
-
-      // Deep Architectural Watermarks (Sweeping vertical glide with viewport culling on desktop)
-      if (watermarks.length) {
-        watermarks.forEach(wm => {
-          const parent = wm.parentElement;
-          if (!parent) return;
-          const rect = parent.getBoundingClientRect();
-          if (rect.bottom > -250 && rect.top < window.innerHeight + 250) {
-            const factor = parseFloat(wm.getAttribute('data-parallax-factor')) || 0.22;
-            const distFromMid = rect.top - window.innerHeight * 0.35;
-            const moveY = (distFromMid * factor).toFixed(1);
-            wm.style.transform = `translate3d(0, ${moveY}px, 0)`;
-          }
-        });
-      }
     }
 
     // 5. Navbar ScrollSpy using Cached Offsets (No synchronous DOM layout reading)
@@ -1100,10 +738,11 @@ function initDynamicTyping() {
   const roles = (typeof getTranslation === 'function' && typeof TRANSLATIONS !== 'undefined')
     ? (TRANSLATIONS[currentLanguage]?.typing_roles || TRANSLATIONS['id'].typing_roles)
     : [
-      "Software Engineering",
-      "Information Systems Architecture",
-      "UX Research & WebQual 4.0 Analysis",
-      "Full-Stack Web Systems"
+      "Administrasi Transportasi",
+      "Manajemen Data & Arsip",
+      "Sistem Informasi ITK",
+      "Penyusunan SOP & Kepatuhan",
+      "Microsoft Office & Analisis"
     ];
 
   let roleIndex = 0;
@@ -1294,7 +933,7 @@ function initTerminalTabs() {
     }, 100);
   }
 
-  // --- Interactive CLI Terminal Engine (Feature 2 - Non-Scroll Compact Mode) ---
+  // Interactive CLI Terminal
   const commandHistory = [];
   let historyIndex = -1;
 
@@ -1321,7 +960,7 @@ function initTerminalTabs() {
     if (cmd === 'clear') {
       cliLog.innerHTML = `
         <div class="cli-motd-header">
-          <div class="text-cyan-400 font-semibold text-xs"><i class="bi bi-terminal-fill me-1"></i> BobbyOS v2.4 (x86_64-darwin) &bull; Shell Active</div>
+          <div class="text-cyan-400 font-semibold text-xs"><i class="bi bi-terminal-fill me-1"></i> Bobby Kamal Aizan &bull; Interactive Portfolio CLI</div>
           <div class="text-muted text-xs mt-0.5">${isEn ? 'Type <span class="cli-highlight">help</span> or tap chips above.' : 'Ketik <span class="cli-highlight">help</span> atau klik chip di atas.'}</div>
         </div>
       `;
@@ -1440,12 +1079,11 @@ function initTerminalTabs() {
     logEntry.innerHTML = `
       <div class="cli-log-cmd">
         <span class="cli-prompt-user">bobby</span><span class="cli-prompt-at">@</span><span class="cli-prompt-host">itk</span><span class="cli-prompt-symbol">:~$</span>
-        <span class="text-white">${escapeHtml(trimmed)}</span>
+        <span class="cli-cmd-echo">${escapeHtml(trimmed)}</span>
       </div>
       <div class="cli-log-result">${outputHtml}</div>
     `;
-    cliLog.innerHTML = '';
-    cliLog.appendChild(logEntry);
+    cliLog.replaceChildren(logEntry);
   }
 
   // Handle Form Submission
@@ -1511,7 +1149,7 @@ function init3DSpotlightCards() {
   if (!window.matchMedia("(pointer: fine)").matches) return;
 
   const cards = document.querySelectorAll(
-    '.glass-card, .hero-terminal-glass, .stats-bar-card, .apple-explorer-wrapper, .stage-device-frame, .about-glass-card, .project-card, .publication-row-card, .social-connect-card, .apple-contact-wrapper'
+    '.skill-card-item, .project-card, .pub-card, .social-hub-card'
   );
 
   cards.forEach(card => {
@@ -1538,10 +1176,10 @@ function init3DSpotlightCards() {
 
           const centerX = cardRect.width / 2;
           const centerY = cardRect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -4;
-          const rotateY = ((x - centerX) / centerX) * 4;
+          const rotateX = ((y - centerY) / centerY) * -2.5;
+          const rotateY = ((x - centerX) / centerX) * 2.5;
 
-          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(6px)`;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(4px)`;
           rafScheduled = false;
         });
       }
@@ -1567,7 +1205,33 @@ function renderExplorerStageSVG(type) {
     security: 'assets/images/explorer/explorer-security.svg'
   };
   const src = svgs[type] || svgs.webqual;
-  return `<img src="${src}" class="stage-svg-visual" alt="Arsitektur Sistem - ${type}" loading="lazy" decoding="async">`;
+  return `<img src="${src}" class="stage-svg-visual" width="460" height="300" alt="Ilustrasi Topik - ${type}" decoding="async">`;
+}
+
+function buildExplorerStackMarkup(activeIndex, lang) {
+  return EXPLORER_DATA.map((item, idx) => {
+    const isActive = idx === activeIndex;
+    const title = lang === 'en' ? item.en_title : item.id_title;
+    const desc = lang === 'en' ? item.en_desc : item.id_desc;
+
+    if (isActive) {
+      return `
+        <div class="explorer-callout-card" style="border-color: ${item.pillColor}66;">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="pill-icon-dot" style="width:10px;height:10px;border-radius:50%;background:${item.pillColor};display:inline-block;flex-shrink:0;"></span>
+            <h3 class="callout-title">${title}</h3>
+          </div>
+          <p class="callout-desc">${desc}</p>
+        </div>
+      `;
+    }
+    return `
+      <div class="explorer-pill-item" onclick="selectExplorerFeature(${idx})">
+        <span class="pill-icon-plus">+</span>
+        <span>${title.split(' ')[0]} ${title.split(' ')[1] || ''}</span>
+      </div>
+    `;
+  }).join('');
 }
 
 function initAppleFeatureExplorer() {
@@ -1575,8 +1239,53 @@ function initAppleFeatureExplorer() {
   const stage = document.getElementById('explorer-stage-container');
   const upBtn = document.getElementById('stepper-btn-up');
   const downBtn = document.getElementById('stepper-btn-down');
+  const wrapper = stack ? stack.closest('.apple-explorer-wrapper') : null;
 
   if (!stack || !stage) return;
+
+  let lastMeasuredKey = '';
+
+  function syncExplorerStackHeight(force = false) {
+    const controls = stack.parentElement;
+    const width = stack.clientWidth;
+    if (!controls || !width) return;
+
+    const lang = (typeof currentLanguage !== 'undefined' && currentLanguage === 'en') ? 'en' : 'id';
+    const cacheKey = `${lang}:${Math.round(width)}`;
+    if (!force && cacheKey === lastMeasuredKey) return;
+    lastMeasuredKey = cacheKey;
+
+    const probe = document.createElement('div');
+    probe.className = stack.className;
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;width:${width}px;z-index:-1;`;
+    controls.appendChild(probe);
+
+    let maxHeight = 0;
+    for (let i = 0; i < EXPLORER_DATA.length; i++) {
+      probe.innerHTML = buildExplorerStackMarkup(i, lang);
+      const card = probe.querySelector('.explorer-callout-card');
+      if (card) {
+        card.style.animation = 'none';
+        card.style.transform = 'none';
+      }
+      maxHeight = Math.max(maxHeight, probe.offsetHeight);
+    }
+
+    probe.remove();
+    if (maxHeight > 0) {
+      stack.style.minHeight = `${Math.ceil(maxHeight)}px`;
+      // Also pin the outer wrapper so the glass card border never resizes
+      if (wrapper) {
+        // Reset first so we can measure the full outer height accurately
+        wrapper.style.minHeight = '';
+        requestAnimationFrame(() => {
+          const outerH = wrapper.offsetHeight;
+          if (outerH > 0) wrapper.style.minHeight = `${outerH}px`;
+        });
+      }
+    }
+  }
 
   window.updateExplorerContent = function () {
     const lang = (typeof currentLanguage !== 'undefined' && currentLanguage === 'en') ? 'en' : 'id';
@@ -1584,34 +1293,12 @@ function initAppleFeatureExplorer() {
     const indicator = document.getElementById('explorer-indicator-text');
 
     if (indicator) {
-      const prefix = lang === 'en' ? 'SPECIFICATION' : 'PILAR REKAYASA';
+      const prefix = lang === 'en' ? 'TOPIC' : 'TOPIK';
       indicator.textContent = `${prefix} 0${currentExplorerIndex + 1} / 0${EXPLORER_DATA.length}`;
     }
 
-    stack.innerHTML = EXPLORER_DATA.map((item, idx) => {
-      const isActive = idx === currentExplorerIndex;
-      const title = lang === 'en' ? item.en_title : item.id_title;
-      const desc = lang === 'en' ? item.en_desc : item.id_desc;
-
-      if (isActive) {
-        return `
-          <div class="explorer-callout-card" style="border-left: 3.5px solid ${item.pillColor};">
-            <div class="d-flex align-items-center gap-2 mb-2">
-              <span class="pill-icon-dot" style="width:10px;height:10px;border-radius:50%;background:${item.pillColor};box-shadow:0 0 10px ${item.pillColor};display:inline-block;"></span>
-              <h5 class="callout-title">${title}</h5>
-            </div>
-            <p class="callout-desc">${desc}</p>
-          </div>
-        `;
-      } else {
-        return `
-          <div class="explorer-pill-item" onclick="selectExplorerFeature(${idx})">
-            <span class="pill-icon-plus">+</span>
-            <span>${title.split(' ')[0]} ${title.split(' ')[1] || ''}</span>
-          </div>
-        `;
-      }
-    }).join('');
+    syncExplorerStackHeight();
+    stack.innerHTML = buildExplorerStackMarkup(currentExplorerIndex, lang);
 
     stage.innerHTML = renderExplorerStageSVG(current.svgType);
   };
@@ -1633,6 +1320,16 @@ function initAppleFeatureExplorer() {
       currentExplorerIndex = (currentExplorerIndex + 1) % EXPLORER_DATA.length;
       updateExplorerContent();
     });
+  }
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => syncExplorerStackHeight(true), 120);
+  }, { passive: true });
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => syncExplorerStackHeight(true));
   }
 
   updateExplorerContent();
@@ -1705,34 +1402,6 @@ function initProjectsRender() {
   init3DSpotlightCards();
 }
 
-function initProjectFilter() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const projectsContainer = document.querySelector('.project-filter-bar');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (projectsContainer) {
-        updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
-        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
-
-      const filter = btn.getAttribute('data-filter');
-      const projectItems = document.querySelectorAll('.project-item');
-
-      projectItems.forEach(item => {
-        if (filter === 'all' || item.getAttribute('data-category') === filter) {
-          item.style.display = 'block';
-          item.style.animation = 'fadeInCard 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-  });
-}
-
 // Lightweight in-modal markdown formatter
 function formatInlineMarkdown(text) {
   if (!text) return '';
@@ -1787,6 +1456,8 @@ function formatProjectMarkdown(mdText) {
   return html;
 }
 
+let lastFocusedBeforeModal = null;
+
 // Global Apple Glass Modal Trigger
 window.openProjectModal = function (projectId) {
   if (typeof getLocalizedProjects !== 'function') return;
@@ -1814,12 +1485,12 @@ window.openProjectModal = function (projectId) {
       </div>
       
       <div class="mb-6">
-        <h5 class="modal-section-title">${sectionDesc}</h5>
+        <h4 class="modal-section-title">${sectionDesc}</h4>
         <div class="modal-desc-body">${formatProjectMarkdown(project.fullDescription)}</div>
       </div>
       
       <div class="mb-6">
-        <h5 class="modal-section-title">${sectionMetrics}</h5>
+        <h4 class="modal-section-title">${sectionMetrics}</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           ${project.metrics.map(m => `
             <div class="glass-card-subtle p-3 text-center">
@@ -1831,7 +1502,7 @@ window.openProjectModal = function (projectId) {
       </div>
       
       <div>
-        <h5 class="modal-section-title">${sectionTech}</h5>
+        <h4 class="modal-section-title">${sectionTech}</h4>
         <div class="flex flex-wrap gap-2">
           ${project.techStack.map(t => `<span class="tech-chip">${t}</span>`).join('')}
         </div>
@@ -1840,23 +1511,31 @@ window.openProjectModal = function (projectId) {
   }
 
   if (modalBackdrop) {
+    lastFocusedBeforeModal = document.activeElement;
     modalBackdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
+    const closeBtn = modalBackdrop.querySelector('.modal-close-btn');
+    if (closeBtn) closeBtn.focus();
   }
 };
 
 window.closeProjectModal = function () {
   const modalBackdrop = document.getElementById('appleProjectModal');
-  if (modalBackdrop) {
+  if (modalBackdrop && modalBackdrop.classList.contains('open')) {
     modalBackdrop.classList.remove('open');
     document.body.style.overflow = '';
+    if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+      lastFocusedBeforeModal.focus();
+      lastFocusedBeforeModal = null;
+    }
   }
 };
 
-// Global Apple QuickLook CV Modal Trigger with Dual Format (Feature 3 & ATS Option)
+// CV Modal Trigger (QuickLook Visual & ATS Format)
 window.openCvModal = function (format = 'quicklook') {
   const cvModalBackdrop = document.getElementById('appleCvModal');
   if (cvModalBackdrop) {
+    lastFocusedBeforeModal = document.activeElement;
     if (format === 'ats') {
       window.switchCvFormat('ats');
     } else if (format === 'quicklook') {
@@ -1864,6 +1543,8 @@ window.openCvModal = function (format = 'quicklook') {
     }
     cvModalBackdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
+    const activeTab = cvModalBackdrop.querySelector('.cv-segment-btn.active') || cvModalBackdrop.querySelector('.cv-exit-btn');
+    if (activeTab) activeTab.focus();
   }
 };
 
@@ -1908,9 +1589,13 @@ window.switchCvFormat = function (format) {
 
 window.closeCvModal = function () {
   const cvModalBackdrop = document.getElementById('appleCvModal');
-  if (cvModalBackdrop) {
+  if (cvModalBackdrop && cvModalBackdrop.classList.contains('open')) {
     cvModalBackdrop.classList.remove('open');
     document.body.style.overflow = '';
+    if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+      lastFocusedBeforeModal.focus();
+      lastFocusedBeforeModal = null;
+    }
   }
 };
 
@@ -1959,11 +1644,9 @@ function updateSegmentedPill(container, pillSelector, activeSelector = '.active'
 
 function refreshAllSegmentedPills() {
   const skillsContainer = document.querySelector('.skill-category-tabs');
-  const projectsContainer = document.querySelector('.project-filter-bar');
   const terminalContainer = document.querySelector('.terminal-tabs');
 
   if (skillsContainer) updateSegmentedPill(skillsContainer, '#skill-filter-morph-pill', '.active');
-  if (projectsContainer) updateSegmentedPill(projectsContainer, '#project-filter-morph-pill', '.active');
   if (terminalContainer) updateSegmentedPill(terminalContainer, '#terminal-morph-pill', '.active');
   if (typeof updateNavMorphPill === 'function') updateNavMorphPill();
 }
@@ -2006,11 +1689,6 @@ function initAllSegmentedMorphPills() {
   const skillsContainer = document.querySelector('.skill-category-tabs');
   if (skillsContainer) {
     setupSegmentedMorphContainer(skillsContainer, '#skill-filter-morph-pill', '.skill-tab-btn');
-  }
-
-  const projectsContainer = document.querySelector('.project-filter-bar');
-  if (projectsContainer) {
-    setupSegmentedMorphContainer(projectsContainer, '#project-filter-morph-pill', '.filter-btn');
   }
 
   const terminalContainer = document.querySelector('.terminal-tabs');
@@ -2118,13 +1796,6 @@ function initScrollReveal() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-
-          const skillFills = entry.target.querySelectorAll('.skill-bar-fill');
-          skillFills.forEach(fill => {
-            const targetWidth = fill.getAttribute('data-width') || '85%';
-            fill.style.width = targetWidth;
-          });
-
           obs.unobserve(entry.target);
         }
       });
@@ -2147,14 +1818,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initPerformanceEngine();
   initNightLightToggle();
   initThemeToggle();
-  initIosGlassSlider();
   initDynamicTyping();
   initTerminalTabs();
   initAmbientCursorGlow();
   init3DSpotlightCards();
   initAppleFeatureExplorer();
   initProjectsRender();
-  initProjectFilter();
   initSkillTabs();
   initAllSegmentedMorphPills();
   initNavbarInteractions();

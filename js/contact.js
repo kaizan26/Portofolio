@@ -1,6 +1,5 @@
 /**
- * Bobby Kamal Aizan - Contact Form & Direct Messaging Logic
- * Fully internationalized with robust email validation & unified HUD feedback
+ * Bobby Kamal Aizan - Contact Form & Direct Email Handoff
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,64 +20,59 @@ function initContactForm() {
 
     const name = document.getElementById('contact-name').value.trim();
     const email = document.getElementById('contact-email').value.trim();
-    const subject = document.getElementById('contact-subject').value.trim();
+    const subjectInput = document.getElementById('contact-subject').value.trim();
     const message = document.getElementById('contact-message').value.trim();
 
-    // 1. Required fields check
     if (!name || !email || !message) {
       const requiredMsg = typeof getTranslation === 'function'
         ? getTranslation('contact_err_required')
         : 'Mohon lengkapi semua kolom yang wajib diisi (*).';
-      showFormAlert(requiredMsg, "error");
+      showFormAlert(requiredMsg, 'error');
       return;
     }
 
-    // 2. Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       const invalidEmailMsg = typeof getTranslation === 'function'
         ? getTranslation('contact_err_email')
         : 'Format alamat email tidak valid.';
-      showFormAlert(invalidEmailMsg, "error");
+      showFormAlert(invalidEmailMsg, 'error');
       return;
     }
 
-    // 3. Simulate loading state
+    const recipient = 'bobbykamalaizan@gmail.com';
+    const mailSubject = subjectInput || `Pesan Portofolio dari ${name}`;
+    const mailBody = `Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`;
+    const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+
     if (submitBtn) {
       submitBtn.disabled = true;
-      const sendingText = typeof getTranslation === 'function'
+      const openingText = typeof getTranslation === 'function'
         ? getTranslation('contact_btn_sending')
-        : 'Mengirim Pesan...';
-      submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> ${sendingText}`;
+        : 'Membuka Email...';
+      submitBtn.innerHTML = `<i class="bi bi-envelope-open me-1"></i> ${openingText}`;
     }
 
-    setTimeout(() => {
-      // Clear draft
-      localStorage.removeItem('bobby_portfolio_contact_draft');
-      form.reset();
+    window.location.href = mailtoUrl;
 
-      if (submitBtn) {
+    localStorage.removeItem('bobby_portfolio_contact_draft');
+    form.reset();
+
+    if (submitBtn) {
+      setTimeout(() => {
         submitBtn.disabled = false;
-        const sentText = typeof getTranslation === 'function'
-          ? getTranslation('contact_btn_sent')
-          : 'Pesan Terkirim!';
         const defaultSendText = typeof getTranslation === 'function'
           ? getTranslation('contact_btn_send')
-          : 'Kirim Pesan';
+          : 'Kirim via Email';
+        submitBtn.innerHTML = `<i class="bi bi-send-fill me-1"></i> ${defaultSendText}`;
+      }, 2000);
+    }
 
-        submitBtn.innerHTML = `<i class="bi bi-check2-circle me-1"></i> ${sentText}`;
-        setTimeout(() => {
-          submitBtn.innerHTML = `<i class="bi bi-send-fill me-1"></i> ${defaultSendText}`;
-        }, 4000);
-      }
-
-      const successTemplate = typeof getTranslation === 'function'
-        ? getTranslation('contact_toast_sent')
-        : 'Terima kasih {name}! Pesan Anda telah diterima. Bobby akan segera menghubungi Anda di {email}.';
-      const successMsg = successTemplate.replace('{name}', name).replace('{email}', email);
-
-      showFormAlert(successMsg, "success");
-    }, 1000);
+    const successTemplate = typeof getTranslation === 'function'
+      ? getTranslation('contact_toast_sent')
+      : 'Aplikasi email dibuka untuk mengirim pesan dari {name} ({email}) ke bobbykamalaizan@gmail.com.';
+    const successMsg = successTemplate.replace('{name}', name).replace('{email}', email);
+    showFormAlert(successMsg, 'success');
   });
 
   function showFormAlert(message, type) {
@@ -89,7 +83,7 @@ function initContactForm() {
 
     setTimeout(() => {
       alertBox.style.display = 'none';
-    }, 6500);
+    }, 7500);
   }
 }
 
@@ -98,7 +92,7 @@ function initCopyActions() {
 
   if (copyEmailBtn) {
     copyEmailBtn.addEventListener('click', () => {
-      const email = "bobbykamalaizan@gmail.com";
+      const email = 'bobbykamalaizan@gmail.com';
       const copiedText = typeof getTranslation === 'function'
         ? getTranslation('contact_toast_copied')
         : 'Alamat email berhasil disalin ke clipboard!';
@@ -106,57 +100,14 @@ function initCopyActions() {
       navigator.clipboard.writeText(email).then(() => {
         if (typeof showHudToast === 'function') {
           showHudToast(copiedText, 'bi-check-circle-fill text-success');
-        } else {
-          showToast(copiedText);
         }
       }).catch(() => {
         if (typeof showHudToast === 'function') {
-          showHudToast("Email: " + email, 'bi-envelope-fill');
-        } else {
-          showToast("Email: " + email);
+          showHudToast(`Email: ${email}`, 'bi-envelope-fill');
         }
       });
     });
   }
-}
-
-function showToast(text) {
-  let toast = document.getElementById('toast-feedback');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast-feedback';
-    toast.style.cssText = `
-      position: fixed;
-      bottom: 90px;
-      right: 28px;
-      background: var(--glass-bg-elevated);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border-highlight);
-      color: var(--text-primary);
-      padding: 12px 20px;
-      border-radius: 9999px;
-      box-shadow: var(--glass-shadow);
-      z-index: 1100;
-      font-size: 0.9rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transform: translateY(20px);
-      opacity: 0;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    `;
-    document.body.appendChild(toast);
-  }
-
-  toast.innerHTML = `<i class="bi bi-check-circle-fill text-success"></i> ${text}`;
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateY(0)';
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(20px)';
-  }, 3500);
 }
 
 function initDraftPersistence() {
@@ -166,7 +117,6 @@ function initDraftPersistence() {
 
   if (!nameInput || !emailInput || !msgInput) return;
 
-  // Load saved draft
   const saved = localStorage.getItem('bobby_portfolio_contact_draft');
   if (saved) {
     try {
@@ -175,11 +125,10 @@ function initDraftPersistence() {
       if (data.email) emailInput.value = data.email;
       if (data.message) msgInput.value = data.message;
     } catch (e) {
-      console.warn("Could not load draft:", e);
+      console.warn('Could not load draft:', e);
     }
   }
 
-  // Auto-save on input
   [nameInput, emailInput, msgInput].forEach(el => {
     el.addEventListener('input', () => {
       const draft = {

@@ -8,7 +8,7 @@ const TRANSLATIONS = {
     // Nav
     nav_home: "Home",
     nav_about: "Tentang",
-    nav_explorer: "Arsitektur",
+    nav_explorer: "Sistem ITK",
     nav_skills: "Keahlian",
     nav_projects: "Proyek",
     nav_research: "Riset",
@@ -94,15 +94,14 @@ const TRANSLATIONS = {
     cv_ats_skills_lang_val: "Fasih berbahasa Indonesia dan Inggris (Fluent in Indonesian and English).",
 
     // Stats
-    stat_itk_label: "IPK 3.63 (Sistem Informasi)",
-    stat_syntax_label: "Administrator Transportasi",
-    stat_webqual_label: "PT. Abicam (Des 2022 - Sekarang)",
-    stat_fullstack_label: "MS Office & Data Management",
+    stat_itk_label: "IPK S1 Sistem Informasi ITK",
+    stat_abicam_label: "Administrator Transportasi",
+    stat_bdk_label: "Magang Balai Diklat Keuangan",
+    stat_office_label: "MS Office & Manajemen Data",
 
     // Interactive Explorer Section
-    explorer_tagline: "Interaktif",
-    explorer_title: "Eksplorasi Arsitektur & Rekayasa Sistem",
-    explorer_subtitle: "Pilih pilar spesifikasi di bawah untuk menjelajahi metodologi rekayasa sistem, instrumen evaluasi empiris, dan implementasi teknologi nyata.",
+    explorer_title: "Landasan Sistem Informasi (ITK)",
+    explorer_subtitle: "Pilih topik di bawah untuk melihat pendekatan analisis sistem informasi, evaluasi kualitas layanan, dan proyek akademik yang dipelajari selama studi S1 Sistem Informasi ITK.",
     explorer_pill_1: "WebQual 4.0 & IPA Matrix",
     explorer_pill_2: "Arsitektur MVC CodeIgniter",
     explorer_pill_3: "Relational DB & Normalisasi",
@@ -110,7 +109,6 @@ const TRANSLATIONS = {
     explorer_pill_5: "Keamanan Sistem & Validasi",
 
     // About
-    about_tagline: "Background",
     about_title: "Profil & Orientasi Profesional",
     about_subtitle: "Kombinasi antara keahlian operasional administrasi, koordinasi sistem transportasi, dan latar belakang analitis Sistem Informasi dari Institut Teknologi Kalimantan.",
     about_heading: "Tentang Bobby Kamal Aizan",
@@ -133,22 +131,16 @@ const TRANSLATIONS = {
     timeline_3_desc: "Mengembangkan Standar Operasional Prosedur (SOP) terstruktur untuk mendukung inisiatif dan kelancaran program pembelajaran daring instansi.",
 
     // Skills
-    skills_tagline: "Kompetensi",
-    skills_title: "Keahlian & Instrumen Teknis",
-    skills_subtitle: "Teknologi, bahasa pemrograman, kerangka kerja, dan metode yang diaplikasikan dalam pembangunan dan evaluasi sistem.",
+    skills_title: "Keahlian Operasional & Sistem",
+    skills_subtitle: "Perpaduan kemampuan administrasi transportasi, pengelolaan data perkantoran, penyusunan SOP, dan dasar teknis Sistem Informasi.",
     skill_tab_all: "Semua Bidang",
-    skill_tab_backend: "Backend & Basis Data",
-    skill_tab_frontend: "Frontend & UI",
-    skill_tab_analysis: "Analisis & Kualitas Sistem",
+    skill_tab_backend: "Administrasi & Armada",
+    skill_tab_frontend: "Perkantoran & Data",
+    skill_tab_analysis: "Sistem Informasi (ITK)",
 
     // Projects
-    projects_tagline: "Proyek & Publikasi",
     projects_title: "Karya Nyata & Dokumentasi Proyek",
     projects_subtitle: "Daftar karya autentik yang mencakup riset evaluasi sistem institusi, sistem manajemen operasional, dan program pemberdayaan masyarakat.",
-    proj_filter_all: "Semua Proyek",
-    proj_filter_research: "Riset & WebQual",
-    proj_filter_web: "Sistem Informasi Web",
-    proj_filter_community: "Pengabdian Masyarakat",
     proj_btn_view: "Lihat Detail & Analisis",
     modal_title_default: "Detail Proyek",
     modal_section_desc: "Deskripsi & Metodologi",
@@ -158,7 +150,6 @@ const TRANSLATIONS = {
     modal_btn_demo: "Tautan Resmi",
 
     // Publications
-    pub_tagline: "Dokumentasi Akademik",
     pub_title: "Publikasi Ilmiah & Repositori",
     pub_subtitle: "Karya ilmiah dan penelitian terindeks yang dapat diakses secara publik pada repositori institusi dan jurnal software engineering.",
     pub_1_badge: "Skripsi Sarjana / Repositori ITK (2023)",
@@ -171,17 +162,15 @@ const TRANSLATIONS = {
     pub_2_btn: "Baca di Syntax Journal",
 
     // Socials
-    social_tagline: "Jejaring",
     social_title: "Profil & Kehadiran Daring",
     social_subtitle: "Kanal resmi untuk terhubung langsung dengan Bobby Kamal Aizan.",
     social_email_handle: "Kontak Langsung",
 
     // Contact
-    contact_tagline: "Kontak",
-    contact_title: "Kirim Pesan atau Konsultasi",
-    contact_subtitle: "Diskusikan kebutuhan pengembangan sistem informasi, audit kualitas website, atau peluang kolaborasi rekayasa perangkat lunak.",
+    contact_title: "Kirim Pesan atau Diskusi",
+    contact_subtitle: "Terbuka untuk peluang kerja di bidang administrasi operasional, manajemen data, koordinasi armada, maupun kolaborasi sistem informasi.",
     contact_info_heading: "Informasi Kontak",
-    contact_info_desc: "Terbuka untuk diskusi teknis seputar arsitektur web, implementasi sistem informasi, serta riset kualitas sistem berbasis data.",
+    contact_info_desc: "Silakan kirim pesan langsung melalui formulir atau email untuk kebutuhan rekrutmen, administrasi operasional, serta koordinasi sistem.",
     contact_email_title: "Alamat Email",
     contact_loc_title: "Domisili",
     contact_loc_val: "Balikpapan, Kalimantan Timur",
@@ -196,24 +185,24 @@ const TRANSLATIONS = {
     contact_label_message: "Isi Pesan *",
     contact_placeholder_message: "Tuliskan pesan, rincian proyek, atau pertanyaan Anda...",
     contact_btn_send: "Kirim Pesan",
-    contact_btn_sending: "Mengirim Pesan...",
-    contact_btn_sent: "Pesan Terkirim!",
+    contact_btn_sending: "Membuka Email...",
+    contact_btn_sent: "Aplikasi Email Dibuka",
     contact_err_required: "Mohon lengkapi semua kolom yang wajib diisi (*).",
     contact_err_email: "Format alamat email tidak valid.",
     contact_toast_copied: "Alamat email berhasil disalin ke clipboard!",
-    contact_toast_sent: "Terima kasih {name}! Pesan Anda telah diterima. Bobby akan segera menghubungi Anda di {email}.",
+    contact_toast_sent: "Aplikasi email dibuka untuk mengirim pesan dari {name} ({email}) ke bobbykamalaizan@gmail.com.",
 
     // Footer
     footer_tagline: "Sistem Informasi • Institut Teknologi Kalimantan (ITK)",
     footer_copy: "© 2026 Bobby Kamal Aizan.",
-    footer_status: "All Systems Operational"
+    footer_status: "Balikpapan, Indonesia"
   },
 
   en: {
     // Nav
     nav_home: "Home",
     nav_about: "About",
-    nav_explorer: "Architecture",
+    nav_explorer: "ITK Systems",
     nav_skills: "Skills",
     nav_projects: "Projects",
     nav_research: "Research",
@@ -299,15 +288,14 @@ const TRANSLATIONS = {
     cv_ats_skills_lang_val: "Fluent in Indonesian and English.",
 
     // Stats
-    stat_itk_label: "GPA 3.63 (Info Systems)",
-    stat_syntax_label: "Transportation Administrator",
-    stat_webqual_label: "PT. Abicam (Dec 2022 - Present)",
-    stat_fullstack_label: "MS Office & Data Management",
+    stat_itk_label: "ITK Info Systems GPA",
+    stat_abicam_label: "Transportation Administrator",
+    stat_bdk_label: "Balai Diklat Keuangan Intern",
+    stat_office_label: "MS Office & Data Management",
 
     // Interactive Explorer Section
-    explorer_tagline: "Interactive",
-    explorer_title: "Architecture & Systems Engineering Explorer",
-    explorer_subtitle: "Select the specification hotspots below to explore systems architecture methodologies, empirical evaluation metrics, and real-world implementations.",
+    explorer_title: "Information Systems Foundation (ITK)",
+    explorer_subtitle: "Select a topic below to explore information systems analysis methods, service quality evaluation, and academic projects from ITK.",
     explorer_pill_1: "WebQual 4.0 & IPA Matrix",
     explorer_pill_2: "CodeIgniter MVC Architecture",
     explorer_pill_3: "Relational DB & Normalization",
@@ -315,7 +303,6 @@ const TRANSLATIONS = {
     explorer_pill_5: "System Security & Validation",
 
     // About
-    about_tagline: "Background",
     about_title: "Professional Overview & Orientation",
     about_subtitle: "Combining operational administrative diligence, transportation systems coordination, and analytical Information Systems depth from Institut Teknologi Kalimantan.",
     about_heading: "About Bobby Kamal Aizan",
@@ -338,22 +325,16 @@ const TRANSLATIONS = {
     timeline_3_desc: "Formulated and developed Standard Operating Procedures (SOP) supporting the institution's online learning initiatives.",
 
     // Skills
-    skills_tagline: "Competencies",
-    skills_title: "Technical Skills & Tooling",
-    skills_subtitle: "Technologies, programming languages, frameworks, and methodologies applied across systems development and evaluation.",
-    skill_tab_all: "All Fields",
-    skill_tab_backend: "Backend & Databases",
-    skill_tab_frontend: "Frontend & UI",
-    skill_tab_analysis: "System Analysis & Quality",
+    skills_title: "Operational & Systems Skills",
+    skills_subtitle: "Combining transportation administration, office data management, SOP development, and Information Systems fundamentals.",
+    skill_tab_all: "All Areas",
+    skill_tab_backend: "Admin & Fleet",
+    skill_tab_frontend: "Office & Data",
+    skill_tab_analysis: "Info Systems (ITK)",
 
     // Projects
-    projects_tagline: "Projects & Publications",
     projects_title: "Featured Works & Project Documentation",
     projects_subtitle: "Verified portfolio encompassing institutional research, operational management systems, and community empowerment initiatives.",
-    proj_filter_all: "All Projects",
-    proj_filter_research: "Research & WebQual",
-    proj_filter_web: "Web Information Systems",
-    proj_filter_community: "Community Service",
     proj_btn_view: "View Details & Analysis",
     modal_title_default: "Project Details",
     modal_section_desc: "Description & Methodology",
@@ -363,7 +344,6 @@ const TRANSLATIONS = {
     modal_btn_demo: "Official Link",
 
     // Publications
-    pub_tagline: "Academic Documentation",
     pub_title: "Scientific Publications & Repositories",
     pub_subtitle: "Indexed research papers and publications publicly accessible on institutional repositories and software engineering journals.",
     pub_1_badge: "Undergraduate Thesis / ITK Repository (2023)",
@@ -376,17 +356,15 @@ const TRANSLATIONS = {
     pub_2_btn: "Read on Syntax Journal",
 
     // Socials
-    social_tagline: "Socials",
     social_title: "Profiles & Online Presence",
     social_subtitle: "Official channels to connect directly with Bobby Kamal Aizan.",
     social_email_handle: "Direct Contact",
 
     // Contact
-    contact_tagline: "Contact",
-    contact_title: "Send a Message or Consultation",
-    contact_subtitle: "Discuss information systems development needs, website quality auditing, or software engineering collaboration opportunities.",
+    contact_title: "Send a Message or Inquiry",
+    contact_subtitle: "Open to opportunities in operational administration, data management, fleet coordination, and information systems collaboration.",
     contact_info_heading: "Contact Information",
-    contact_info_desc: "Open for technical discussions regarding web architectures, information systems implementations, and data-driven quality research.",
+    contact_info_desc: "Feel free to reach out via the form or email for recruitment inquiries, operational administration, or systems coordination.",
     contact_email_title: "Email Address",
     contact_loc_title: "Location",
     contact_loc_val: "Balikpapan, East Kalimantan, Indonesia",
@@ -401,17 +379,17 @@ const TRANSLATIONS = {
     contact_label_message: "Message Body *",
     contact_placeholder_message: "Write your message, project details, or questions...",
     contact_btn_send: "Send Message",
-    contact_btn_sending: "Sending Message...",
-    contact_btn_sent: "Message Sent Successfully!",
+    contact_btn_sending: "Opening Email...",
+    contact_btn_sent: "Email App Opened",
     contact_err_required: "Please fill out all required fields (*).",
     contact_err_email: "Please enter a valid email address.",
     contact_toast_copied: "Email address copied to clipboard!",
-    contact_toast_sent: "Thank you {name}! Your message has been received. Bobby will reach out to you shortly at {email}.",
+    contact_toast_sent: "Your email client is opening to send a message from {name} ({email}) to bobbykamalaizan@gmail.com.",
 
     // Footer
     footer_tagline: "Information Systems • Institut Teknologi Kalimantan (ITK)",
     footer_copy: "© 2026 Bobby Kamal Aizan.",
-    footer_status: "All Systems Operational"
+    footer_status: "Balikpapan, Indonesia"
   }
 };
 
@@ -506,9 +484,7 @@ function applyTranslations() {
     const icon = el.querySelector('i');
     if (icon) {
       const iconClone = icon.cloneNode(true);
-      el.innerHTML = '';
-      el.appendChild(iconClone);
-      el.appendChild(document.createTextNode(' ' + text));
+      el.replaceChildren(iconClone, document.createTextNode(' ' + text));
     } else {
       el.textContent = text;
     }

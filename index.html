@@ -3,15 +3,25 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="dark">
+  <script>
+    try {
+      var savedTheme = localStorage.getItem('bobby-portfolio-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      var schemeMeta = document.querySelector('meta[name="color-scheme"]');
+      if (schemeMeta) schemeMeta.content = savedTheme === 'light' ? 'light' : 'dark';
+    } catch (e) {}
+  </script>
 
   <!-- SEO & Primary Meta Tags -->
-  <title>Bobby Kamal Aizan | Software Engineer & Information Systems Specialist</title>
-  <meta name="title" content="Bobby Kamal Aizan | Software Engineer & Information Systems Specialist">
+  <title>Bobby Kamal Aizan, S.Kom | Administrator &amp; Information Systems Specialist</title>
+  <meta name="title" content="Bobby Kamal Aizan, S.Kom | Administrator & Information Systems Specialist">
   <meta name="description"
-    content="Personal portfolio of Bobby Kamal Aizan — Software Engineer, Information Systems Specialist, and Institut Teknologi Kalimantan (ITK) alumnus.">
+    content="Portfolio of Bobby Kamal Aizan — Transportation Administrator at PT. Abicam & Information Systems alumnus (GPA 3.63) from Institut Teknologi Kalimantan (ITK).">
   <meta name="keywords"
-    content="Bobby Kamal Aizan, Software Engineer, Information Systems, Institut Teknologi Kalimantan, ITK, SIAT WebQual, Sirem Car Rental, Web Developer">
+    content="Bobby Kamal Aizan, Administrator Transportation, PT Abicam, Information Systems, Institut Teknologi Kalimantan, ITK, Data Management, SOP, Balikpapan">
   <meta name="author" content="Bobby Kamal Aizan">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://bobby-portofolio.vercel.app">
@@ -19,18 +29,18 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bobby-portofolio.vercel.app">
-  <meta property="og:title" content="Bobby Kamal Aizan | Software Engineer & Information Systems Specialist">
+  <meta property="og:title" content="Bobby Kamal Aizan, S.Kom | Administrator & Information Systems Specialist">
   <meta property="og:description"
-    content="Personal portfolio of Bobby Kamal Aizan — Software Engineer, Information Systems Specialist, and ITK alumnus.">
-  <meta property="og:image" content="https://bobby-portofolio.vercel.app/assets/images/projects/siat-webqual.svg">
+    content="Portfolio of Bobby Kamal Aizan — Transportation Administrator at PT. Abicam & Information Systems alumnus (GPA 3.63) from ITK.">
+  <meta property="og:image" content="https://bobby-portofolio.vercel.app/assets/icons/icon-512.svg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://bobby-portofolio.vercel.app">
-  <meta name="twitter:title" content="Bobby Kamal Aizan | Software Engineer & Information Systems Specialist">
+  <meta name="twitter:title" content="Bobby Kamal Aizan, S.Kom | Administrator & Information Systems Specialist">
   <meta name="twitter:description"
-    content="Personal portfolio of Bobby Kamal Aizan — Software Engineer, Information Systems Specialist, and ITK alumnus.">
-  <meta name="twitter:image" content="https://bobby-portofolio.vercel.app/assets/images/projects/siat-webqual.svg">
+    content="Portfolio of Bobby Kamal Aizan — Transportation Administrator at PT. Abicam & Information Systems alumnus (GPA 3.63) from ITK.">
+  <meta name="twitter:image" content="https://bobby-portofolio.vercel.app/assets/icons/icon-512.svg">
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -39,30 +49,29 @@
     "@type": "Person",
     "name": "Bobby Kamal Aizan",
     "url": "https://bobby-portofolio.vercel.app",
-    "jobTitle": "Software Engineer & Information Systems Specialist",
+    "jobTitle": "Administrator & Information Systems Specialist",
     "alumniOf": {
       "@type": "CollegeOrUniversity",
       "name": "Institut Teknologi Kalimantan"
     },
     "knowsAbout": [
-      "Software Engineering",
-      "Information Systems Architecture",
-      "WebQual 4.0",
-      "Importance-Performance Analysis (IPA)",
-      "MVC Architecture",
-      "JavaScript",
-      "PHP",
-      "SQL"
+      "Transportation Administration",
+      "Fleet & Route Coordination",
+      "Standard Operating Procedures (SOP)",
+      "Data Management",
+      "Microsoft Office",
+      "Information Systems",
+      "WebQual 4.0"
     ]
   }
   </script>
 
-  <!-- Apple San Francisco & Inter Typography Fonts -->
+  <!-- Typography Fonts & Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
   <!-- Dynamic Theme Color, PWA Manifest & App Icons -->
@@ -71,42 +80,26 @@
   <link rel="apple-touch-icon" href="assets/icons/icon-192.svg">
 
   <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer">
 
-  <!-- Custom Apple Pro Liquid Glass Stylesheets -->
-  <link rel="stylesheet" href="css/glassmorphism.css?v=7.4">
-  <link rel="stylesheet" href="css/style.css?v=7.4">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/glassmorphism.css?v=7.5">
+  <link rel="stylesheet" href="css/style.css?v=7.5">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon-192.svg">
 </head>
 
 <body class="antialiased">
 
-  <!-- Apple Liquid Glass Optical Refraction Pipeline (Silky Smooth Fluid Lensing) -->
-  <svg width="0" height="0" class="pointer-events-none" style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0;" aria-hidden="true">
-    <defs>
-      <!-- Main Liquid Glass Refraction (Cards, Terminal, Bento, Modal) -->
-      <filter id="liquid-refract-filter" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.008" numOctaves="3" seed="42" result="fluidNoise" />
-        <feGaussianBlur in="fluidNoise" stdDeviation="7" result="smoothFluidNoise" />
-        <feDisplacementMap id="filter-displace-main" in="SourceGraphic" in2="smoothFluidNoise" scale="22" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-
-      <!-- Silky Fluid Refraction (Navbar, Dynamic Island, Pills) -->
-      <filter id="liquid-refract-nav" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.005 0.007" numOctaves="3" seed="77" result="fluidNoiseNav" />
-        <feGaussianBlur in="fluidNoiseNav" stdDeviation="8" result="smoothFluidNoiseNav" />
-        <feDisplacementMap id="filter-displace-nav" in="SourceGraphic" in2="smoothFluidNoiseNav" scale="14" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </defs>
-  </svg>
-
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress-bar" id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
 
-  <!-- Pure Clean Apple Liquid Glass Background (Interactive Fluid Canvas) -->
+  <!-- Background Fluid Canvas -->
   <div class="liquid-bg-wrapper" id="liquid-bg-canvas" aria-hidden="true">
     <div class="ambient-titanium-glow" id="ambient-titanium-glow"></div>
     <div class="liquid-orb-layer" id="orb-layer-1">
@@ -124,8 +117,6 @@
     <div class="liquid-orb-layer" id="orb-layer-5">
       <div class="liquid-orb liquid-orb-5"></div>
     </div>
-    <!-- Apple Liquid Glass Studio WebGL2 Lens Layer (Transparent - Preserves Original Background) -->
-    <canvas id="liquid-glass-lens-canvas" class="liquid-glass-lens-canvas"></canvas>
   </div>
 
   <!-- Interactive Mouse Ambient Glow -->
@@ -155,7 +146,7 @@
           <div class="nav-active-morph-pill" id="nav-morph-pill"></div>
           <li><a href="#hero" class="nav-link-item active" data-i18n="nav_home">Home</a></li>
           <li><a href="#about" class="nav-link-item" data-i18n="nav_about">Tentang</a></li>
-          <li><a href="#explorer" class="nav-link-item" data-i18n="nav_explorer">Arsitektur</a></li>
+          <li><a href="#explorer" class="nav-link-item" data-i18n="nav_explorer">Sistem ITK</a></li>
           <li><a href="#skills" class="nav-link-item" data-i18n="nav_skills">Keahlian</a></li>
           <li><a href="#projects" class="nav-link-item" data-i18n="nav_projects">Proyek</a></li>
           <li><a href="#publications" class="nav-link-item" data-i18n="nav_research">Riset</a></li>
@@ -170,41 +161,6 @@
             <div class="lang-morph-pill"></div>
             <button class="lang-btn-pro lang-btn-id active" title="Bahasa Indonesia">ID</button>
             <button class="lang-btn-pro lang-btn-en" title="English">EN</button>
-          </div>
-
-          <!-- Glassmorphism Intensity Controller (iOS 26 Glass Slider) -->
-          <div class="glass-control-wrapper" id="glass-controller-container">
-            <button class="btn-glass-icon-pro" id="glass-slider-toggle-btn" aria-label="Tingkat Glassmorphism"
-              title="iOS 26 Glass Slider" aria-expanded="false">
-              <i class="bi bi-droplet-half" id="glass-slider-nav-icon"></i>
-            </button>
-
-            <!-- Apple iOS 26 Glass Slider Popover -->
-            <div class="ios-26-slider-popover" id="ios-glass-popover" role="dialog" aria-label="Tingkat Glassmorphism">
-              <div class="ios-26-slider-container">
-                <button type="button" class="ios-26-side-icon ios-26-icon-left" id="glass-icon-min" title="Matte (Min)" aria-label="Minimal Glass">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="7" width="12" height="12" rx="3" />
-                    <path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
-                  </svg>
-                </button>
-                <div class="ios-26-slider-track" id="desktop-ios-slider" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" tabindex="0">
-                  <div class="ios-26-rail-bg"></div>
-                  <div class="ios-26-rail-fill" id="desktop-slider-fill"></div>
-                  <div class="ios-26-glass-thumb" id="desktop-slider-thumb">
-                    <div class="ios-26-thumb-core"></div>
-                    <div class="ios-26-thumb-specular"></div>
-                    <div class="ios-26-thumb-rim-bottom"></div>
-                  </div>
-                </div>
-                <button type="button" class="ios-26-side-icon ios-26-icon-right" id="glass-icon-max" title="Hyper Crystal (Max)" aria-label="Maximum Glass">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M5 8h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z" opacity="0.4" />
-                    <rect x="8" y="4" width="13" height="13" rx="3" />
-                  </svg>
-                </button>
-              </div>
-            </div>
           </div>
 
           <!-- Night Light Switcher (Comfort Warmth Mode) -->
@@ -243,10 +199,6 @@
   <div class="mobile-menu-drawer" id="mobile-drawer">
     <div class="flex justify-between items-center mb-3 pb-3 border-b border-white/10">
       <div class="flex items-center gap-2">
-        <button class="btn-glass-icon-pro" id="mobile-glass-toggle-btn" aria-label="Tingkat Glassmorphism"
-          title="Efek Kaca">
-          <i class="bi bi-droplet-half"></i>
-        </button>
         <button class="btn-glass-icon-pro" id="mobile-nightlight-toggle-btn" aria-label="Toggle Night Light"
           title="Night Light">
           <i class="bi bi-lamp" id="mobile-nightlight-icon"></i>
@@ -265,36 +217,9 @@
         <button class="lang-btn-pro lang-btn-en">EN</button>
       </div>
     </div>
-
-    <!-- Mobile iOS 26 Glass Slider -->
-    <div class="mobile-ios-26-slider-container mb-4" id="mobile-glass-card">
-      <div class="ios-26-slider-container w-full">
-        <button type="button" class="ios-26-side-icon ios-26-icon-left" id="mobile-glass-icon-min" title="Matte (Min)" aria-label="Minimal Glass">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="7" width="12" height="12" rx="3" />
-            <path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
-          </svg>
-        </button>
-        <div class="ios-26-slider-track" id="mobile-ios-slider" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" tabindex="0">
-          <div class="ios-26-rail-bg"></div>
-          <div class="ios-26-rail-fill" id="mobile-slider-fill"></div>
-          <div class="ios-26-glass-thumb" id="mobile-slider-thumb">
-            <div class="ios-26-thumb-core"></div>
-            <div class="ios-26-thumb-specular"></div>
-            <div class="ios-26-thumb-rim-bottom"></div>
-          </div>
-        </div>
-        <button type="button" class="ios-26-side-icon ios-26-icon-right" id="mobile-glass-icon-max" title="Hyper Crystal (Max)" aria-label="Maximum Glass">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M5 8h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z" opacity="0.4" />
-            <rect x="8" y="4" width="13" height="13" rx="3" />
-          </svg>
-        </button>
-      </div>
-    </div>
     <a href="#hero" class="nav-link-item" data-i18n="nav_home">Home</a>
     <a href="#about" class="nav-link-item" data-i18n="nav_about">Tentang</a>
-    <a href="#explorer" class="nav-link-item" data-i18n="nav_explorer">Arsitektur</a>
+    <a href="#explorer" class="nav-link-item" data-i18n="nav_explorer">Sistem ITK</a>
     <a href="#skills" class="nav-link-item" data-i18n="nav_skills">Keahlian</a>
     <a href="#projects" class="nav-link-item" data-i18n="nav_projects">Proyek</a>
     <a href="#publications" class="nav-link-item" data-i18n="nav_research">Riset & Publikasi</a>
@@ -371,8 +296,8 @@
                   <span class="dot dot-green"></span>
                 </div>
                 <span class="terminal-title"><i class="bi bi-terminal me-1"></i> bobby@itk-system: ~</span>
-                <span class="bg-white/10 text-cyan-400 text-xs px-2 py-0.5 rounded-full"><i class="bi bi-cpu me-1"></i>
-                  v2.4.0</span>
+                <span class="bg-white/10 text-cyan-400 text-xs px-2 py-0.5 rounded-full"><i class="bi bi-terminal-split me-1"></i>
+                  CLI</span>
               </div>
 
               <!-- Terminal Tab Controls with Morph Pill -->
@@ -425,8 +350,8 @@
                   <!-- Terminal Output Stream -->
                   <div class="cli-output-log" id="cli-output-log">
                     <div class="cli-motd-header">
-                      <div class="text-cyan-400 font-semibold text-xs"><i class="bi bi-terminal-fill me-1"></i> BobbyOS v2.4 (x86_64-darwin) &bull; Shell Active</div>
-                      <div class="text-muted text-xs mt-0.5" data-i18n="cli_welcome_hint">Ketik <span class="cli-highlight">help</span> atau klik chip di atas. Ketik <span class="cli-highlight">cv</span> untuk ringkasan CV.</div>
+                      <div class="text-cyan-400 font-semibold text-xs"><i class="bi bi-terminal-fill me-1"></i> Bobby Kamal Aizan &bull; Interactive Portfolio CLI</div>
+                      <div class="text-muted text-xs mt-0.5" data-i18n="cli_welcome_hint">Ketik <span class="cli-highlight">help</span> atau klik chip di atas untuk menjelajah portofolio via CLI.</div>
                     </div>
                   </div>
 
@@ -459,29 +384,29 @@
           <div class="stat-item">
             <div class="sf-icon-squircle blue"><i class="bi bi-mortarboard-fill"></i></div>
             <div class="stat-text-col">
-              <div class="stat-value gradient-text">ITK</div>
-              <div class="stat-label" data-i18n="stat_itk_label">Sistem Informasi Alumnus</div>
+              <div class="stat-value gradient-text">3.63</div>
+              <div class="stat-label" data-i18n="stat_itk_label">IPK S1 Sistem Informasi ITK</div>
             </div>
           </div>
           <div class="stat-item">
-            <div class="sf-icon-squircle purple"><i class="bi bi-journal-bookmark-fill"></i></div>
+            <div class="sf-icon-squircle purple"><i class="bi bi-truck"></i></div>
             <div class="stat-text-col">
-              <div class="stat-value gradient-text-cyan">Syntax</div>
-              <div class="stat-label" data-i18n="stat_syntax_label">Peer-Reviewed Journal Author</div>
+              <div class="stat-value gradient-text-cyan">PT. Abicam</div>
+              <div class="stat-label" data-i18n="stat_abicam_label">Administrator Transportasi</div>
             </div>
           </div>
           <div class="stat-item">
-            <div class="sf-icon-squircle orange"><i class="bi bi-bar-chart-steps"></i></div>
+            <div class="sf-icon-squircle orange"><i class="bi bi-bank"></i></div>
             <div class="stat-text-col">
-              <div class="stat-value gradient-text">WebQual</div>
-              <div class="stat-label" data-i18n="stat_webqual_label">4.0 Empirical Evaluation</div>
+              <div class="stat-value gradient-text">BDK</div>
+              <div class="stat-label" data-i18n="stat_bdk_label">Magang Balai Diklat Keuangan</div>
             </div>
           </div>
           <div class="stat-item">
-            <div class="sf-icon-squircle emerald"><i class="bi bi-layers-half"></i></div>
+            <div class="sf-icon-squircle emerald"><i class="bi bi-file-earmark-spreadsheet"></i></div>
             <div class="stat-text-col">
-              <div class="stat-value gradient-text-cyan">Full-Stack</div>
-              <div class="stat-label" data-i18n="stat_fullstack_label">MVC & Web Architecture</div>
+              <div class="stat-value gradient-text-cyan">MS Office</div>
+              <div class="stat-label" data-i18n="stat_office_label">MS Office &amp; Manajemen Data</div>
             </div>
           </div>
         </div>
@@ -492,17 +417,12 @@
          ABOUT ME SECTION
          ========================================================================== -->
     <section id="about">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">PROFILE // 01</span>
-        <span class="watermark-sub">SYS.ID: BKA &bull; LOC: BALIKPAPAN &bull; 116.85&deg; E</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="about_tagline"><i class="bi bi-person-badge"></i> Background</span>
-          <h2 class="section-title" data-i18n="about_title">Profil & Orientasi Profesional</h2>
+          <h2 class="section-title" data-i18n="about_title">Profil &amp; Orientasi Profesional</h2>
           <p class="section-subtitle mx-auto" data-i18n="about_subtitle">
-            Kombinasi antara keahlian teknis pengembangan perangkat lunak dan pendekatan analitis sistem informasi untuk
-            menghasilkan solusi digital yang andal dan terukur.
+            Kombinasi antara keahlian operasional administrasi, koordinasi sistem transportasi, dan latar belakang analitis
+            Sistem Informasi dari Institut Teknologi Kalimantan.
           </p>
         </div>
 
@@ -516,33 +436,32 @@
                   Aizan</span>
               </h3>
               <p class="about-intro-text" data-i18n="about_p1">
-                Saya merupakan lulusan program studi Sistem Informasi dari Institut Teknologi Kalimantan (ITK). Fokus
-                keahlian saya mencakup perancangan sistem informasi berbasis web, arsitektur basis data relasional,
-                implementasi pola MVC, serta evaluasi kualitas perangkat lunak secara kuantitatif dan kualitatif.
+                Saya merupakan lulusan program studi Sistem Informasi dari Institut Teknologi Kalimantan (ITK) dengan IPK
+                3.63 (Sangat Memuaskan). Saat ini saya aktif berkarier sebagai Administrator Transportation di PT. Abicam
+                Balikpapan serta memiliki pengalaman magang di Balai Diklat Keuangan Balikpapan.
               </p>
               <p class="about-intro-text" data-i18n="about_p2">
-                Melalui riset akademik dan pengalaman pengembangan sistem nyata, saya terbiasa menerjemahkan kebutuhan
-                bisnis dan pengguna ke dalam struktur teknis yang teruji, mulai dari tahap analisis kebutuhan,
-                perancangan database, penulisan kode terstruktur, hingga audit kegunaan sistem (Usability & Service
-                Quality).
+                Dengan ketelitian tinggi dan pendekatan terstruktur dalam pemecahan masalah, saya memiliki keterampilan kuat
+                dalam manajemen data, dokumentasi administratif, koordinasi armada &amp; sistem operasional, kepatuhan
+                prosedural, serta penyusunan Standar Operasional Prosedur (SOP).
               </p>
 
               <h4 class="font-bold text-xs uppercase text-muted mt-6 mb-4 flex items-center gap-2"
-                style="letter-spacing:0.05em;" data-i18n="about_principles">
-                <i class="bi bi-lightning-charge text-warning"></i> Prinsip Rekayasa Sistem
+                data-i18n="about_principles">
+                <i class="bi bi-lightning-charge text-warning"></i> Prinsip Kerja &amp; Operasional
               </h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="glass-card-subtle pillar-card">
-                  <div class="sf-icon-squircle blue mb-3"><i class="bi bi-diagram-3-fill"></i></div>
-                  <h5 class="pillar-title" data-i18n="pillar_arch_title">Arsitektur Terstruktur</h5>
-                  <p class="pillar-desc" data-i18n="pillar_arch_desc">Penerapan pola MVC yang bersih, struktur database
-                    ternormalisasi, dan keterbacaan kode yang modular.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
+                <div class="pillar-card">
+                  <div class="sf-icon-squircle blue mb-3"><i class="bi bi-folder2-open"></i></div>
+                  <h5 class="pillar-title" data-i18n="pillar_arch_title">Manajemen Data &amp; Kepatuhan</h5>
+                  <p class="pillar-desc" data-i18n="pillar_arch_desc">Pengelolaan dokumentasi administratif, izin kendaraan,
+                    dan sertifikasi pemeliharaan secara tertib dan akurat.</p>
                 </div>
-                <div class="glass-card-subtle pillar-card">
-                  <div class="sf-icon-squircle orange mb-3"><i class="bi bi-clipboard2-pulse-fill"></i></div>
-                  <h5 class="pillar-title" data-i18n="pillar_ux_title">Evaluasi Kualitas Empiris</h5>
-                  <p class="pillar-desc" data-i18n="pillar_ux_desc">Pemanfaatan WebQual 4.0 dan Importance-Performance
-                    Analysis (IPA) untuk membedah kualitas sistem nyata.</p>
+                <div class="pillar-card">
+                  <div class="sf-icon-squircle orange mb-3"><i class="bi bi-truck"></i></div>
+                  <h5 class="pillar-title" data-i18n="pillar_ux_title">Efisiensi Operasional</h5>
+                  <p class="pillar-desc" data-i18n="pillar_ux_desc">Optimalisasi jadwal perjalanan armada dan rute guna
+                    menekan kendala mobilitas serta meningkatkan kepuasan pelanggan.</p>
                 </div>
               </div>
             </div>
@@ -595,20 +514,15 @@
     </section>
 
     <!-- ==========================================================================
-         APPLE PRO INTERACTIVE ARCHITECTURE & ENGINEERING EXPLORER
+         LANDASAN SISTEM INFORMASI & METODOLOGI AKADEMIK (ITK)
          ========================================================================== -->
     <section id="explorer">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">SYSTEM // 02</span>
-        <span class="watermark-sub">ARCH.TYPE: MVC &bull; EMPIRICAL UX &bull; v2.4</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="explorer_tagline"><i class="bi bi-cpu"></i> Interaktif</span>
-          <h2 class="section-title" data-i18n="explorer_title">Eksplorasi Arsitektur & Rekayasa Sistem</h2>
+          <h2 class="section-title" data-i18n="explorer_title">Landasan Sistem Informasi (ITK)</h2>
           <p class="section-subtitle mx-auto" data-i18n="explorer_subtitle">
-            Pilih pilar spesifikasi di bawah untuk menjelajahi metodologi rekayasa sistem, instrumen evaluasi empiris,
-            dan implementasi teknologi nyata.
+            Pilih topik di bawah untuk melihat pendekatan analisis sistem informasi, evaluasi kualitas layanan, dan proyek
+            akademik yang dipelajari selama studi S1 Sistem Informasi ITK.
           </p>
         </div>
 
@@ -619,7 +533,7 @@
               <!-- Integrated Toolbar Header -->
               <div class="explorer-toolbar">
                 <span class="explorer-index-indicator" id="explorer-indicator-text"><i class="bi bi-sliders me-1"></i>
-                  SPECIFICATION 01 / 05</span>
+                  TOPIK 01 / 05</span>
                 <div class="explorer-nav-arrows-inline">
                   <button class="stepper-btn-inline" id="stepper-btn-up" aria-label="Previous Feature"><i
                       class="bi bi-chevron-up"></i></button>
@@ -649,17 +563,12 @@
          SKILLS & EXPERTISE MATRIX (CENTERED)
          ========================================================================== -->
     <section id="skills">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">STACK // 03</span>
-        <span class="watermark-sub">STACK: PHP &bull; JS &bull; SQL &bull; MVC &bull; REST</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="skills_tagline"><i class="bi bi-tools"></i> Kompetensi</span>
-          <h2 class="section-title" data-i18n="skills_title">Keahlian & Instrumen Teknis</h2>
+          <h2 class="section-title" data-i18n="skills_title">Keahlian Operasional &amp; Sistem</h2>
           <p class="section-subtitle mx-auto" data-i18n="skills_subtitle">
-            Teknologi, bahasa pemrograman, kerangka kerja, dan metode yang diaplikasikan dalam pembangunan dan evaluasi
-            sistem.
+            Perpaduan kemampuan administrasi transportasi, pengelolaan data perkantoran, penyusunan SOP, dan dasar teknis
+            Sistem Informasi.
           </p>
         </div>
 
@@ -669,157 +578,127 @@
             <div class="filter-morph-pill" id="skill-filter-morph-pill"></div>
             <button class="skill-tab-btn active" data-skill-group="all" data-i18n="skill_tab_all"><i
                 class="bi bi-grid-fill me-1"></i> Semua Bidang</button>
-            <button class="skill-tab-btn" data-skill-group="backend" data-i18n="skill_tab_backend"><i
-                class="bi bi-hdd-stack-fill me-1"></i> Backend & Basis Data</button>
-            <button class="skill-tab-btn" data-skill-group="frontend" data-i18n="skill_tab_frontend"><i
-                class="bi bi-window-fullscreen me-1"></i> Frontend & UI</button>
-            <button class="skill-tab-btn" data-skill-group="analysis" data-i18n="skill_tab_analysis"><i
-                class="bi bi-clipboard2-data-fill me-1"></i> Analisis & Kualitas Sistem</button>
+            <button class="skill-tab-btn" data-skill-group="operations" data-i18n="skill_tab_backend"><i
+                class="bi bi-truck me-1"></i> Administrasi &amp; Armada</button>
+            <button class="skill-tab-btn" data-skill-group="office" data-i18n="skill_tab_frontend"><i
+                class="bi bi-file-earmark-spreadsheet-fill me-1"></i> Perkantoran &amp; Data</button>
+            <button class="skill-tab-btn" data-skill-group="systems" data-i18n="skill_tab_analysis"><i
+                class="bi bi-clipboard2-data-fill me-1"></i> Sistem Informasi (ITK)</button>
           </div>
         </div>
 
         <!-- Skills Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Skill Card 1: Backend PHP & Frameworks -->
-          <div class="skill-group-container reveal-on-scroll" data-skill-group="backend">
+          <!-- Skill Card 1: Administrasi Transportasi -->
+          <div class="skill-group-container reveal-on-scroll" data-skill-group="operations">
             <div class="glass-card skill-card-item">
-              <div>
-                <div class="skill-header">
-                  <div class="sf-icon-squircle blue"><i class="bi bi-filetype-php"></i></div>
-                  <div>
-                    <h4 class="skill-name">PHP & MVC Frameworks</h4>
-                    <span class="skill-level-text">CodeIgniter & Laravel</span>
-                  </div>
-                </div>
-                <div class="skill-bar-track">
-                  <div class="skill-bar-fill" data-width="92%"></div>
+              <div class="skill-header">
+                <div class="sf-icon-squircle blue"><i class="bi bi-truck"></i></div>
+                <div>
+                  <h3 class="skill-name">Administrasi Transportasi</h3>
+                  <span class="skill-level-text">PT. Abicam &bull; Rute &amp; Jadwal</span>
                 </div>
               </div>
               <div class="skill-tags">
-                <span class="skill-tag-pill"><i class="bi bi-code-slash me-1"></i> CodeIgniter MVC</span>
-                <span class="skill-tag-pill"><i class="bi bi-box me-1"></i> Laravel</span>
-                <span class="skill-tag-pill"><i class="bi bi-arrow-left-right me-1"></i> RESTful API</span>
-                <span class="skill-tag-pill"><i class="bi bi-braces me-1"></i> OOP PHP</span>
+                <span class="skill-tag-pill"><i class="bi bi-signpost-split me-1"></i> Optimasi Rute</span>
+                <span class="skill-tag-pill"><i class="bi bi-calendar2-week me-1"></i> Jadwal Armada</span>
+                <span class="skill-tag-pill"><i class="bi bi-shield-check me-1"></i> Regulasi Transportasi</span>
+                <span class="skill-tag-pill"><i class="bi bi-speedometer2 me-1"></i> Monitoring Kinerja</span>
               </div>
             </div>
           </div>
 
-          <!-- Skill Card 2: Basis Data -->
-          <div class="skill-group-container reveal-on-scroll delay-100" data-skill-group="backend">
+          <!-- Skill Card 2: Koordinasi & Dokumentasi -->
+          <div class="skill-group-container reveal-on-scroll delay-100" data-skill-group="operations">
             <div class="glass-card skill-card-item">
-              <div>
-                <div class="skill-header">
-                  <div class="sf-icon-squircle emerald"><i class="bi bi-database-check"></i></div>
-                  <div>
-                    <h4 class="skill-name">Relational Databases</h4>
-                    <span class="skill-level-text">MySQL & PostgreSQL</span>
-                  </div>
-                </div>
-                <div class="skill-bar-track">
-                  <div class="skill-bar-fill" data-width="90%"></div>
+              <div class="skill-header">
+                <div class="sf-icon-squircle emerald"><i class="bi bi-folder2-open"></i></div>
+                <div>
+                  <h3 class="skill-name">Dokumentasi &amp; Koordinasi</h3>
+                  <span class="skill-level-text">Perizinan, Servis &amp; Laporan</span>
                 </div>
               </div>
               <div class="skill-tags">
-                <span class="skill-tag-pill"><i class="bi bi-diagram-2 me-1"></i> ERD Modeling</span>
-                <span class="skill-tag-pill"><i class="bi bi-check2-circle me-1"></i> Normalisasi 3NF</span>
-                <span class="skill-tag-pill"><i class="bi bi-search me-1"></i> Complex Queries</span>
-                <span class="skill-tag-pill"><i class="bi bi-speedometer2 me-1"></i> Optimization</span>
+                <span class="skill-tag-pill"><i class="bi bi-file-earmark-check me-1"></i> Izin Kendaraan</span>
+                <span class="skill-tag-pill"><i class="bi bi-wrench-adjustable me-1"></i> Sertifikasi Servis</span>
+                <span class="skill-tag-pill"><i class="bi bi-journal-text me-1"></i> Laporan Perjalanan</span>
+                <span class="skill-tag-pill"><i class="bi bi-people me-1"></i> Driver &amp; Mekanik</span>
               </div>
             </div>
           </div>
 
-          <!-- Skill Card 3: Web Quality & Analysis -->
-          <div class="skill-group-container reveal-on-scroll delay-200" data-skill-group="analysis">
+          <!-- Skill Card 3: Microsoft Office & Data -->
+          <div class="skill-group-container reveal-on-scroll delay-200" data-skill-group="office">
             <div class="glass-card skill-card-item">
-              <div>
-                <div class="skill-header">
-                  <div class="sf-icon-squircle orange"><i class="bi bi-clipboard2-check"></i></div>
-                  <div>
-                    <h4 class="skill-name">WebQual 4.0 & IPA</h4>
-                    <span class="skill-level-text">Metodologi Kualitas Sistem</span>
-                  </div>
-                </div>
-                <div class="skill-bar-track">
-                  <div class="skill-bar-fill" data-width="95%"></div>
+              <div class="skill-header">
+                <div class="sf-icon-squircle cyan"><i class="bi bi-file-earmark-spreadsheet"></i></div>
+                <div>
+                  <h3 class="skill-name">Microsoft Office &amp; Data</h3>
+                  <span class="skill-level-text">Pengolahan Data &amp; Arsip</span>
                 </div>
               </div>
               <div class="skill-tags">
-                <span class="skill-tag-pill"><i class="bi bi-eye me-1"></i> Usability</span>
-                <span class="skill-tag-pill"><i class="bi bi-info-circle me-1"></i> Information</span>
-                <span class="skill-tag-pill"><i class="bi bi-headset me-1"></i> Service</span>
+                <span class="skill-tag-pill"><i class="bi bi-table me-1"></i> Microsoft Excel</span>
+                <span class="skill-tag-pill"><i class="bi bi-file-word me-1"></i> Microsoft Word</span>
+                <span class="skill-tag-pill"><i class="bi bi-easel me-1"></i> PowerPoint</span>
+                <span class="skill-tag-pill"><i class="bi bi-database-check me-1"></i> Manajemen Arsip</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 4: SOP & Bahasa -->
+          <div class="skill-group-container reveal-on-scroll" data-skill-group="office">
+            <div class="glass-card skill-card-item">
+              <div class="skill-header">
+                <div class="sf-icon-squircle orange"><i class="bi bi-check2-all"></i></div>
+                <div>
+                  <h3 class="skill-name">SOP &amp; Komunikasi Bisnis</h3>
+                  <span class="skill-level-text">Balai Diklat Keuangan &amp; Umum</span>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-list-check me-1"></i> Penyusunan SOP</span>
+                <span class="skill-tag-pill"><i class="bi bi-clock me-1"></i> Time Management</span>
+                <span class="skill-tag-pill"><i class="bi bi-translate me-1"></i> Bahasa Indonesia</span>
+                <span class="skill-tag-pill"><i class="bi bi-globe me-1"></i> English (Fluent)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skill Card 5: Analisis & Kualitas Sistem -->
+          <div class="skill-group-container reveal-on-scroll delay-100" data-skill-group="systems">
+            <div class="glass-card skill-card-item">
+              <div class="skill-header">
+                <div class="sf-icon-squircle purple"><i class="bi bi-clipboard2-check"></i></div>
+                <div>
+                  <h3 class="skill-name">Analisis Kualitas Sistem</h3>
+                  <span class="skill-level-text">Skripsi &amp; Riset ITK (IPK 3.63)</span>
+                </div>
+              </div>
+              <div class="skill-tags">
+                <span class="skill-tag-pill"><i class="bi bi-eye me-1"></i> WebQual 4.0</span>
                 <span class="skill-tag-pill"><i class="bi bi-grid-3x3 me-1"></i> IPA Matrix</span>
+                <span class="skill-tag-pill"><i class="bi bi-graph-up me-1"></i> Statistik SPSS</span>
+                <span class="skill-tag-pill"><i class="bi bi-diagram-2 me-1"></i> UML &amp; BPMN</span>
               </div>
             </div>
           </div>
 
-          <!-- Skill Card 4: Modern JavaScript -->
-          <div class="skill-group-container reveal-on-scroll" data-skill-group="frontend">
+          <!-- Skill Card 6: Web & Basis Data -->
+          <div class="skill-group-container reveal-on-scroll delay-200" data-skill-group="systems">
             <div class="glass-card skill-card-item">
-              <div>
-                <div class="skill-header">
-                  <div class="sf-icon-squircle cyan"><i class="bi bi-filetype-js"></i></div>
-                  <div>
-                    <h4 class="skill-name">JavaScript & Frontend</h4>
-                    <span class="skill-level-text">Modern ES6+, DOM, Asinkron</span>
-                  </div>
-                </div>
-                <div class="skill-bar-track">
-                  <div class="skill-bar-fill" data-width="88%"></div>
+              <div class="skill-header">
+                <div class="sf-icon-squircle pink"><i class="bi bi-code-slash"></i></div>
+                <div>
+                  <h3 class="skill-name">Basis Data &amp; Sistem Web</h3>
+                  <span class="skill-level-text">Dasar Teknis S.Kom ITK</span>
                 </div>
               </div>
               <div class="skill-tags">
-                <span class="skill-tag-pill"><i class="bi bi-lightning me-1"></i> ES6+</span>
-                <span class="skill-tag-pill"><i class="bi bi-cloud-arrow-down me-1"></i> Fetch / AJAX</span>
-                <span class="skill-tag-pill"><i class="bi bi-palette me-1"></i> Tailwind CSS</span>
-                <span class="skill-tag-pill"><i class="bi bi-phone me-1"></i> Responsive UI</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Skill Card 5: Analisis Kebutuhan Sistem -->
-          <div class="skill-group-container reveal-on-scroll delay-100" data-skill-group="analysis">
-            <div class="glass-card skill-card-item">
-              <div>
-                <div class="skill-header">
-                  <div class="sf-icon-squircle purple"><i class="bi bi-diagram-2"></i></div>
-                  <div>
-                    <h4 class="skill-name">Analisis Sistem Informasi</h4>
-                    <span class="skill-level-text">UML, DFD, & BPMN</span>
-                  </div>
-                </div>
-                <div class="skill-bar-track">
-                  <div class="skill-bar-fill" data-width="91%"></div>
-                </div>
-              </div>
-              <div class="skill-tags">
-                <span class="skill-tag-pill"><i class="bi bi-bounding-box me-1"></i> Use Case</span>
-                <span class="skill-tag-pill"><i class="bi bi-activity me-1"></i> Activity</span>
-                <span class="skill-tag-pill"><i class="bi bi-arrow-repeat me-1"></i> DFD</span>
-                <span class="skill-tag-pill"><i class="bi bi-file-earmark-check me-1"></i> Requirements</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Skill Card 6: Software Engineering Tools -->
-          <div class="skill-group-container reveal-on-scroll delay-200" data-skill-group="backend">
-            <div class="glass-card skill-card-item">
-              <div>
-                <div class="skill-header">
-                  <div class="sf-icon-squircle pink"><i class="bi bi-git"></i></div>
-                  <div>
-                    <h4 class="skill-name">Version Control & Tooling</h4>
-                    <span class="skill-level-text">Git, SPSS, Figma, Web Servers</span>
-                  </div>
-                </div>
-                <div class="skill-bar-track">
-                  <div class="skill-bar-fill" data-width="87%"></div>
-                </div>
-              </div>
-              <div class="skill-tags">
-                <span class="skill-tag-pill"><i class="bi bi-github me-1"></i> Git / GitHub</span>
-                <span class="skill-tag-pill"><i class="bi bi-graph-up me-1"></i> SPSS</span>
-                <span class="skill-tag-pill"><i class="bi bi-server me-1"></i> Apache</span>
-                <span class="skill-tag-pill"><i class="bi bi-vector-pen me-1"></i> Figma</span>
+                <span class="skill-tag-pill"><i class="bi bi-database me-1"></i> MySQL / SQL</span>
+                <span class="skill-tag-pill"><i class="bi bi-filetype-php me-1"></i> PHP / CodeIgniter</span>
+                <span class="skill-tag-pill"><i class="bi bi-filetype-html me-1"></i> HTML5 / CSS3</span>
+                <span class="skill-tag-pill"><i class="bi bi-git me-1"></i> Git / GitHub</span>
               </div>
             </div>
           </div>
@@ -831,14 +710,8 @@
          FEATURED PROJECTS / PORTFOLIO SECTION (CENTERED)
          ========================================================================== -->
     <section id="projects">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">PROJECTS // 04</span>
-        <span class="watermark-sub">CASE STUDIES: SIAT &bull; SIREM &bull; TOURISM &bull; ITK</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="projects_tagline"><i class="bi bi-folder-check"></i> Proyek &
-            Publikasi</span>
           <h2 class="section-title" data-i18n="projects_title">Karya Nyata & Dokumentasi Proyek</h2>
           <p class="section-subtitle mx-auto" data-i18n="projects_subtitle">
             Daftar karya autentik yang mencakup riset evaluasi sistem institusi, sistem manajemen operasional, dan
@@ -846,22 +719,7 @@
           </p>
         </div>
 
-        <!-- Project Filter Controls with Morph Pill (Horizontal Scroll Container) -->
-        <div class="tabs-scroll-container reveal-on-scroll">
-          <div class="project-filter-bar">
-            <div class="filter-morph-pill" id="project-filter-morph-pill"></div>
-            <button class="filter-btn active" data-filter="all" data-i18n="proj_filter_all"><i
-                class="bi bi-grid me-1"></i> Semua Proyek</button>
-            <button class="filter-btn" data-filter="research" data-i18n="proj_filter_research"><i
-                class="bi bi-bar-chart me-1"></i> Riset & WebQual</button>
-            <button class="filter-btn" data-filter="web-systems" data-i18n="proj_filter_web"><i
-                class="bi bi-laptop me-1"></i> Sistem Informasi Web</button>
-            <button class="filter-btn" data-filter="community" data-i18n="proj_filter_community"><i
-                class="bi bi-people me-1"></i> Pengabdian Masyarakat</button>
-          </div>
-        </div>
-
-        <!-- Dynamic Projects Grid (Rendered by JS with Tailwind Grid) -->
+        <!-- Dynamic Projects Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
           <!-- Populated from js/projects-data.js -->
         </div>
@@ -872,14 +730,8 @@
          RESEARCH & PUBLICATIONS HIGHLIGHT SECTION
          ========================================================================== -->
     <section id="publications">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">RESEARCH // 05</span>
-        <span class="watermark-sub">PEER-REVIEW: SYNTAX JOURNAL &bull; REPO: ITK</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="pub_tagline"><i class="bi bi-journal-text"></i> Dokumentasi
-            Akademik</span>
           <h2 class="section-title" data-i18n="pub_title">Publikasi Ilmiah & Repositori</h2>
           <p class="section-subtitle mx-auto" data-i18n="pub_subtitle">
             Karya ilmiah dan penelitian terindeks yang dapat diakses secara publik pada repositori institusi dan jurnal
@@ -952,14 +804,9 @@
          SOCIAL & ONLINE PRESENCE HUB (CENTERED)
          ========================================================================== -->
     <section id="social">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">NETWORK // 06</span>
-        <span class="watermark-sub">NODE: GITHUB &bull; LINKEDIN &bull; EMAIL &bull; OPEN</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="social_tagline"><i class="bi bi-share"></i> Jejaring</span>
-          <h2 class="section-title" data-i18n="social_title">Profil & Kehadiran Daring</h2>
+          <h2 class="section-title" data-i18n="social_title">Profil &amp; Kehadiran Daring</h2>
           <p class="section-subtitle mx-auto" data-i18n="social_subtitle">
             Kanal resmi untuk terhubung langsung dengan Bobby Kamal Aizan.
           </p>
@@ -968,59 +815,35 @@
         <div class="social-grid-container">
           <!-- LinkedIn -->
           <div class="reveal-on-scroll">
-            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.linkedin.com/in/bobbykamalaizan" target="_blank" rel="noopener noreferrer"
               class="glass-card social-hub-card social-linkedin">
               <div class="social-hub-icon">
                 <i class="bi bi-linkedin"></i>
               </div>
-              <h4 class="social-hub-title">LinkedIn</h4>
-              <span class="social-hub-handle">Bobby Kamal Aizan</span>
-            </a>
-          </div>
-
-          <!-- Instagram -->
-          <div class="reveal-on-scroll delay-100">
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"
-              class="glass-card social-hub-card social-instagram">
-              <div class="social-hub-icon">
-                <i class="bi bi-instagram"></i>
-              </div>
-              <h4 class="social-hub-title">Instagram</h4>
-              <span class="social-hub-handle">@bobbykamalaizan</span>
-            </a>
-          </div>
-
-          <!-- Facebook -->
-          <div class="reveal-on-scroll delay-200">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
-              class="glass-card social-hub-card social-facebook">
-              <div class="social-hub-icon">
-                <i class="bi bi-facebook"></i>
-              </div>
-              <h4 class="social-hub-title">Facebook</h4>
-              <span class="social-hub-handle">Bobby Kamal Aizan</span>
+              <h3 class="social-hub-title">LinkedIn</h3>
+              <span class="social-hub-handle">in/bobbykamalaizan</span>
             </a>
           </div>
 
           <!-- GitHub -->
-          <div class="reveal-on-scroll delay-300">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+          <div class="reveal-on-scroll delay-100">
+            <a href="https://github.com/kaizan26" target="_blank" rel="noopener noreferrer"
               class="glass-card social-hub-card social-github">
               <div class="social-hub-icon">
                 <i class="bi bi-github"></i>
               </div>
-              <h4 class="social-hub-title">GitHub</h4>
-              <span class="social-hub-handle">Repositories</span>
+              <h3 class="social-hub-title">GitHub</h3>
+              <span class="social-hub-handle">@kaizan26</span>
             </a>
           </div>
 
           <!-- Email Direct -->
-          <div class="reveal-on-scroll delay-300">
+          <div class="reveal-on-scroll delay-200">
             <a href="mailto:bobbykamalaizan@gmail.com" class="glass-card social-hub-card social-email">
               <div class="social-hub-icon">
                 <i class="bi bi-envelope-at"></i>
               </div>
-              <h4 class="social-hub-title">Email</h4>
+              <h3 class="social-hub-title">Email</h3>
               <span class="social-hub-handle" data-i18n="social_email_handle">Kontak Langsung</span>
             </a>
           </div>
@@ -1032,17 +855,12 @@
          CONTACT & INQUIRY SECTION (CENTERED)
          ========================================================================== -->
     <section id="contact">
-      <div class="section-parallax-watermark" data-parallax-factor="0.32" aria-hidden="true">
-        <span class="watermark-title">CONNECT // 07</span>
-        <span class="watermark-sub">STATUS: READY FOR INQUIRY &bull; COLLABORATION</span>
-      </div>
       <div class="container-custom">
         <div class="text-center mb-14 reveal-on-scroll">
-          <span class="section-tagline" data-i18n="contact_tagline"><i class="bi bi-chat-dots"></i> Kontak</span>
-          <h2 class="section-title" data-i18n="contact_title">Kirim Pesan atau Konsultasi</h2>
+          <h2 class="section-title" data-i18n="contact_title">Kirim Pesan atau Diskusi</h2>
           <p class="section-subtitle mx-auto" data-i18n="contact_subtitle">
-            Diskusikan kebutuhan pengembangan sistem informasi, audit kualitas website, atau peluang kolaborasi rekayasa
-            perangkat lunak.
+            Terbuka untuk peluang kerja di bidang administrasi operasional, manajemen data, koordinasi armada, maupun
+            kolaborasi sistem informasi.
           </p>
         </div>
 
@@ -1055,8 +873,8 @@
                 <span data-i18n="contact_info_heading">Informasi Kontak</span>
               </h3>
               <p class="text-secondary mb-6 leading-relaxed" data-i18n="contact_info_desc">
-                Terbuka untuk diskusi teknis seputar arsitektur web, implementasi sistem informasi, serta riset kualitas
-                sistem berbasis data.
+                Silakan kirim pesan langsung melalui formulir atau email untuk kebutuhan rekrutmen, administrasi
+                operasional, serta koordinasi sistem.
               </p>
 
               <div class="contact-info-list mb-6">
@@ -1066,7 +884,7 @@
                     <i class="bi bi-envelope-at-fill"></i>
                   </div>
                   <div class="contact-info-content">
-                    <h6 data-i18n="contact_email_title">Alamat Email</h6>
+                    <h4 data-i18n="contact_email_title">Alamat Email</h4>
                     <p>bobbykamalaizan@gmail.com</p>
                   </div>
                   <button class="btn-copy-email" id="copy-email-btn" title="Salin Email" aria-label="Salin Email">
@@ -1080,7 +898,7 @@
                     <i class="bi bi-geo-alt-fill"></i>
                   </div>
                   <div class="contact-info-content">
-                    <h6 data-i18n="contact_loc_title">Domisili</h6>
+                    <h4 data-i18n="contact_loc_title">Domisili</h4>
                     <p data-i18n="contact_loc_val">Balikpapan, Kalimantan Timur</p>
                   </div>
                 </div>
@@ -1091,7 +909,7 @@
                     <i class="bi bi-check-circle-fill"></i>
                   </div>
                   <div class="contact-info-content">
-                    <h6 data-i18n="contact_status_title">Status</h6>
+                    <h4 data-i18n="contact_status_title">Status</h4>
                     <p class="text-success font-semibold" data-i18n="contact_status_val">Terbuka untuk Peluang
                       Kolaborasi</p>
                   </div>
@@ -1161,9 +979,9 @@
           </p>
         </div>
         <div class="footer-social-links">
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
+          <a href="https://www.linkedin.com/in/bobbykamalaizan" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
             aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
+          <a href="https://github.com/kaizan26" target="_blank" rel="noopener noreferrer" class="btn-glass-icon-pro"
             aria-label="GitHub"><i class="bi bi-github"></i></a>
           <a href="mailto:bobbykamalaizan@gmail.com" class="btn-glass-icon-pro" aria-label="Email"><i
               class="bi bi-envelope-fill"></i></a>
@@ -1175,8 +993,8 @@
           &copy; 2026 Bobby Kamal Aizan.
         </div>
         <div>
-          <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-shield-check text-info"></i> <span
-              data-i18n="footer_status">All Systems Operational</span></span>
+          <span class="glass-badge py-1 px-3 text-xs"><i class="bi bi-geo-alt-fill text-info"></i> <span
+              data-i18n="footer_status">Balikpapan, Indonesia</span></span>
         </div>
       </div>
     </div>
@@ -1186,6 +1004,7 @@
        NATIVE TAILWIND APPLE GLASS MODAL: PROJECT DEEP DIVE
        ========================================================================== -->
   <div class="apple-glass-modal-backdrop" id="appleProjectModal"
+    role="dialog" aria-modal="true" aria-labelledby="projectModalTitle"
     onclick="if(event.target === this) closeProjectModal()">
     <div class="apple-glass-modal-card">
       <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close modal">
@@ -1207,6 +1026,7 @@
        NATIVE TAILWIND APPLE GLASS MODAL: QUICKLOOK CV VIEWER
        ========================================================================== -->
   <div class="apple-glass-modal-backdrop" id="appleCvModal"
+    role="dialog" aria-modal="true" aria-labelledby="cvModalTitle"
     onclick="if(event.target === this) closeCvModal()">
     <div class="apple-glass-modal-card cv-quicklook-card">
       <!-- CV Window Header Topbar with Native macOS Traffic Controls (Red = Exit) & Format Switcher -->
@@ -1216,7 +1036,7 @@
           <button type="button" class="dot dot-yellow cv-min-btn" onclick="closeCvModal()" aria-label="Tutup CV" title="Tutup CV"></button>
           <button type="button" class="dot dot-green cv-zoom-btn" onclick="printCv()" aria-label="Cetak CV" title="Cetak / Simpan PDF (1 Halaman A4)"></button>
         </div>
-        <div class="cv-window-title"><i class="bi bi-file-earmark-person me-1"></i> Curriculum Vitae — Bobby Kamal Aizan</div>
+        <div class="cv-window-title" id="cvModalTitle"><i class="bi bi-file-earmark-person me-1"></i> Curriculum Vitae — Bobby Kamal Aizan</div>
         <!-- Format Switcher Segmented Control (QuickLook vs ATS) -->
         <div class="cv-format-toggle-bar">
           <div class="cv-segmented-control" role="tablist" aria-label="Format CV">
@@ -1258,19 +1078,19 @@
       <div class="cv-metrics-strip">
         <div class="cv-metric-box">
           <div class="cv-metric-val gradient-text">3.63</div>
-          <div class="cv-metric-lbl" data-i18n="stat_itk_label">IPK 3.63 (Sistem Informasi)</div>
+          <div class="cv-metric-lbl" data-i18n="stat_itk_label">IPK S1 Sistem Informasi ITK</div>
         </div>
         <div class="cv-metric-box">
           <div class="cv-metric-val gradient-text-cyan">PT. Abicam</div>
-          <div class="cv-metric-lbl" data-i18n="stat_syntax_label">Administrator Transportasi</div>
+          <div class="cv-metric-lbl" data-i18n="stat_abicam_label">Administrator Transportasi</div>
         </div>
         <div class="cv-metric-box">
           <div class="cv-metric-val gradient-text-orange">BDK</div>
-          <div class="cv-metric-lbl" data-i18n="stat_webqual_label">PT. Abicam (Des 2022 - Sekarang)</div>
+          <div class="cv-metric-lbl" data-i18n="stat_bdk_label">Magang Balai Diklat Keuangan</div>
         </div>
         <div class="cv-metric-box">
           <div class="cv-metric-val gradient-text-green">MS Office</div>
-          <div class="cv-metric-lbl" data-i18n="stat_fullstack_label">MS Office &amp; Data Management</div>
+          <div class="cv-metric-lbl" data-i18n="stat_office_label">MS Office &amp; Manajemen Data</div>
         </div>
       </div>
 
@@ -1278,10 +1098,10 @@
       <div id="cvModalBody" class="cv-modal-content">
         <!-- Executive Summary -->
         <div class="cv-section-block">
-          <h5 class="cv-section-title">
+          <h4 class="cv-section-title">
             <i class="bi bi-person-lines-fill text-primary"></i>
             <span data-i18n="modal_cv_sec_summary">Executive Summary</span>
-          </h5>
+          </h4>
           <div class="cv-summary-card">
             <p class="cv-p" data-i18n="modal_cv_summary_text">
               Profesional administrasi yang berorientasi pada detail dengan latar belakang akademis Sistem Informasi dari Institut Teknologi Kalimantan. Berpengalaman dalam mengefisiensikan proses operasional, memiliki keterampilan kuat dalam manajemen data, dokumentasi administratif, dan koordinasi sistem untuk meningkatkan akurasi dan efisiensi. Dengan ketelitian tinggi dan pendekatan terstruktur dalam pemecahan masalah, saya unggul dalam pengelolaan rekam data, memastikan kepatuhan prosedural, serta mendukung operasional harian.
@@ -1293,13 +1113,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
           <!-- Experience -->
           <div class="cv-section-block mb-0">
-            <h5 class="cv-section-title">
+            <h4 class="cv-section-title">
               <i class="bi bi-briefcase-fill text-primary"></i>
               <span data-i18n="modal_cv_sec_publication">Pengalaman Kerja Utama</span>
-            </h5>
+            </h4>
             <div class="cv-detail-card h-full">
               <div class="flex items-start justify-between gap-2 mb-1">
-                <h6 class="font-bold text-sm text-primary">PT. Abicam | Balikpapan</h6>
+                <h5 class="font-bold text-sm text-primary">PT. Abicam | Balikpapan</h5>
                 <span class="cv-year-pill">Des 2022 – Sekarang</span>
               </div>
               <div class="font-semibold text-xs mb-1">Administrator Transportation</div>
@@ -1311,13 +1131,13 @@
 
           <!-- Education -->
           <div class="cv-section-block mb-0">
-            <h5 class="cv-section-title">
+            <h4 class="cv-section-title">
               <i class="bi bi-mortarboard-fill text-info"></i>
               <span data-i18n="modal_cv_sec_education">Pendidikan &amp; Almamater</span>
-            </h5>
+            </h4>
             <div class="cv-detail-card h-full">
               <div class="flex items-start justify-between gap-2 mb-1">
-                <h6 class="font-bold text-sm text-primary">S1 Sistem Informasi</h6>
+                <h5 class="font-bold text-sm text-primary">S1 Sistem Informasi</h5>
                 <span class="cv-year-pill">Jan 2024</span>
               </div>
               <div class="font-semibold text-xs mb-1">Institut Teknologi Kalimantan (ITK)</div>
@@ -1330,10 +1150,10 @@
 
         <!-- Technical Competencies Matrix -->
         <div class="cv-section-block">
-          <h5 class="cv-section-title">
+          <h4 class="cv-section-title">
             <i class="bi bi-award-fill text-success"></i>
             <span data-i18n="modal_cv_sec_tech">Kompetensi Utama (Core Competencies)</span>
-          </h5>
+          </h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
             <div class="cv-tech-card">
               <div class="cv-tech-heading" data-i18n="modal_cv_tech_languages">MICROSOFT OFFICE</div>
@@ -1512,12 +1332,11 @@
     <i class="bi bi-chevron-up"></i>
   </button>
 
-  <!-- Project Scripts with i18n Engine & Liquid Glass Studio Engine -->
-  <script defer src="js/i18n.js?v=7.4"></script>
-  <script defer src="js/projects-data.js?v=7.4"></script>
-  <script defer src="js/liquid-glass-engine.js?v=7.4"></script>
-  <script defer src="js/main.js?v=7.4"></script>
-  <script defer src="js/contact.js?v=7.4"></script>
+  <!-- Project Scripts -->
+  <script defer src="js/i18n.js?v=7.5"></script>
+  <script defer src="js/projects-data.js?v=7.5"></script>
+  <script defer src="js/main.js?v=7.5"></script>
+  <script defer src="js/contact.js?v=7.5"></script>
 </body>
 
 </html>
