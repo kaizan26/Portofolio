@@ -6,11 +6,11 @@
 /* Web Font Stack with San Francisco Apple Primary Fallback */
 :root {
   color-scheme: light dark;
-  /* Apple Pro Velvet Canvas */
-  --bg-primary: #030306;
-  --bg-secondary: #08080e;
-  --bg-tertiary: #0e0e16;
-  --bg-elevated: #141420;
+  /* Apple Pro Velvet Canvas - Obsidian Studio Depth */
+  --bg-primary: #060913;
+  --bg-secondary: #0a0f1d;
+  --bg-tertiary: #0e1526;
+  --bg-elevated: #131b30;
 
   --text-primary: #f5f5f7;
   --text-secondary: #a1a1ad;
@@ -109,10 +109,10 @@
 :root:has(> head > meta[name="color-scheme"][content="light"]),
 [data-theme="light"] {
   color-scheme: light;
-  --bg-primary: #f2f3f7;
-  --bg-secondary: #fafafd;
-  --bg-tertiary: #e5e7ee;
-  --bg-elevated: #fafafd;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --bg-elevated: #ffffff;
 
   --text-primary: #1d1d1f;
   --text-secondary: #4c4c52;
@@ -300,11 +300,16 @@
   z-index: -1;
   pointer-events: none;
   background-color: var(--bg-primary);
-  transition: background-color 0.5s ease;
+  background: radial-gradient(ellipse 110% 75% at 50% 0%, #0d1527 0%, #060913 55%, #030408 100%);
+  transition: background-color 0.5s ease, background 0.5s ease;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+[data-theme="light"] .liquid-bg-wrapper {
+  background: radial-gradient(ellipse 110% 70% at 50% 0%, #eaf1fa 0%, #f8fafc 52%, #f1f5f9 100%);
 }
 
 /* Subtle architectural systems grid that fades smoothly toward viewport edges */
@@ -313,20 +318,20 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(to right, rgba(148, 163, 184, 0.052) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.052) 1px, transparent 1px);
+  background-size: 44px 44px;
   background-position: center top;
-  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 42%, #000 30%, transparent 100%);
-  mask-image: radial-gradient(ellipse 85% 75% at 50% 42%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 38%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 38%, #000 35%, transparent 100%);
   pointer-events: none;
   z-index: 0;
 }
 
 [data-theme="light"] .liquid-bg-wrapper::before {
   background-image:
-    linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+    linear-gradient(to right, rgba(71, 85, 105, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(71, 85, 105, 0.05) 1px, transparent 1px);
 }
 
 .liquid-glass-lens-canvas {
@@ -455,20 +460,26 @@ html[data-perf-mode="true"] .parallax-card-stagger-2 {
   inset: -40px;
   width: calc(100% + 80px);
   height: calc(100% + 80px);
-  background: linear-gradient(125deg, rgba(15, 23, 42, 0.54) 0%, rgba(18, 30, 58, 0.28) 52%, rgba(12, 20, 42, 0.14) 80%, rgba(3, 3, 6, 0) 100%);
+  background:
+    radial-gradient(ellipse 950px 750px at 78% 16%, rgba(37, 99, 235, 0.22) 0%, rgba(30, 58, 138, 0.10) 45%, transparent 75%),
+    radial-gradient(ellipse 800px 700px at 20% 36%, rgba(56, 189, 248, 0.14) 0%, rgba(30, 64, 175, 0.05) 50%, transparent 72%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.45) 0%, rgba(10, 16, 30, 0.2) 50%, rgba(3, 4, 8, 0) 100%);
   filter: none;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
 [data-theme="light"] .ambient-titanium-glow {
-  background: linear-gradient(180deg, rgba(226, 234, 246, 0.5) 0%, rgba(242, 243, 247, 0) 65%);
+  background:
+    radial-gradient(ellipse 950px 750px at 78% 16%, rgba(186, 230, 253, 0.55) 0%, rgba(224, 242, 254, 0.25) 50%, transparent 75%),
+    radial-gradient(ellipse 800px 700px at 20% 36%, rgba(219, 234, 254, 0.4) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(241, 245, 249, 0.7) 0%, rgba(248, 250, 252, 0) 65%);
 }
 
 .liquid-orb {
   position: absolute;
   filter: none;
-  opacity: 0.36;
+  opacity: 0.42;
   border-radius: 50%;
   will-change: transform;
   pointer-events: none;
@@ -479,29 +490,29 @@ html[data-perf-mode="true"] .parallax-card-stagger-2 {
 }
 
 [data-theme="light"] .liquid-orb {
-  opacity: 0.18;
+  opacity: 0.24;
   filter: none;
 }
 
 .liquid-orb-1 {
   top: -5%;
   left: 8%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle closest-side, rgba(30, 64, 175, 0.45) 0%, rgba(30, 58, 138, 0.2) 55%, transparent 96%);
+  width: 660px;
+  height: 660px;
+  background: radial-gradient(circle closest-side, rgba(30, 64, 175, 0.48) 0%, rgba(30, 58, 138, 0.22) 55%, transparent 96%);
   animation: floatFluidOrb1 14s infinite alternate ease-in-out;
 }
 
 [data-theme="light"] .liquid-orb-1 {
-  background: radial-gradient(circle closest-side, rgba(59, 130, 246, 0.34) 0%, rgba(96, 165, 250, 0.14) 55%, transparent 96%);
+  background: radial-gradient(circle closest-side, rgba(59, 130, 246, 0.38) 0%, rgba(96, 165, 250, 0.16) 55%, transparent 96%);
 }
 
 .liquid-orb-2 {
   top: 30%;
   right: -8%;
-  width: 680px;
-  height: 680px;
-  background: radial-gradient(circle closest-side, rgba(99, 102, 241, 0.56) 0%, rgba(99, 102, 241, 0.26) 52%, transparent 96%);
+  width: 720px;
+  height: 720px;
+  background: radial-gradient(circle closest-side, rgba(99, 102, 241, 0.48) 0%, rgba(79, 70, 229, 0.22) 52%, transparent 96%);
   animation: floatFluidOrb2 16s infinite alternate ease-in-out;
   animation-delay: -3s;
 }
@@ -509,9 +520,9 @@ html[data-perf-mode="true"] .parallax-card-stagger-2 {
 .liquid-orb-3 {
   bottom: 0%;
   left: 12%;
-  width: 640px;
-  height: 640px;
-  background: radial-gradient(circle closest-side, rgba(14, 165, 233, 0.52) 0%, rgba(14, 165, 233, 0.24) 52%, transparent 96%);
+  width: 680px;
+  height: 680px;
+  background: radial-gradient(circle closest-side, rgba(14, 165, 233, 0.46) 0%, rgba(30, 64, 175, 0.18) 52%, transparent 96%);
   animation: floatFluidOrb3 15s infinite alternate ease-in-out;
   animation-delay: -6s;
 }
@@ -519,29 +530,29 @@ html[data-perf-mode="true"] .parallax-card-stagger-2 {
 .liquid-orb-4 {
   top: 65%;
   right: 15%;
-  width: 550px;
-  height: 550px;
-  background: radial-gradient(circle closest-side, rgba(30, 64, 175, 0.34) 0%, rgba(30, 58, 138, 0.16) 52%, transparent 96%);
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle closest-side, rgba(30, 64, 175, 0.38) 0%, rgba(30, 58, 138, 0.18) 52%, transparent 96%);
   animation: floatFluidOrb4 13s infinite alternate ease-in-out;
   animation-delay: -9s;
 }
 
 [data-theme="light"] .liquid-orb-4 {
-  background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.3) 0%, rgba(59, 130, 246, 0.12) 55%, transparent 96%);
+  background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.34) 0%, rgba(59, 130, 246, 0.14) 55%, transparent 96%);
 }
 
 .liquid-orb-5 {
-  top: 8%;
-  right: 6%;
-  width: 560px;
-  height: 560px;
-  background: radial-gradient(circle closest-side, rgba(37, 99, 235, 0.36) 0%, rgba(14, 165, 233, 0.16) 52%, transparent 96%);
+  top: 6%;
+  right: 4%;
+  width: 640px;
+  height: 640px;
+  background: radial-gradient(circle closest-side, rgba(37, 99, 235, 0.45) 0%, rgba(14, 165, 233, 0.20) 52%, transparent 96%);
   animation: floatFluidOrb5 17s infinite alternate ease-in-out;
   animation-delay: -2s;
 }
 
 [data-theme="light"] .liquid-orb-5 {
-  background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.24) 0%, rgba(59, 130, 246, 0.1) 55%, transparent 96%);
+  background: radial-gradient(circle closest-side, rgba(56, 189, 248, 0.3) 0%, rgba(59, 130, 246, 0.12) 55%, transparent 96%);
 }
 
 /* Stable transform-only keyframes without expensive border-radius recalculations */
