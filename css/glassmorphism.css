@@ -33,22 +33,22 @@
   --gradient-pro-accent: linear-gradient(135deg, #0066cc 0%, #2997ff 100%);
 
   /* HYPER-REALISTIC CRYSTAL LIQUID GLASS TOKENS */
-  --glass-bg-nav: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 30%, rgba(14, 14, 24, 0.78) 100%);
-  --glass-bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 35%, rgba(15, 15, 24, 0.38) 100%);
-  --glass-bg-subtle: rgba(255, 255, 255, 0.05);
-  --glass-bg-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 35%, rgba(18, 18, 30, 0.75) 100%);
-  --glass-bg-stage: linear-gradient(160deg, rgba(16, 24, 42, 0.78) 0%, rgba(10, 12, 20, 0.85) 100%);
+  --glass-bg-nav: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 40%, rgba(10, 16, 30, 0.38) 100%);
+  --glass-bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(10, 16, 30, 0.25) 100%);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.06);
+  --glass-bg-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(14, 20, 36, 0.48) 100%);
+  --glass-bg-stage: linear-gradient(160deg, rgba(16, 24, 42, 0.65) 0%, rgba(10, 12, 20, 0.72) 100%);
 
-  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.20);
   --glass-border-hover: rgba(255, 255, 255, 0.42);
-  --glass-border-pro: rgba(41, 151, 255, 0.55);
-  --glass-border-highlight: rgba(255, 255, 255, 0.55);
+  --glass-border-pro: rgba(56, 189, 248, 0.55);
+  --glass-border-highlight: rgba(255, 255, 255, 0.75);
 
-  --glass-blur: 0px;
-  --glass-blur-sm: 0px;
-  --glass-blur-lg: 0px;
+  --glass-blur: 20px;
+  --glass-blur-sm: 14px;
+  --glass-blur-lg: 24px;
 
-  /* TRUE OPTICAL LIQUID GLASS PIPELINE (CRYSTAL WATER CLEAR, NOT FROSTED) */
+  /* TRUE OPTICAL LIQUID GLASS PIPELINE: Default fallback for non-Chromium (Safari/Firefox) */
   --liquid-refraction-factor: 0.18;
   --liquid-dispersion-gain: 0.065;
   --liquid-thickness: 0.52;
@@ -58,30 +58,28 @@
   --liquid-glare-intensity: 1.45;
   --liquid-glare-hardness: 36.0;
 
-  --glass-refract-card: saturate(210%) contrast(110%);
-  --glass-refract-nav: blur(8px) saturate(215%) contrast(108%);
-  --glass-refract-subtle: saturate(200%) contrast(108%);
+  --glass-refract-card: blur(20px) saturate(180%) contrast(104%);
+  --glass-refract-nav: blur(18px) saturate(190%) contrast(104%);
+  --glass-refract-subtle: blur(14px) saturate(170%) contrast(104%);
 
   /* Precision Liquid Glass Chamfers & Specular Refraction Shadows */
-  --liquid-dispersion-rim: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.55) 18%, rgba(255, 255, 255, 0.92) 50%, rgba(148, 163, 184, 0.5) 82%, transparent 100%);
+  --liquid-dispersion-rim: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.55) 18%, rgba(255, 255, 255, 0.95) 50%, rgba(148, 163, 184, 0.5) 82%, transparent 100%);
   --liquid-specular-glare: radial-gradient(380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 40%, transparent 65%);
 
   --glass-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.65),
-    inset 0 1.5px 0.75px rgba(255, 255, 255, 0.75),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-    inset 0 -2px 2px rgba(0, 0, 0, 0.55);
+    0 24px 60px rgba(0, 0, 0, 0.60),
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1.5px 1px 0 rgba(0, 0, 0, 0.45);
 
   --glass-shadow-hover:
-    0 32px 80px rgba(0, 0, 0, 0.8),
-    inset 0 2px 1px rgba(255, 255, 255, 0.90),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.32),
-    inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+    0 32px 80px rgba(0, 0, 0, 0.78),
+    inset 0 2px 1.2px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1.5px 1px 0 rgba(0, 0, 0, 0.55);
 
   --glass-shadow-sm:
     0 10px 28px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0.75px rgba(255, 255, 255, 0.6),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+    inset 0 1.2px 0.8px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0.8px 0 rgba(0, 0, 0, 0.35);
 
   /* Radius */
   --radius-sm: 10px;
@@ -135,23 +133,36 @@
   --glass-bg-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(240, 240, 250, 0.75) 100%);
   --glass-bg-stage: linear-gradient(160deg, rgba(235, 240, 250, 0.85) 0%, rgba(242, 243, 248, 0.9) 100%);
 
-  --glass-border: rgba(255, 255, 255, 0.65);
-  --glass-border-hover: rgba(41, 151, 255, 0.45);
-  --glass-border-highlight: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-border-hover: rgba(41, 151, 255, 0.55);
+  --glass-border-highlight: #ffffff;
 
   --glass-shadow:
     0 16px 36px rgba(0, 0, 0, 0.05),
-    inset 0 1.5px 1px #ffffff,
-    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    inset 0 1.5px 1px 0 #ffffff,
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
 
   --glass-shadow-hover:
     0 24px 50px rgba(0, 0, 0, 0.09),
-    inset 0 2px 1px #ffffff,
-    inset 0 0 0 1px rgba(0, 102, 204, 0.22);
+    inset 0 2px 1.2px 0 #ffffff,
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.08);
 
   --glass-shadow-sm:
     0 6px 18px rgba(0, 0, 0, 0.03),
-    inset 0 1px 1px #ffffff;
+    inset 0 1px 1px 0 #ffffff;
+}
+
+/* ==========================================================================
+   TRUE OPTICAL LIQUID GLASS PIPELINE (Chromium: Chrome, Edge, Arc, Brave)
+   Uses SVG feDisplacementMap + feTurbulence for genuine fluid refraction optics
+   Gracefully falls back to standard frosted blur in Safari and Firefox
+   ========================================================================== */
+@supports (backdrop-filter: url(#liquid-refraction-card)) or (-webkit-backdrop-filter: url(#liquid-refraction-card)) {
+  :root {
+    --glass-refract-card: url(#liquid-refraction-card) saturate(195%) contrast(106%);
+    --glass-refract-nav: url(#liquid-refraction-nav) saturate(205%) contrast(106%);
+    --glass-refract-subtle: url(#liquid-refraction-nav) saturate(180%) contrast(104%);
+  }
 }
 
 /* ==========================================================================
@@ -318,8 +329,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.052) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.052) 1px, transparent 1px);
+    linear-gradient(to right, rgba(148, 163, 184, 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.075) 1px, transparent 1px);
   background-size: 44px 44px;
   background-position: center top;
   -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 38%, #000 35%, transparent 100%);
@@ -330,8 +341,8 @@
 
 [data-theme="light"] .liquid-bg-wrapper::before {
   background-image:
-    linear-gradient(to right, rgba(71, 85, 105, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(71, 85, 105, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(71, 85, 105, 0.065) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(71, 85, 105, 0.065) 1px, transparent 1px);
 }
 
 .liquid-glass-lens-canvas {
@@ -474,6 +485,26 @@ html[data-perf-mode="true"] .parallax-card-stagger-2 {
     radial-gradient(ellipse 950px 750px at 78% 16%, rgba(186, 230, 253, 0.55) 0%, rgba(224, 242, 254, 0.25) 50%, transparent 75%),
     radial-gradient(ellipse 800px 700px at 20% 36%, rgba(219, 234, 254, 0.4) 0%, transparent 70%),
     linear-gradient(180deg, rgba(241, 245, 249, 0.7) 0%, rgba(248, 250, 252, 0) 65%);
+}
+
+/* Continuous Central Liquid Light (Ensures refraction is vibrant across About, Skills, Research & Social) */
+.central-ambient-aurora {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 950px 750px at 50% 48%, rgba(37, 99, 235, 0.22) 0%, rgba(30, 58, 138, 0.08) 50%, transparent 75%),
+    radial-gradient(ellipse 800px 650px at 28% 68%, rgba(56, 189, 248, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 850px 700px at 72% 38%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translateZ(0);
+}
+
+[data-theme="light"] .central-ambient-aurora {
+  background:
+    radial-gradient(ellipse 950px 750px at 50% 48%, rgba(186, 230, 253, 0.52) 0%, rgba(224, 242, 254, 0.20) 50%, transparent 75%),
+    radial-gradient(ellipse 800px 650px at 28% 68%, rgba(219, 234, 254, 0.38) 0%, transparent 70%),
+    radial-gradient(ellipse 850px 700px at 72% 38%, rgba(224, 231, 255, 0.32) 0%, transparent 70%);
 }
 
 .liquid-orb {
@@ -849,8 +880,8 @@ html[data-perf-mode="true"] .glass-card:hover {
 
 .glass-navbar {
   background: var(--glass-bg-nav);
-  backdrop-filter: var(--glass-refract-nav, blur(var(--glass-blur)) saturate(220%) contrast(108%));
-  -webkit-backdrop-filter: var(--glass-refract-nav, blur(var(--glass-blur)) saturate(220%) contrast(108%));
+  backdrop-filter: var(--glass-refract-nav);
+  -webkit-backdrop-filter: var(--glass-refract-nav);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-pill);
   box-shadow: var(--glass-shadow);
@@ -869,11 +900,11 @@ html[data-perf-mode="true"] .glass-card:hover {
   content: '';
   position: absolute;
   top: 0;
-  left: 12px;
-  right: 12px;
+  left: 14px;
+  right: 14px;
   height: 1.5px;
   border-radius: var(--radius-pill);
-  background: var(--liquid-dispersion-rim, linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.5) 20%, rgba(255, 255, 255, 0.9) 50%, rgba(148, 163, 184, 0.5) 80%, transparent 100%));
+  background: var(--liquid-dispersion-rim);
   pointer-events: none;
 }
 
@@ -1052,41 +1083,48 @@ html[data-perf-mode="true"] .glass-card:hover {
   align-items: center;
   padding: 3px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--glass-border);
-  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.3), inset 0 0.5px 0.5px rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(255, 255, 255, 0.05);
   user-select: none;
   overflow: hidden;
-  width: 70px;
+  width: 72px;
   height: 32px;
   box-sizing: border-box;
   flex-shrink: 0;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 
 [data-theme="light"] .lang-switcher-pro {
-  background: rgba(0, 0, 0, 0.06);
-  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.06);
 }
 
 .lang-morph-pill {
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 31px;
+  width: 32px;
   height: 24px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.24);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  backdrop-filter: var(--glass-refract-subtle);
-  -webkit-backdrop-filter: var(--glass-refract-subtle);
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(16px) saturate(190%);
+  -webkit-backdrop-filter: blur(16px) saturate(190%);
+  border: 0.5px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.65);
   pointer-events: none;
   z-index: 1;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
 [data-theme="light"] .lang-morph-pill {
   background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 1px #ffffff;
+}
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
 }
 
@@ -1537,19 +1575,31 @@ html.theme-transitioning *::after {
   box-shadow: none !important;
 }
 
-/* Terminal Tab Sliding Morph Pill */
+/* ==========================================================================
+   APPLE PRO LIQUID GLASS SEGMENTED CONTROL (WWDC Technology Overviews)
+   Concentric geometry, elevated glass thumb, specular rim, spring motion
+   ========================================================================== */
 .terminal-tabs {
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.22);
-  border-bottom: 1px solid var(--glass-border);
-  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(255, 255, 255, 0.05);
+  margin: 8px 10px 4px 10px;
+  padding: 3px;
+  border-radius: 12px;
   gap: 2px;
   overflow-x: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   flex-shrink: 0;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+}
+
+[data-theme="light"] .terminal-tabs {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.06);
 }
 
 .terminal-tabs::-webkit-scrollbar {
@@ -1560,18 +1610,30 @@ html.theme-transitioning *::after {
 
 .terminal-morph-pill {
   position: absolute;
-  top: 4px;
+  top: 3px;
   left: 0;
-  height: calc(100% - 8px);
-  border-radius: 8px;
-  background: rgba(41, 151, 255, 0.16);
-  border: 1px solid rgba(41, 151, 255, 0.4);
-  box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 0, 0, 0.22);
+  height: calc(100% - 6px);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px) saturate(190%);
+  -webkit-backdrop-filter: blur(16px) saturate(190%);
+  border: 0.5px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.25);
   pointer-events: none;
   z-index: 1;
   opacity: 0;
-  transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1), width 0.34s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), width 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
   will-change: transform, width;
+}
+
+[data-theme="light"] .terminal-morph-pill {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10), 0 1px 2px rgba(0, 0, 0, 0.06), inset 0 1px 1px #ffffff;
 }
 
 .terminal-tab-btn {
@@ -1582,19 +1644,23 @@ html.theme-transitioning *::after {
   outline: none !important;
   box-shadow: none !important;
   padding: 5px 6px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 9px;
   transition: color 0.2s ease;
   white-space: nowrap;
-  flex-shrink: 0;
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
 }
 
 .terminal-tab-btn i {
-  margin-right: 3px !important;
+  font-size: 0.82rem;
 }
 
 .terminal-tab-btn:hover {
@@ -1602,11 +1668,17 @@ html.theme-transitioning *::after {
 }
 
 .terminal-tab-btn.active {
-  color: var(--apple-blue) !important;
-  font-weight: 700;
+  color: #ffffff !important;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+}
+
+[data-theme="light"] .terminal-tab-btn.active {
+  color: #1d1d1f !important;
+  text-shadow: none;
 }
 
 .terminal-tab-btn:focus,
@@ -1688,8 +1760,8 @@ html.theme-transitioning *::after {
    ========================================================================== */
 .apple-explorer-wrapper {
   background: var(--glass-bg-card);
-  backdrop-filter: blur(var(--glass-blur)) saturate(220%) contrast(108%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(220%) contrast(108%);
+  backdrop-filter: var(--glass-refract-card);
+  -webkit-backdrop-filter: var(--glass-refract-card);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--glass-shadow);
@@ -1709,7 +1781,8 @@ html.theme-transitioning *::after {
   left: 0;
   right: 0;
   height: 1.5px;
-  background: linear-gradient(90deg, transparent 5%, rgba(255, 255, 255, 0.55) 50%, transparent 95%);
+  background: var(--liquid-dispersion-rim);
+  pointer-events: none;
 }
 
 .explorer-layout {
@@ -1941,8 +2014,8 @@ html.theme-transitioning *::after {
    ========================================================================== */
 .glass-card {
   background: var(--glass-bg-card);
-  backdrop-filter: var(--glass-refract-card, blur(var(--glass-blur)) saturate(220%) contrast(108%));
-  -webkit-backdrop-filter: var(--glass-refract-card, blur(var(--glass-blur)) saturate(220%) contrast(108%));
+  backdrop-filter: var(--glass-refract-card);
+  -webkit-backdrop-filter: var(--glass-refract-card);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--glass-shadow);
@@ -1959,7 +2032,7 @@ html.theme-transitioning *::after {
   left: 0;
   right: 0;
   height: 1.5px;
-  background: var(--liquid-dispersion-rim, linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.4) 20%, rgba(255, 255, 255, 0.85) 50%, rgba(175, 82, 222, 0.4) 80%, transparent 100%));
+  background: var(--liquid-dispersion-rim);
   pointer-events: none;
   z-index: 3;
 }
@@ -1987,8 +2060,8 @@ html.theme-transitioning *::after {
 
 .glass-card-subtle {
   background: var(--glass-bg-subtle);
-  backdrop-filter: blur(var(--glass-blur-sm)) saturate(200%);
-  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(200%);
+  backdrop-filter: var(--glass-refract-subtle);
+  -webkit-backdrop-filter: var(--glass-refract-subtle);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   box-shadow: var(--glass-shadow-sm);
@@ -2009,8 +2082,8 @@ html.theme-transitioning *::after {
   font-size: 0.8rem;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(var(--glass-blur-sm)) saturate(200%);
-  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(200%);
+  backdrop-filter: var(--glass-refract-subtle);
+  -webkit-backdrop-filter: var(--glass-refract-subtle);
   border: 1px solid var(--glass-border);
   box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.35);
   color: var(--text-primary);
@@ -2147,11 +2220,11 @@ html.theme-transitioning *::after {
   overflow-y: auto;
   overscroll-behavior: contain;
   background: linear-gradient(135deg, rgba(26, 26, 38, 0.96) 0%, rgba(14, 14, 24, 0.94) 100%);
-  backdrop-filter: blur(24px) saturate(200%) contrast(108%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%) contrast(108%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: var(--glass-refract-card);
+  -webkit-backdrop-filter: var(--glass-refract-card);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.92), inset 0 2px 1px rgba(255, 255, 255, 0.65), inset 0 -2px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.92), inset 0 2px 1.2px 0 rgba(255, 255, 255, 0.75), inset 0 -2px 2px rgba(0, 0, 0, 0.5);
   color: var(--text-primary);
   padding: 32px;
   position: relative;

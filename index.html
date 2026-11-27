@@ -99,9 +99,28 @@
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress-bar" id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
 
+  <!-- Hidden Liquid Glass Optical Refraction Filters (SVG Displacement Pipeline) -->
+  <svg class="liquid-glass-svg-filters" style="position: absolute; width: 0; height: 0; pointer-events: none; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <!-- Filter 1: Dynamic Refraction for Glass Cards, Terminal, Explorer, Modals -->
+      <filter id="liquid-refraction-card" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="3" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="1.8" result="smoothNoise" />
+        <feDisplacementMap in="SourceGraphic" in2="smoothNoise" scale="52" xChannelSelector="R" yChannelSelector="G" result="refracted" />
+      </filter>
+      <!-- Filter 2: Silky Refraction for Floating Navbar & Pills (Gentle edge distortion) -->
+      <filter id="liquid-refraction-nav" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.016 0.022" numOctaves="2" seed="5" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="1.5" result="smoothNoise" />
+        <feDisplacementMap in="SourceGraphic" in2="smoothNoise" scale="32" xChannelSelector="R" yChannelSelector="G" result="refracted" />
+      </filter>
+    </defs>
+  </svg>
+
   <!-- Background Fluid Canvas -->
   <div class="liquid-bg-wrapper" id="liquid-bg-canvas" aria-hidden="true">
     <div class="ambient-titanium-glow" id="ambient-titanium-glow"></div>
+    <div class="central-ambient-aurora" id="central-ambient-aurora"></div>
     <div class="liquid-orb-layer" id="orb-layer-1">
       <div class="liquid-orb liquid-orb-1"></div>
     </div>
